@@ -27,10 +27,17 @@ jobs:
             });
 
             const approvals = Array.from(uniqueReviews.values()).filter(state => state === 'APPROVED').length;
+            const changesRequested = Array.from(uniqueReviews.values()).filter(state => state === 'CHANGES_REQUESTED').length;
 
             if (approvals < 1) {
               core.setFailed(`Not enough approvals. Required: 1, Found: ${approvals}`);
             }
+
+            if (changesRequested > 0) {
+              core.setFailed('PR has requested changes, cannot merge.');
+            }
+
+            
 
       - name: Merge Pull Request           # PR을 병합하는 단계
         if: success()                      # 이전 단계가 성공했을 때만 실행

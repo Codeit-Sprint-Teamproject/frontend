@@ -1,14 +1,9 @@
 name: Auto Merge Pull Requests
 
 on:
-  pull_request:             # pull_request 이벤트 발생 시 트리거
+  pull_request_review:      # pull_request_review 이벤트 발생 시 트리거
     types:
-      - submitted           # 리뷰가 제출되었을 때
-      - review_requested    # 리뷰 요청이 발생했을 때
-      - review_dismissed    # 기존 리뷰가 취소되었을 때
-  pull_request_review:
-    types:
-      - submitted
+      - submitted           # 리뷰가 제출되었을때
 
 jobs:
   auto-merge:

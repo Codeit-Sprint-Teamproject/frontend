@@ -1,3 +1,4 @@
+import Navbar from './_components/Navbar';
 import QueryProvider from './_providers/QueryProvider';
 import './globals.css';
 
@@ -11,6 +12,7 @@ export default function RootLayout({
       <body>
         <QueryProvider>
           <div id='modal'></div>
+          <Navbar />
           {children}
         </QueryProvider>
       </body>

@@ -12,7 +12,7 @@ type Props = { user: User; setUser: (user: User) => void };
 export default function ProfileModifyForm({ user, setUser }: Props) {
   const [nickname, setNickname] = useState(user?.companyName);
   const [image, setImage] = useState(user?.image);
-  const [file, setFile] = useState<File | undefined>();
+  const [file, setFile] = useState<File>();
   const [errors, setErrors] = useState<Record<string, string>>();
   const { closeModal } = useModalStore();
 

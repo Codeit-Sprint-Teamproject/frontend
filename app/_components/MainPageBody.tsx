@@ -1,49 +1,8 @@
 'use client';
 
-// import { useEffect, useState } from 'react';
-// import { api } from '../_services/api';
 import { Input } from '@/components/ui/input';
 
 export default function MainPageBody() {
-  // 모임목록 상태
-  // const [meetingsList, setMeetingsList] = useState([]);
-  // API 호출 상태
-  // const [loading, setloading] = useState<boolean | null>(false);
-  // const [error, setError] = useState<string | null>('');
-  // 로그인 상태
-  // const [isLogin, setIsLogin] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       setloading(true);
-  //       const recentGameData = await api.getMeetingsList();
-  //       setMeetingsList(recentGameData);
-  //       setloading(false);
-  //     } catch (err) {
-  //       if (err instanceof Error) {
-  //         setError(err.message);
-  //         console.log('ERROR :', error);
-  //         setloading(false);
-  //       } else {
-  //         setError('알 수 없는 에러 발생');
-  //         console.log('ERROR :', error);
-  //         setloading(false);
-  //       }
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  // if (loading) {
-  //   return (
-  //     <div className='flex justify-center items-center w-full min-h-screen'>
-  //       <div>Loading..</div>
-  //     </div>
-  //   );
-  // }
-
   // 더미 데이터
   // 베스트 서적 Top3
   const bestBooks = [

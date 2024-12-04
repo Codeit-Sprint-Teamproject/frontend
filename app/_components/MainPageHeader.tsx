@@ -5,6 +5,9 @@ import Calendar from 'react-calendar';
 import './CustomCalendar.css';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 export default function MainPageHeader() {

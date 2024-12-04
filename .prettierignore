@@ -1,2 +1,7 @@
-.github/
+build
+dist
+coverage
+.next
+pulic
+.github
 *.json

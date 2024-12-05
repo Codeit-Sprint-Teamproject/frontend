@@ -39,58 +39,12 @@
 .react-calendar__month-view__weekdays abbr {
   text-decoration: none;
 }
-.react-calendar__month-view__days {
-  width: 568px;
-}
 .react-calendar__month-view__days button {
   position: relative;
-  width: 70.86px;
-  height: 102.2px;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 12px;
+  width: 69.71px;
+  height: 66.33px;
 }
 .react-calendar__month-view__days__day abbr {
   position: relative;
   z-index: 1;
-}
-.react-calendar__navigation__today-button {
-  border: 1px solid;
-  width: 60px;
-  height: 40px;
-}
-.react-calendar__navigation__today-button {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 60px;
-  height: 40px;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-}
-.book-cover {
-  position: absolute;
-  bottom: 0;
-  left: 1/6;
-  border: 3px solid white;
-}
-.book-count {
-  position: absolute;
-  bottom: 0;
-  right: 4px;
-  width: 23px;
-  height: 16px;
-  font-size: 10px;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  padding: 1px 5px;
-  background-color: white;
-  color: black;
-}
-.today-tile {
-  background-color: black;
-  border: 1px solid black;
-  color: white;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
 }

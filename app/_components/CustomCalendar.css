@@ -1,0 +1,48 @@
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 0.9375rem;
+}
+
+.react-calendar__navigation button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+.react-calendar__navigation span {
+  font-size: 1.125rem;
+}
+
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  font-size: 1.125rem;
+  margin-bottom: 0.3125rem;
+}
+
+.react-calendar__month-view__weekdays abbr {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.react-calendar {
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.5rem;
+  width: 28rem;
+  height: 25.5625rem;
+  padding: 1.25rem;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.react-calendar__tile {
+  padding: 0.3125rem 0rem 1.125rem;
+  position: relative;
+}
+
+.not-current-month {
+  color: rgba(175, 175, 175, 0.664) !important;
+}

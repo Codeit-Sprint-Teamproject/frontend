@@ -1,4 +1,4 @@
-import NavigationCard from './_components/NavigationCard';
+import MyReadingCalendar from './_components/MyReadingCalendar';
 import Profile from './_components/Profile';
 
 export default function page() {
@@ -6,7 +6,8 @@ export default function page() {
     <>
       <h3 className='text-[32px] font-semibold my-2'>마이페이지</h3>
       <Profile />
-      <NavigationCard />
+      <h4 className='text-xl font-bold mb-5'>나의 독서 달력</h4>
+      <MyReadingCalendar />
     </>
   );
 }

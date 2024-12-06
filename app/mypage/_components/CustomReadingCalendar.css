@@ -39,12 +39,32 @@
 .react-calendar__month-view__weekdays abbr {
   text-decoration: none;
 }
+.react-calendar__month-view__days {
+  width: 568px;
+}
 .react-calendar__month-view__days button {
   position: relative;
-  width: 69.71px;
-  height: 66.33px;
+  width: 70.86px;
+  height: 102.2px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
 }
 .react-calendar__month-view__days__day abbr {
   position: relative;
   z-index: 1;
+}
+.react-calendar__navigation__today-button {
+  border: 1px solid;
+  width: 60px;
+  height: 40px;
+}
+.react-calendar__navigation__today-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 60px;
+  height: 40px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
 }

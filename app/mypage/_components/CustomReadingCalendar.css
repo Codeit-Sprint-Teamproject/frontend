@@ -1,30 +1,70 @@
 .react-calendar {
-  width: 592px;
-  height: 541px;
-  padding: 1rem;
+  width: 600px;
+  height: 680px;
+  padding: 15px;
   border: 1px solid #d9d9d9;
 }
 .react-calendar__navigation {
+  width: 255px;
   display: flex;
   height: 44px;
-  margin-bottom: 1em;
+  margin-left: 10px;
+  margin-bottom: 20px;
 }
 .react-calendar__navigation__label {
+  font-size: 26px;
+}
+.react-calendar__navigation__prev-button,
+.react-calendar__navigation__next-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid;
+  border-radius: 50%;
+}
+.react-calendar__navigation__label {
+  width: 133px;
   font-weight: 600;
 }
 .react-calendar__month-view__weekdays {
+  width: 100%;
+  height: 17px;
   text-align: center;
-  font-weight: 600;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 12px;
 }
 .react-calendar__month-view__weekdays abbr {
   text-decoration: none;
 }
+.react-calendar__month-view__days {
+  width: 568px;
+}
 .react-calendar__month-view__days button {
   position: relative;
-  width: 69.71px;
-  height: 66.33px;
+  width: 70.86px;
+  height: 102.2px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
 }
 .react-calendar__month-view__days__day abbr {
   position: relative;
   z-index: 1;
+}
+.react-calendar__navigation__today-button {
+  border: 1px solid;
+  width: 60px;
+  height: 40px;
+}
+.react-calendar__navigation__today-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 60px;
+  height: 40px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
 }

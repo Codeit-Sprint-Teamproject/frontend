@@ -5,7 +5,7 @@ import Calendar from 'react-calendar';
 import NextIcon from '../_svg/NextIcon';
 import PrevIcon from '../_svg/PrevIcon';
 import './CustomReadingCalendar.css';
-import { formatDate } from 'date-fns';
+import { format, isToday } from 'date-fns';
 import Image from 'next/image';
 
 export default function MyReadingCalendar() {
@@ -42,14 +42,12 @@ export default function MyReadingCalendar() {
       <>
         <Image
           src={data.bookCover}
-          className='absolute bottom-0 left-1/6 border-[3px] border-white'
+          className='book-cover'
           alt={data.title}
           width={60}
           height={85}
         />
-        <span className='absolute bottom-0 right-[4px] w-[23px] h-[16px] text-[10px] border rounded px-[5px] py-[1px] bg-white text-black'>
-          +1
-        </span>
+        <span className='book-count'>+1</span>
       </>
     ) : null;
   };
@@ -58,19 +56,15 @@ export default function MyReadingCalendar() {
       <Calendar
         locale='ko'
         view='month'
-        formatMonthYear={(locale, date) => formatDate(date, 'yyyy년 M월')}
-        formatDay={(locale, date) => formatDate(date, 'd')}
+        formatMonthYear={(locale, date) => format(date, 'yyyy년 M월')}
+        formatDay={(locale, date) => format(date, 'd')}
         prevLabel={<PrevIcon />}
         nextLabel={<NextIcon />}
         prev2Label={null}
         next2Label={null}
         calendarType='hebrew'
         showNeighboringMonth={false}
-        tileClassName={({ date }) =>
-          date.toDateString() === new Date().toDateString()
-            ? 'today-tile'
-            : null
-        }
+        tileClassName={({ date }) => (isToday(date) ? 'today-tile' : null)}
         tileContent={getBookCover}
         activeStartDate={activeStartDate}
         onActiveStartDateChange={({ activeStartDate }) =>

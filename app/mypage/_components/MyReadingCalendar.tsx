@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Calendar from 'react-calendar';
 import NextIcon from '../_svg/NextIcon';
 import PrevIcon from '../_svg/PrevIcon';
@@ -8,6 +9,11 @@ import { formatDate } from 'date-fns';
 import Image from 'next/image';
 
 export default function MyReadingCalendar() {
+  const [activeStartDate, setActiveStartDate] = useState(new Date());
+  const goToThisMonth = () => {
+    const today = new Date();
+    setActiveStartDate(new Date(today.getFullYear(), today.getMonth(), 1));
+  };
   const books = [
     {
       date: '2024-12-05',
@@ -58,8 +64,17 @@ export default function MyReadingCalendar() {
         calendarType='hebrew'
         showNeighboringMonth={false}
         tileContent={getBookCover}
+        activeStartDate={activeStartDate}
+        onActiveStartDateChange={({ activeStartDate }) =>
+          setActiveStartDate(activeStartDate as Date)
+        }
       />
-      <button className='react-calendar__navigation__today-button'>오늘</button>
+      <button
+        className='react-calendar__navigation__today-button'
+        onClick={goToThisMonth}
+      >
+        오늘
+      </button>
     </div>
   );
 }

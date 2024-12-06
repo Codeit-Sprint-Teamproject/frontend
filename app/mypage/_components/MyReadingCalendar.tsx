@@ -39,15 +39,18 @@ export default function MyReadingCalendar() {
     const data = books.find((b) => b.date === formattedDate);
 
     return data ? (
-      <div className='absolute top-1/4 left-1/4'>
+      <>
         <Image
           src={data.bookCover}
-          className='z-0'
+          className='absolute bottom-0 left-1/6 border-[3px] border-white'
           alt={data.title}
-          width='50'
-          height='75'
+          width={60}
+          height={85}
         />
-      </div>
+        <span className='absolute bottom-0 right-[4px] w-[23px] h-[16px] text-[10px] border rounded px-[5px] py-[1px] bg-white text-black'>
+          +1
+        </span>
+      </>
     ) : null;
   };
   return (
@@ -63,6 +66,11 @@ export default function MyReadingCalendar() {
         next2Label={null}
         calendarType='hebrew'
         showNeighboringMonth={false}
+        tileClassName={({ date }) =>
+          date.toDateString() === new Date().toDateString()
+            ? 'today-tile'
+            : null
+        }
         tileContent={getBookCover}
         activeStartDate={activeStartDate}
         onActiveStartDateChange={({ activeStartDate }) =>

@@ -1,6 +1,8 @@
 'use client';
 
 import Calendar from 'react-calendar';
+import NextIcon from '../_svg/NextIcon';
+import PrevIcon from '../_svg/PrevIcon';
 import './CustomReadingCalendar.css';
 import { formatDate } from 'date-fns';
 import Image from 'next/image';
@@ -43,14 +45,21 @@ export default function MyReadingCalendar() {
     ) : null;
   };
   return (
-    <Calendar
-      locale='en'
-      view='month'
-      formatMonthYear={(locale, date) => formatDate(date, 'MMM yyyy')}
-      prev2Label={null}
-      next2Label={null}
-      showNeighboringMonth={false}
-      tileContent={getBookCover}
-    />
+    <div className='relative'>
+      <Calendar
+        locale='ko'
+        view='month'
+        formatMonthYear={(locale, date) => formatDate(date, 'yyyy년 M월')}
+        formatDay={(locale, date) => formatDate(date, 'd')}
+        prevLabel={<PrevIcon />}
+        nextLabel={<NextIcon />}
+        prev2Label={null}
+        next2Label={null}
+        calendarType='hebrew'
+        showNeighboringMonth={false}
+        tileContent={getBookCover}
+      />
+      <button className='react-calendar__navigation__today-button'>오늘</button>
+    </div>
   );
 }

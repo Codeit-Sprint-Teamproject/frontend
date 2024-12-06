@@ -1,11 +1,19 @@
 'use client';
 
+import { useState } from 'react';
 import Calendar from 'react-calendar';
+import NextIcon from '../_svg/NextIcon';
+import PrevIcon from '../_svg/PrevIcon';
 import './CustomReadingCalendar.css';
-import { formatDate } from 'date-fns';
+import { format, isToday } from 'date-fns';
 import Image from 'next/image';
 
 export default function MyReadingCalendar() {
+  const [activeStartDate, setActiveStartDate] = useState(new Date());
+  const goToThisMonth = () => {
+    const today = new Date();
+    setActiveStartDate(new Date(today.getFullYear(), today.getMonth(), 1));
+  };
   const books = [
     {
       date: '2024-12-05',
@@ -31,26 +39,44 @@ export default function MyReadingCalendar() {
     const data = books.find((b) => b.date === formattedDate);
 
     return data ? (
-      <div className='absolute top-1/4 left-1/4'>
+      <>
         <Image
           src={data.bookCover}
-          className='z-0'
+          className='book-cover'
           alt={data.title}
-          width='50'
-          height='75'
+          width={60}
+          height={85}
         />
-      </div>
+        <span className='book-count'>+1</span>
+      </>
     ) : null;
   };
   return (
-    <Calendar
-      locale='en'
-      view='month'
-      formatMonthYear={(locale, date) => formatDate(date, 'MMM yyyy')}
-      prev2Label={null}
-      next2Label={null}
-      showNeighboringMonth={false}
-      tileContent={getBookCover}
-    />
+    <div className='relative'>
+      <Calendar
+        locale='ko'
+        view='month'
+        formatMonthYear={(locale, date) => format(date, 'yyyy년 M월')}
+        formatDay={(locale, date) => format(date, 'd')}
+        prevLabel={<PrevIcon />}
+        nextLabel={<NextIcon />}
+        prev2Label={null}
+        next2Label={null}
+        calendarType='hebrew'
+        showNeighboringMonth={false}
+        tileClassName={({ date }) => (isToday(date) ? 'today-tile' : null)}
+        tileContent={getBookCover}
+        activeStartDate={activeStartDate}
+        onActiveStartDateChange={({ activeStartDate }) =>
+          setActiveStartDate(activeStartDate as Date)
+        }
+      />
+      <button
+        className='react-calendar__navigation__today-button'
+        onClick={goToThisMonth}
+      >
+        오늘
+      </button>
+    </div>
   );
 }

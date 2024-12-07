@@ -14,6 +14,7 @@ export const Form = () => {
         <FormInput errors={state?.errors} />
       </div>
       <FormButton />
+      {state?.message}
     </form>
   );
 };

@@ -1,6 +1,7 @@
 'use server';
 
 import { validateSignupData } from './validation';
+import { fetchAPI } from '@/lib/fetchAPI';
 import { redirect } from 'next/navigation';
 
 export type State = {
@@ -34,11 +35,18 @@ export async function userSignup(prevState: State, formData: FormData) {
     };
   }
 
-  const response = await fetch('http://54.180.31.176/api/auths/signUp', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userName, email, password }),
+  // const response = await fetch('http://54.180.31.176/api/auths/signUp', {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({ userName, email, password }),
+  // });
+
+  const response = await fetchAPI('/api/auths/signUp', 'POST', {
+    userName,
+    email,
+    password,
   });
+
   //Api 아직 완성이 안됬습니다!
   if (response.status === 500) {
     const responseData = await response.json();
@@ -53,13 +61,13 @@ export async function userSignup(prevState: State, formData: FormData) {
     }
 
     return {
-      message: '회원가입 실패',
+      message: '회원가입 실패1',
     };
   }
 
   if (!response.ok) {
     return {
-      message: '회원가입 실패',
+      message: '회원가입 실패2',
     };
   }
   redirect('/auth/login');

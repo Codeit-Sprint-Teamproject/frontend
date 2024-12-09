@@ -1,3 +1,4 @@
+import Meetings from './_components/Meetings';
 import Tab from './_components/Tab';
 import TabProvider from './_components/TabContext';
 
@@ -7,6 +8,7 @@ export default function MyMeetingPage() {
       <h3 className='text-xl font-bold mb-[15px]'>나의 모임</h3>
       <TabProvider>
         <Tab />
+        <Meetings />
       </TabProvider>
     </div>
   );

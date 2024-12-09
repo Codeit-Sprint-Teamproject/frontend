@@ -4,7 +4,6 @@ import { useTabContext } from './TabContext';
 
 export default function Tab() {
   const { tab, setTab } = useTabContext();
-  console.log('tab', tab);
   const tabs = [
     { value: 'active', label: '참여 중인 모임', count: 3 },
     { value: 'completed', label: '완료한 모임', count: 3 },

@@ -8,7 +8,7 @@ type TabContextType = {
 };
 
 export const TabContext = createContext<TabContextType | null>(null);
-export default function MeetingTabContextProvider({
+export default function TabContextProvider({
   children,
 }: {
   children: React.ReactNode;

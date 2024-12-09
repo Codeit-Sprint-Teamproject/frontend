@@ -52,7 +52,7 @@ export default function MyReadingCalendar() {
     ) : null;
   };
   return (
-    <div className='relative'>
+    <div className='relative w-[600px]'>
       <Calendar
         locale='ko'
         view='month'

@@ -6,9 +6,40 @@ const User = {
   email: 'aa@test.com',
   profile: '',
 };
+const meetingList = [
+  {
+    id: 1,
+    name: '[매일 30분 읽기] 한강 디에션셜 함께 읽어요!',
+    content: '★ 한강 작가의 장편소설, 단편소설, 시, 산문을 한 권으로 만난다!',
+    goalDays: 15,
+    readingTimeGoal: 30,
+    startDate: '2024-12-10',
+    endDate: '2024-12-24',
+    minCapacity: 5,
+    maxCapacity: 30,
+    gatheringStatus: 'RECRUITING',
+    createdTime: '2024-12-10T14:38:36.805101',
+    updatedTime: '2024-12-10T14:38:36.805101',
+    bookTitle: '한강',
+    bookImage: '/book.png',
+    publisher: '문학동네',
+    publishDate: '2023-06-01',
+    star: '9.8',
+  },
+];
+const readingList = [
+  {
+    bookProfile: '/book.png',
+    readingDate: '2024-12-11',
+  },
+];
 
 const getProfile = http.get('/api/profile', () => {
-  return HttpResponse.json(User);
+  return HttpResponse.json({
+    user: User,
+    gatheringList: meetingList,
+    myReadingList: readingList,
+  });
 });
 
 const updateProfile = http.put('/api/auths/edit/user', async ({ request }) => {
@@ -28,7 +59,10 @@ const updateProfile = http.put('/api/auths/edit/user', async ({ request }) => {
     User.profile = '/heart.png';
   }
   return HttpResponse.json(
-    { message: '프로필 수정 완료', user: User },
+    {
+      message: '프로필 수정 완료',
+      user: User,
+    },
     { status: 200 },
   );
 });

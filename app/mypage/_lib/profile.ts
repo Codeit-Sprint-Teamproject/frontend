@@ -1,12 +1,7 @@
-export type User = {
-  userId: number;
-  userName: string;
-  email: string;
-  profile: string;
-};
+import { User } from '@/types/user';
 
 const token = 'token';
-export const getUser = async () => {
+export const getUser = async (): Promise<User> => {
   const res = await fetch('http://localhost:9090/api/profile', {
     headers: {
       Authorization: `Bearer ${token}`,

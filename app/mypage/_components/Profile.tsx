@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { User, getUser } from '../_lib/profile';
+import { getUser } from '../_lib/profile';
 import ImageIcon from '../_svg/ImageIcon';
 import ProfileModifyForm from './ProfileModifyForm';
 import Modal from '@/components/Modal';
 import { useModalStore } from '@/store/modal';
+import { User } from '@/types/user';
 import Image from 'next/image';
 
 export default function Profile() {
@@ -21,7 +22,8 @@ export default function Profile() {
   }, []);
 
   if (!user) return <p>Loading...</p>;
-  const { userName, email, profile } = user;
+  const { userName, email, profile } = user?.user;
+  const { name, startDate, endDate, bookImage } = user?.gatheringList?.[0];
 
   return (
     <div className='w-[700px] h-[372px] bg-[#D9D9D9] bg-opacity-30 px-[22px] py-9 mb-8'>
@@ -51,11 +53,14 @@ export default function Profile() {
         </button>
       </div>
       <div className='flex gap-5 w-[652px] h-[201x] bg-white pl-3 py-[18px] rounded-lg'>
-        <div className='w-[131px] h-[165px] bg-[#D9D9D9]'></div>
+        <Image src={bookImage} width={132} height={200} alt='책 표지' />
         <div className='text-sm'>
-          <p className='mb-3'>목표 독서 기간 </p>
-          <p className='font-bold mb-7'>2024.12.10 ~ 2024.12.24</p>
-          <p className='mb-3'>목표 독서 시간 </p>
+          <h3>{name}</h3>
+          <p className='mb-3'>모임 기간 </p>
+          <p className='font-bold mb-7'>
+            {startDate.toLocaleString()} ~ {endDate.toLocaleString()}
+          </p>
+          <p className='mb-3'>나의 독서 진행률 </p>
           <div className='w-[334px] h-[15px] bg-[#D9D9D9]'></div>
         </div>
       </div>

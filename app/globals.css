@@ -74,3 +74,6 @@ li {
     @apply bg-background text-foreground;
   }
 }
+* {
+  @apply box-border;
+}

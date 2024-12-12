@@ -1,5 +1,6 @@
 import ImageIcon from '../_svg/ImageIcon';
 import MoreIcon from '../_svg/MoreIcon';
+import { formatDateWithWeekday } from '@/app/_utils/dateFormatter';
 import { MeetingList } from '@/types/meeting';
 import Image from 'next/image';
 
@@ -8,7 +9,7 @@ type Props = {
 };
 export default function MyMeetingList({ meetingList }: Props) {
   const { name, startDate, endDate, bookImage, capacity } = meetingList[0];
-  console.log('start', startDate);
+
   return (
     <div className='flex gap-5 w-[575px] h-[201x] bg-white p-4 rounded-sm border border-[rgba(0, 0, 0, 0.10)]'>
       <Image src={bookImage} width={132} height={200} alt='책 표지' />
@@ -16,21 +17,7 @@ export default function MyMeetingList({ meetingList }: Props) {
         <h3 className='text-lg mb-4'>{name}</h3>
         <p className='text-sm mb-[2px]'>모임 기간 </p>
         <p className='font-bold mb-2'>
-          {new Date(startDate)
-            .toLocaleString('ko', {
-              month: '2-digit',
-              day: '2-digit',
-              weekday: 'short',
-            })
-            .replace(/(.*?\..*?)\./, '$1')}
-          ~{' '}
-          {new Date(endDate)
-            .toLocaleString('ko', {
-              month: '2-digit',
-              day: '2-digit',
-              weekday: 'short',
-            })
-            .replace(/(.*?\..*?)\./, '$1')}
+          {formatDateWithWeekday(startDate)}~ {formatDateWithWeekday(endDate)}
         </p>
         <p className='mb-1'>나의 독서 진행률 </p>
         <div className='flex gap-2 mb-2.5'>

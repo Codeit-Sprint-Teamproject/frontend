@@ -1,7 +1,7 @@
 import { MyReadingList } from './book';
 import { MeetingList } from './meeting';
 
-type UserProfile = {
+export type UserProfile = {
   userId: number;
   userName: string;
   email: string;

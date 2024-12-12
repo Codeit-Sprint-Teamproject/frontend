@@ -1,17 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { User, updateUser } from '../_lib/profile';
+import { updateUser } from '../_lib/profile';
 import { validateProfile } from '../_lib/profileSchema';
 import ImageIcon from '../_svg/ImageIcon';
 import { useModalStore } from '@/store/modal';
+import { User } from '@/types/user';
 import Image from 'next/image';
 
 type Props = { user: User; setUser: (user: User) => void };
 
 export default function ProfileModifyForm({ user, setUser }: Props) {
-  const [nickname, setNickname] = useState(user?.userName);
-  const [image, setImage] = useState(user?.profile);
+  const [nickname, setNickname] = useState(user?.user.userName);
+  const [image, setImage] = useState(user?.user.profile);
   const [file, setFile] = useState<File>();
   const [errors, setErrors] = useState<Record<string, string>>();
   const { closeModal } = useModalStore();
@@ -40,14 +41,13 @@ export default function ProfileModifyForm({ user, setUser }: Props) {
     }
     setErrors({});
     const formData = new FormData();
-    // 프로필 수정 임시 api여서 회사명으로 추가
     formData.append('userName', nickname);
     if (file) {
       formData.append('profile', file as File);
     }
     try {
-      const { user } = await updateUser(formData);
-      setUser(user);
+      const updated = await updateUser(formData);
+      setUser({ ...user, ...updated });
     } catch (error) {
       console.error(error);
     }
@@ -69,7 +69,7 @@ export default function ProfileModifyForm({ user, setUser }: Props) {
               alt='프로필'
             />
           ) : (
-            <ImageIcon />
+            <ImageIcon width={64} height={64} />
           )}
           <input
             type='file'

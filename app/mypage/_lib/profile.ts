@@ -1,4 +1,4 @@
-import { User } from '@/types/user';
+import { User, UserProfile } from '@/types/user';
 
 const token = 'token';
 export const getUser = async (): Promise<User> => {
@@ -13,7 +13,7 @@ export const getUser = async (): Promise<User> => {
   return res.json();
 };
 
-export const updateUser = async (formData: FormData) => {
+export const updateUser = async (formData: FormData): Promise<UserProfile> => {
   const res = await fetch('http://localhost:9090/api/auths/edit/user', {
     method: 'PUT',
     headers: {

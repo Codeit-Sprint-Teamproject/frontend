@@ -8,6 +8,7 @@ export type MeetingList = {
   endDate: Date;
   minCapacity: number;
   maxCapacity: number;
+  capacity: number;
   gatheringStatus: string;
   createdTime: Date;
   updatedTime: Date;

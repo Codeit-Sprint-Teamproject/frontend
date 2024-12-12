@@ -1,43 +1,11 @@
+import meetingList from '@/mocks/data/user/meetingList.json';
+import readingList from '@/mocks/data/user/readingList.json';
+import user from '@/mocks/data/user/user.json';
 import { HttpResponse, http } from 'msw';
-
-const User = {
-  userId: 1,
-  userName: '테스트1',
-  email: 'aa@test.com',
-  profile: '',
-};
-const meetingList = [
-  {
-    id: 1,
-    name: '[매일 30분 읽기] 한강 디에션셜 함께 읽어요!',
-    content: '★ 한강 작가의 장편소설, 단편소설, 시, 산문을 한 권으로 만난다!',
-    goalDays: 15,
-    readingTimeGoal: 30,
-    startDate: new Date(2024, 11, 10),
-    endDate: new Date(2024, 11, 24),
-    minCapacity: 5,
-    maxCapacity: 35,
-    capacity: 31,
-    gatheringStatus: 'RECRUITING',
-    createdTime: '2024-12-10T14:38:36.805101',
-    updatedTime: '2024-12-10T14:38:36.805101',
-    bookTitle: '한강',
-    bookImage: '/book.png',
-    publisher: '문학동네',
-    publishDate: '2023-06-01',
-    star: '9.8',
-  },
-];
-const readingList = [
-  {
-    bookProfile: '/book.png',
-    readingDate: '2024-12-11',
-  },
-];
 
 const getProfile = http.get('/api/profile', () => {
   return HttpResponse.json({
-    user: User,
+    user,
     gatheringList: meetingList,
     myReadingList: readingList,
   });
@@ -56,15 +24,15 @@ const updateProfile = http.put('/api/auths/edit/user', async ({ request }) => {
   const profile = formData.get('profile');
 
   if (userName) {
-    User.userName = userName as string;
+    user.userName = userName as string;
   }
   if (profile) {
-    User.profile = '/next.svg';
+    user.profile = '/next.svg';
   }
   return HttpResponse.json(
     {
       message: '프로필 수정 완료',
-      user: User,
+      user,
     },
     { status: 200 },
   );

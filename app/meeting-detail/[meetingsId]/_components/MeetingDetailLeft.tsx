@@ -1,4 +1,6 @@
-import { Heart, Share, User } from 'lucide-react';
+import HeartIcon from '@/public/HeartIcon';
+import ShareIcon from '@/public/ShareIcon';
+import UserIcon from '@/public/UserIcon';
 
 export default function MeetingDetailLeft() {
   return (
@@ -11,7 +13,7 @@ export default function MeetingDetailLeft() {
       </div>
       <div className='h-[36px] flex flex-row items-center mt-[15px]'>
         <div className='w-[2rem] h-[2rem] border-[0.925px] border-[#D1D5DB] bg-white rounded-full flex justify-center items-center'>
-          <User />
+          <UserIcon width='36px' height='36px' />
         </div>
         <div className='font-bold ml-[14px]'>닉네임</div>
       </div>
@@ -22,11 +24,11 @@ export default function MeetingDetailLeft() {
       </div>
       <div className='h-[24px] flex flex-row justify-center items-center gap-6 mt-[36px]'>
         <div className='flex flex-row gap-2'>
-          <Share />
+          <ShareIcon width='24px' height='24px' />
           <span>공유하기</span>
         </div>
         <div className='flex flex-row gap-2'>
-          <Heart />
+          <HeartIcon width='25px' height='25px' />
           <span>찜하기</span>
         </div>
       </div>

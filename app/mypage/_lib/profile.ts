@@ -26,3 +26,19 @@ export const updateUser = async (formData: FormData): Promise<UserProfile> => {
   }
   return res.json();
 };
+
+export const checkCurrentPassword = async (password: string) => {
+  const res = await fetch('http://localhost:9090/api/auths/password/check', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ password }),
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  return data;
+};

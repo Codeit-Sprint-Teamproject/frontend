@@ -43,6 +43,8 @@ const getProfile = http.get('/api/profile', () => {
   });
 });
 
+type PasswordCheckRequestBody = { password: string };
+
 const updateProfile = http.put('/api/auths/edit/user', async ({ request }) => {
   const formData = await request.formData();
   const token = request.headers.get('Authorization')?.split(' ')[1];
@@ -52,12 +54,12 @@ const updateProfile = http.put('/api/auths/edit/user', async ({ request }) => {
   }
   const userName = formData.get('userName');
   const profile = formData.get('profile');
+
   if (userName) {
     User.userName = userName as string;
   }
   if (profile) {
-    // 임시 이미지 설정
-    User.profile = '/heart.png';
+    User.profile = '/next.svg';
   }
   return HttpResponse.json(
     {
@@ -68,4 +70,28 @@ const updateProfile = http.put('/api/auths/edit/user', async ({ request }) => {
   );
 });
 
-export const myProfile = [getProfile, updateProfile];
+const checkPassword = http.post(
+  '/api/auths/password/check',
+  async ({ request }) => {
+    const { password } = (await request.json()) as PasswordCheckRequestBody;
+    const token = request.headers.get('Authorization')?.split(' ')[1];
+    if (password.length < 8) {
+      return HttpResponse.json(
+        { message: '비밀번호 유효성 검사 오류' },
+        { status: 400 },
+      );
+    }
+    if (token === 'token' && password === 'test123$') {
+      return HttpResponse.json(
+        { success: true, message: '비밀번호 확인 완료' },
+        { status: 200 },
+      );
+    }
+    return HttpResponse.json(
+      { message: '기존 비밀번호가 틀립니다.' },
+      { status: 401 },
+    );
+  },
+);
+
+export const myProfile = [getProfile, updateProfile, checkPassword];

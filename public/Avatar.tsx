@@ -1,9 +1,14 @@
-const Avatar = () => {
+interface AvartarProps {
+  width: string;
+  height: string;
+}
+
+const Avatar = ({ width, height }: AvartarProps) => {
   return (
     <>
       <svg
-        width='23'
-        height='23'
+        width={width}
+        height={height}
         viewBox='0 0 23 23'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'

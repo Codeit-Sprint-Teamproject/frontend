@@ -1,53 +1,73 @@
 'use client';
 
-import { useState } from 'react';
-import { User, updateUser } from '../_lib/profile';
-import { validateProfile } from '../_lib/profileSchema';
+import { Controller, useForm } from 'react-hook-form';
+import { checkCurrentPassword, updateUser } from '../_lib/profile';
+import { profileSchema } from '../_lib/profileSchema';
 import ImageIcon from '../_svg/ImageIcon';
 import { useModalStore } from '@/store/modal';
+import { User } from '@/types/user';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 
 type Props = { user: User; setUser: (user: User) => void };
+type FormValues = {
+  nickname: string;
+  image: string;
+  file?: File;
+  currentPassword?: string;
+  newPassword?: string;
+};
 
 export default function ProfileModifyForm({ user, setUser }: Props) {
-  const [nickname, setNickname] = useState(user?.userName);
-  const [image, setImage] = useState(user?.profile);
-  const [file, setFile] = useState<File>();
-  const [errors, setErrors] = useState<Record<string, string>>();
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    setError,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      nickname: user?.user.userName,
+      image: user?.user.profile,
+    },
+  });
   const { closeModal } = useModalStore();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, files } = e.target;
-    if (name === 'nickname') {
-      setNickname(value);
+  const handleFileChange =
+    (field: { onChange: (value: File) => void }) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (files && files[0]) {
+        field.onChange(files[0]);
+        setValue('file', files[0]);
+        const imageUrl = URL.createObjectURL(files[0]);
+        setValue('image', imageUrl);
+      }
+    };
+  const onSubmit = async (data: FormValues) => {
+    const { nickname, currentPassword, newPassword, file } = data;
+    if (newPassword && currentPassword) {
+      try {
+        await checkCurrentPassword(currentPassword);
+      } catch (error) {
+        setError('currentPassword', { message: (error as Error).message });
+        return;
+      }
     }
-    if (files && name === 'image') {
-      const file = files[0];
-      setFile(file);
-      setImage(URL.createObjectURL(file));
-    }
-  };
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const errors = validateProfile({
-      nickname,
-      image: file,
-    });
-    if (errors) {
-      setErrors(errors);
-      return;
-    }
-    setErrors({});
     const formData = new FormData();
-    // 프로필 수정 임시 api여서 회사명으로 추가
     formData.append('userName', nickname);
     if (file) {
-      formData.append('profile', file as File);
+      formData.append('file', file);
+    }
+    if (newPassword) {
+      formData.append('password', newPassword);
     }
     try {
-      const { user } = await updateUser(formData);
-      setUser(user);
+      const updated = await updateUser(formData);
+      setUser({ ...user, ...updated });
     } catch (error) {
       console.error(error);
     }
@@ -58,35 +78,57 @@ export default function ProfileModifyForm({ user, setUser }: Props) {
   return (
     <div className='text-black'>
       <h3 className='text-lg font-semibold mb-4'>프로필 수정하기</h3>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-col gap-3 mb-3'>
-          {image ? (
+          {watch('image') ? (
             <Image
-              src={image}
+              src={watch('image')}
               className='rounded-md'
               width={70}
               height={70}
               alt='프로필'
             />
           ) : (
-            <ImageIcon />
+            <ImageIcon width={64} height={64} />
           )}
-          <input
-            type='file'
-            name='image'
-            onChange={handleChange}
-            accept='image/*'
-          ></input>
-          {errors && <p>{errors?.image}</p>}
+          <Controller
+            name='file'
+            control={control}
+            render={({ field }) => (
+              <input
+                type='file'
+                accept='image/*'
+                onChange={handleFileChange(field)}
+              />
+            )}
+          />
+          {errors.file && <p className='text-red-500'>{errors.file.message}</p>}
           <p className='font-semibold'>닉네임</p>
           <input
             className='w-full h-11 border rounded-xl px-4 py-2'
-            type='text'
-            name='nickname'
-            value={nickname}
-            onChange={handleChange}
+            {...register('nickname')}
           />
-          {errors && <p>{errors?.nickname}</p>}
+          {errors.nickname && (
+            <p className='text-red-500'>{errors.nickname.message}</p>
+          )}
+          <p className='font-semibold'>현재 비밀번호</p>
+          <input
+            className='w-full h-11 border rounded-xl px-4 py-2'
+            type='password'
+            {...register('currentPassword')}
+          />
+          {errors.currentPassword && (
+            <p className='text-red-500'>{errors.currentPassword.message}</p>
+          )}
+          <p className='font-semibold'>새 비밀번호</p>
+          <input
+            className='w-full h-11 border rounded-xl px-4 py-2'
+            type='password'
+            {...register('newPassword')}
+          />
+          {errors.newPassword && (
+            <p className='text-red-500'>{errors.newPassword.message}</p>
+          )}
         </div>
         <div className='flex items-center gap-4 font-semibold'>
           <button

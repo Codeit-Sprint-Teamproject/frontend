@@ -17,20 +17,14 @@ export default function MyReadingCalendar() {
   const books = [
     {
       date: '2024-12-05',
-      bookCover:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjG17iALTrgmpEhD9eNsSfFsJNVMIgq5AgRg&s',
       title: 'Book 1',
     },
     {
       date: '2024-12-10',
-      bookCover:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjG17iALTrgmpEhD9eNsSfFsJNVMIgq5AgRg&s',
       title: 'Book 2',
     },
     {
       date: '2024-12-18',
-      bookCover:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjG17iALTrgmpEhD9eNsSfFsJNVMIgq5AgRg&s',
       title: 'Book 3',
     },
   ];
@@ -41,7 +35,7 @@ export default function MyReadingCalendar() {
     return data ? (
       <>
         <Image
-          src={data.bookCover}
+          src='/book.png'
           className='book-cover'
           alt={data.title}
           width={60}
@@ -52,7 +46,7 @@ export default function MyReadingCalendar() {
     ) : null;
   };
   return (
-    <div className='relative w-[600px]'>
+    <div className='relative w-[600px] px-[22px]'>
       <Calendar
         locale='ko'
         view='month'

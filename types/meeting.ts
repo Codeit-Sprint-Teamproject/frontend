@@ -1,6 +1,20 @@
-export type Meeting = {
+export type MeetingList = {
+  id: number;
   name: string;
-  gathering_date: Date;
-  end_date: Date;
+  content: number;
+  goalDays: number;
+  readingTimeGoal: number;
+  startDate: Date;
+  endDate: Date;
+  minCapacity: number;
+  maxCapacity: number;
   capacity: number;
+  gatheringStatus: string;
+  createdTime: Date;
+  updatedTime: Date;
+  bookTitle: string;
+  bookImage: string;
+  publisher: string;
+  publishDate: string;
+  star: number;
 };

@@ -22,6 +22,7 @@ export const FormInputField = ({
 }: FormInputFieldProps) => (
   <div>
     <Input
+      className='w-[380px] h-11 px-2.5 py-1.5'
       id={id}
       name={name}
       type={type}

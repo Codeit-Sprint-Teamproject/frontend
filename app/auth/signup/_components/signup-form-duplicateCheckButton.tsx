@@ -51,7 +51,7 @@ export const CheckDuplicateButton = ({
       <Button
         onClick={handleCheck}
         type='button'
-        className='px-2 py-1 bg-blue-500 text-white rounded'
+        className='px-2 py-1 bg-black text-white rounded'
       >
         중복 검사
       </Button>

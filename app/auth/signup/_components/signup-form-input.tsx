@@ -34,7 +34,7 @@ export const SignupFormInput = ({
     <div className='flex flex-col gap-[30px]'>
       <div>
         <p className='text-lg font-bold mb-3'>이메일</p>
-        <div className='flex items-center space-x-2'>
+        <div className='flex space-x-2'>
           <FormInputField
             id='email'
             name='email'
@@ -99,7 +99,7 @@ export const SignupFormInput = ({
       </div>
       <div>
         <p className='text-lg font-bold mb-3'>닉네임</p>
-        <div className='flex items-center space-x-2 mb-[30px]'>
+        <div className='flex space-x-2 mb-[30px]'>
           <FormInputField
             id='userName'
             name='userName'

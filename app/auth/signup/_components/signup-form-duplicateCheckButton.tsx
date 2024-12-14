@@ -36,7 +36,7 @@ export const CheckDuplicateButton = ({
     if (result.isDuplicate) {
       setError([result.message]);
       setStatusMessage(result.message);
-      setMessageColor('text-red-500');
+      setMessageColor('text-error');
       onFailure();
     } else {
       setError([]);
@@ -47,17 +47,15 @@ export const CheckDuplicateButton = ({
   };
 
   return (
-    <div>
+    <div className='flex flex-col gap-2'>
       <Button
         onClick={handleCheck}
         type='button'
-        className='px-2 py-1 bg-black text-white rounded'
+        className='w-20 px-2 py-1 bg-black text-white rounded'
       >
         중복 검사
       </Button>
-      {statusMessage && (
-        <p className={`mt-1 ${messageColor}`}>{statusMessage}</p>
-      )}
+      {statusMessage && <p className={` ${messageColor}`}>{statusMessage}</p>}
     </div>
   );
 };

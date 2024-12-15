@@ -21,7 +21,7 @@ const updateProfile = http.put('/api/auths/edit/user', async ({ request }) => {
     return HttpResponse.json({ message: '프로필 수정 실패' }, { status: 401 });
   }
   const userName = formData.get('userName');
-  const profile = formData.get('profile');
+  const profile = formData.get('file');
 
   if (userName) {
     user.userName = userName as string;

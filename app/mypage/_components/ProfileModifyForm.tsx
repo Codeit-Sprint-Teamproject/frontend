@@ -1,15 +1,14 @@
 'use client';
 
 import { Controller, useForm } from 'react-hook-form';
-import { checkCurrentPassword, updateUser } from '../_lib/profile';
+import { checkCurrentPassword } from '../_lib/profile';
 import { profileSchema } from '../_lib/profileSchema';
 import ImageIcon from '../_svg/ImageIcon';
+import { useProfileQuery } from '@/hooks/userProfileQuery';
 import { useModalStore } from '@/store/modal';
-import { User } from '@/types/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 
-type Props = { user: User; setUser: (user: User) => void };
 type FormValues = {
   nickname: string;
   image: string;
@@ -18,7 +17,8 @@ type FormValues = {
   newPassword?: string;
 };
 
-export default function ProfileModifyForm({ user, setUser }: Props) {
+export default function ProfileModifyForm() {
+  const { user, updateProfileMutate } = useProfileQuery();
   const {
     register,
     handleSubmit,
@@ -66,15 +66,13 @@ export default function ProfileModifyForm({ user, setUser }: Props) {
       formData.append('password', newPassword);
     }
     try {
-      const updated = await updateUser(formData);
-      setUser({ ...user, ...updated });
+      updateProfileMutate(formData);
     } catch (error) {
       console.error(error);
     }
     closeModal();
   };
 
-  if (!user) return <p>Loading...</p>;
   return (
     <div className='text-black'>
       <h3 className='text-lg font-semibold mb-4'>프로필 수정하기</h3>

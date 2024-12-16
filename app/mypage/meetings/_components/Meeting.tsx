@@ -1,7 +1,8 @@
-import ImageIcon from '../../_svg/ImageIcon';
-import MoreIcon from '../../_svg/MoreIcon';
+import Heart from '../_svg/Heart';
 import { useTabContext } from './TabContext';
 import { formatDateWithWeekday } from '@/app/_utils/dateFormatter';
+import ImageIcon from '@/app/mypage/_svg/ImageIcon';
+import MoreIcon from '@/app/mypage/_svg/MoreIcon';
 import { MyMeetingList } from '@/types/meeting';
 import Image from 'next/image';
 
@@ -14,7 +15,11 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
         <Image src={bookImage} width={132} height={200} alt='책 표지' />
       </div>
       <div className='w-3/4 text-sm'>
-        <h3 className='text-lg mb-4'>{name}</h3>
+        <div className={`${tab === 'bookmark' ? 'flex justify-between' : ''}`}>
+          <h3 className='text-lg mb-4'>{name}</h3>
+          {tab === 'bookmark' && <Heart />}
+        </div>
+
         <p className='text-sm mb-[2px]'>모임 기간 </p>
         <p className='mb-2'>
           {formatDateWithWeekday(startDate)} - {formatDateWithWeekday(endDate)}
@@ -38,7 +43,8 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
           </div>
           <p className='text-sm'>
             {currentCapacity}명과 함께{' '}
-            {tab === 'active' ? '읽는 중' : '읽었어요'}
+            {/* TODO (유진) 만든 모임에서도 완료한 모임 여부 판단 추가할 예정 */}
+            {tab === 'completed' ? '읽었어요' : '읽는 중'}
           </p>
         </div>
       </div>

@@ -8,7 +8,14 @@ import Pagination from './Pagination';
 import { useTabContext } from './TabContext';
 import { MyMeetingCount, MyMeetingList } from '@/types/meeting';
 
+type Tab = 'active' | 'completed' | 'created' | 'bookmark';
 const SIZE = 3;
+const countKeyMap: Record<Tab, keyof MyMeetingCount> = {
+  active: 'participatingCount',
+  completed: 'completedCount',
+  created: 'myCreatedCount',
+  bookmark: 'myWishedCount',
+};
 
 export default function MeetingList() {
   const [page, setPage] = useState(0);
@@ -32,8 +39,11 @@ export default function MeetingList() {
     enabled: !!tab,
   });
   const total =
-    queryClient.getQueryData<MyMeetingCount>(['mypage', 'meetings', 'counts'])
-      ?.participatingCount || 0;
+    queryClient.getQueryData<MyMeetingCount>([
+      'mypage',
+      'meetings',
+      'counts',
+    ])?.[countKeyMap[tab]] || 0;
 
   if (isLoading) return <p>Loading...</p>;
   if (!meetings?.length) return <p>모임이 없습니다.</p>;

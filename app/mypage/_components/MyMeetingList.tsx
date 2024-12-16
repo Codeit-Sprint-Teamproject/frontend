@@ -32,7 +32,7 @@ export default function MyMeetingList({ meetingList = [] }: Props) {
         modules={[Navigation, Pagination]}
       >
         {meetingList?.map(
-          ({ id, name, startDate, endDate, bookImage, capacity }) => (
+          ({ id, name, startDate, endDate, bookImage, currentCapacity }) => (
             <SwiperSlide key={id}>
               <div className='flex gap-5 w-[575px] h-[201x] bg-white p-4 rounded-sm border border-[rgba(0, 0, 0, 0.10)]'>
                 <Image src={bookImage} width={132} height={200} alt='책 표지' />
@@ -59,7 +59,9 @@ export default function MyMeetingList({ meetingList = [] }: Props) {
                         <MoreIcon width={25} height={25} />
                       </div>
                     </div>
-                    <p className='text-sm'>{capacity}명과 함께 읽는 중</p>
+                    <p className='text-sm'>
+                      {currentCapacity}명과 함께 읽는 중
+                    </p>
                   </div>
                 </div>
               </div>

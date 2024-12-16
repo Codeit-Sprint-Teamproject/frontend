@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { DefaultError, useQuery } from '@tanstack/react-query';
 import {
   getActiveMeetings,
+  getBookmarkedMeetings,
   getCompletedMeetings,
+  getCreatedMeetings,
   getMeetingCounts,
 } from '../_lib/mymeetings';
 import Meeting from './Meeting';
@@ -31,6 +33,10 @@ export default function MeetingList() {
         return getActiveMeetings(page, size);
       case 'completed':
         return getCompletedMeetings(page, size);
+      case 'created':
+        return getCreatedMeetings(page, size);
+      case 'bookmark':
+        return getBookmarkedMeetings(page, size);
       default:
         throw new Error('Invalid Tab');
     }

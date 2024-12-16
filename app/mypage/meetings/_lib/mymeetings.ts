@@ -12,9 +12,9 @@ export const getActiveMeetings = async (page: number, size: number) => {
   throw new Error(`Failed fetch active meetings ${res.code}-${res.message}`);
 };
 
-export const getCompletedMeetings = async () => {
+export const getCompletedMeetings = async (page: number, size: number) => {
   const res = await fetchAPIClient(
-    '/api/gatheringSearch/participating?page=0&size=3&gatheringStatus=COMPLETED',
+    `/api/gatheringSearch/participating?page=${page}&size=${size}&gatheringStatus=COMPLETED`,
     'GET',
   );
   if (res.code === 'SUCCESS') {

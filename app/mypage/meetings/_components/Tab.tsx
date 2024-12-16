@@ -10,7 +10,7 @@ export default function Tab() {
     queryKey: ['mypage', 'meetings', 'counts'],
     queryFn: getMeetingCounts,
   });
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return null;
   const { participatingCount, completedCount, myCreatedCount, myWishedCount } =
     meetingCounts!;
 
@@ -20,9 +20,9 @@ export default function Tab() {
       label: '참여 중인 모임',
       count: participatingCount || 0,
     },
-    { value: 'completed', label: '완료한 모임', count: completedCount || 0 },
-    { value: 'created', label: '내가 만든 모임', count: myCreatedCount || 0 },
-    { value: 'bookmark', label: '찜한 모임', count: myWishedCount || 0 },
+    { value: 'completed', label: '완료한 모임', count: completedCount },
+    { value: 'created', label: '내가 만든 모임', count: myCreatedCount },
+    { value: 'bookmark', label: '찜한 모임', count: myWishedCount },
   ] as const;
 
   return (

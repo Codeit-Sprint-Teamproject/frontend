@@ -29,3 +29,9 @@ export type MyMeetingList = {
   readingTimeGoal: number;
   currentCapacity: number;
 };
+export type MyMeetingCount = {
+  participatingCount: number;
+  completedCount: number;
+  myCreatedCount: number;
+  myWishedCount: number;
+};

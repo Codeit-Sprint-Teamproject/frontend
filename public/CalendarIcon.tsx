@@ -1,10 +1,15 @@
-const calendarIcon = () => {
+interface CalendarIconProps{
+  width: number;
+  height: number;
+}
+
+const CalendarIcon = ({width, height}:CalendarIconProps) => {
   return (
     <>
       <svg
         xmlns='http://www.w3.org/2000/svg'
-        width='24'
-        height='24'
+        width={`${width}px`}
+        height={`${height}px`}
         viewBox='0 0 24 24'
         fill='none'
       >
@@ -40,4 +45,4 @@ const calendarIcon = () => {
     </>
   );
 };
-export default calendarIcon;
+export default CalendarIcon;

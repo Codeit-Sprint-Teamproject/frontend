@@ -1,8 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getActiveMeetings, getCompletedMeetings } from '../_lib/mymeetings';
+import { DefaultError, useQuery } from '@tanstack/react-query';
+import {
+  getActiveMeetings,
+  getCompletedMeetings,
+  getMeetingCounts,
+} from '../_lib/mymeetings';
 import Meeting from './Meeting';
 import Pagination from './Pagination';
 import { useTabContext } from './TabContext';
@@ -20,7 +24,6 @@ const countKeyMap: Record<Tab, keyof MyMeetingCount> = {
 export default function MeetingList() {
   const [page, setPage] = useState(0);
   const { tab } = useTabContext();
-  const queryClient = useQueryClient();
 
   const getMeetings = (page: number, size: number) => {
     switch (tab) {
@@ -32,22 +35,26 @@ export default function MeetingList() {
         throw new Error('Invalid Tab');
     }
   };
-
-  const { isLoading, data: meetings } = useQuery<MyMeetingList[]>({
+  const { data: total, isLoading: isCountLoading } = useQuery<
+    MyMeetingCount,
+    DefaultError,
+    number
+  >({
+    queryKey: ['mypage', 'meetings', tab, 'counts'],
+    queryFn: getMeetingCounts,
+    select: (cnt) => cnt[countKeyMap[tab]] || 0,
+  });
+  const { isLoading: isMeetingsLoading, data: meetings } = useQuery<
+    MyMeetingList[]
+  >({
     queryKey: ['mypage', 'meetings', tab, page],
     queryFn: () => getMeetings(page, SIZE),
     enabled: !!tab,
   });
-  const total =
-    queryClient.getQueryData<MyMeetingCount>([
-      'mypage',
-      'meetings',
-      'counts',
-    ])?.[countKeyMap[tab]] || 0;
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isCountLoading || isMeetingsLoading) return <p>Loading...</p>;
   if (!meetings?.length) return <p>모임이 없습니다.</p>;
-  const totalPage = Math.ceil(total / SIZE);
+  const totalPage = Math.ceil((total as number) / SIZE);
 
   return (
     <div className='relative min-h-[900px]'>

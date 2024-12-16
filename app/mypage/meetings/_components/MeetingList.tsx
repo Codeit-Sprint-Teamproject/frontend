@@ -2,17 +2,12 @@
 
 import { useState } from 'react';
 import { DefaultError, useQuery } from '@tanstack/react-query';
-import {
-  getActiveMeetings,
-  getBookmarkedMeetings,
-  getCompletedMeetings,
-  getCreatedMeetings,
-  getMeetingCounts,
-} from '../_lib/mymeetings';
+import { getMeetingCounts } from '../_lib/mymeetings';
 import Meeting from './Meeting';
 import Pagination from './Pagination';
 import { useTabContext } from './TabContext';
-import { MyMeetingCount, MyMeetingList } from '@/types/meeting';
+import { useMyMeetingQuery } from '@/hooks/useMyMeetingQuery';
+import { MyMeetingCount } from '@/types/meeting';
 
 type Tab = 'active' | 'completed' | 'created' | 'bookmark';
 const SIZE = 3;
@@ -27,20 +22,6 @@ export default function MeetingList() {
   const [page, setPage] = useState(0);
   const { tab } = useTabContext();
 
-  const getMeetings = (page: number, size: number) => {
-    switch (tab) {
-      case 'active':
-        return getActiveMeetings(page, size);
-      case 'completed':
-        return getCompletedMeetings(page, size);
-      case 'created':
-        return getCreatedMeetings(page, size);
-      case 'bookmark':
-        return getBookmarkedMeetings(page, size);
-      default:
-        throw new Error('Invalid Tab');
-    }
-  };
   const { data: total, isLoading: isCountLoading } = useQuery<
     MyMeetingCount,
     DefaultError,
@@ -50,13 +31,7 @@ export default function MeetingList() {
     queryFn: getMeetingCounts,
     select: (cnt) => cnt[countKeyMap[tab]] || 0,
   });
-  const { isLoading: isMeetingsLoading, data: meetings } = useQuery<
-    MyMeetingList[]
-  >({
-    queryKey: ['mypage', 'meetings', tab, page],
-    queryFn: () => getMeetings(page, SIZE),
-    enabled: !!tab,
-  });
+  const { isMeetingsLoading, meetings } = useMyMeetingQuery(tab, page);
 
   if (isCountLoading || isMeetingsLoading) return <p>Loading...</p>;
   if (!meetings?.length) return <p>모임이 없습니다.</p>;

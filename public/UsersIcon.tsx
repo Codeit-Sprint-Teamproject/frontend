@@ -1,54 +1,18 @@
-interface UserIconProps {
-  width: string;
-  height: string;
+interface UsersIconProps {
+  width: number;
+  height: number;
 }
 
-const UsersIcon = ({ width, height }: UserIconProps) => {
+const UsersIcon = ({width, height}:UsersIconProps) => {
   return (
     <>
-      <svg
-        width={width}
-        height={height}
-        viewBox='0 0 25 25'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-      >
-        <g id='users'>
-          <path
-            id='Vector'
-            d='M17.7079 21.877V19.7936C17.7079 18.6886 17.2689 17.6287 16.4875 16.8473C15.7061 16.0659 14.6463 15.627 13.5413 15.627H5.20793C4.10286 15.627 3.04305 16.0659 2.26165 16.8473C1.48025 17.6287 1.04126 18.6886 1.04126 19.7936V21.877'
-            stroke='black'
-            stroke-width='2.08333'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-          />
-          <path
-            id='Vector_2'
-            d='M9.37565 11.4574C11.6768 11.4574 13.5423 9.59188 13.5423 7.29069C13.5423 4.9895 11.6768 3.12402 9.37565 3.12402C7.07446 3.12402 5.20898 4.9895 5.20898 7.29069C5.20898 9.59188 7.07446 11.4574 9.37565 11.4574Z'
-            stroke='black'
-            stroke-width='2.08333'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-          />
-          <path
-            id='Vector_3'
-            d='M23.959 21.8734V19.79C23.9583 18.8668 23.651 17.97 23.0854 17.2404C22.5198 16.5107 21.7279 15.9896 20.834 15.7588'
-            stroke='black'
-            stroke-width='2.08333'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-          />
-          <path
-            id='Vector_4'
-            d='M16.6663 3.2627C17.5625 3.49218 18.3569 4.01343 18.9242 4.74427C19.4915 5.47511 19.7994 6.37398 19.7994 7.29915C19.7994 8.22433 19.4915 9.12319 18.9242 9.85404C18.3569 10.5849 17.5625 11.1061 16.6663 11.3356'
-            stroke='black'
-            stroke-width='2.08333'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-          />
-        </g>
+      <svg width={`${width}px`} height={`${height}px`} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11.3327 14V12.6667C11.3327 11.9594 11.0517 11.2811 10.5516 10.781C10.0515 10.281 9.37326 10 8.66602 10H3.33268C2.62544 10 1.94716 10.281 1.44706 10.781C0.946967 11.2811 0.666016 11.9594 0.666016 12.6667V14" stroke="black" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M5.99967 7.33333C7.47243 7.33333 8.66634 6.13943 8.66634 4.66667C8.66634 3.19391 7.47243 2 5.99967 2C4.52692 2 3.33301 3.19391 3.33301 4.66667C3.33301 6.13943 4.52692 7.33333 5.99967 7.33333Z" stroke="black" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M15.333 13.9993V12.6659C15.3326 12.0751 15.1359 11.5011 14.7739 11.0341C14.4119 10.5672 13.9051 10.2336 13.333 10.0859" stroke="black" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M10.666 2.08984C11.2396 2.23671 11.748 2.57031 12.1111 3.03805C12.4742 3.50579 12.6712 4.08106 12.6712 4.67318C12.6712 5.26529 12.4742 5.84056 12.1111 6.3083C11.748 6.77604 11.2396 7.10964 10.666 7.25651" stroke="black" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     </>
   );
-};
-export default UsersIcon;
+}
+export default UsersIcon

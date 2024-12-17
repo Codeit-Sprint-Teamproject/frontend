@@ -18,3 +18,12 @@ export const formatDateTime = (date: Date): string => {
 export const safeFormatDateTime = (date: Date | null): string | null => {
   return date ? formatDateTime(date) : null;
 };
+export const formatDateWithWeekday = (date: Date): string => {
+  return new Date(date)
+    .toLocaleString('ko', {
+      month: '2-digit',
+      day: '2-digit',
+      weekday: 'short',
+    })
+    .replace(/(.*?\..*?)\./, '$1');
+};

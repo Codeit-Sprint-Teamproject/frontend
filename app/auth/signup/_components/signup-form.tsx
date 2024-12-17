@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useFormState } from 'react-dom';
 import { userSignup } from '../_lib/signup';
+import TermsAgreement from './TermsAgreement';
 import { SignupFormInput } from './signup-form-input';
 import { FormButton } from '@/app/auth/_components/form-button';
 
@@ -11,8 +12,9 @@ export const SignupForm = () => {
   const [state, dispatch] = useFormState(userSignup, initialState);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isUserNameValid, setIsUserNameValid] = useState(false);
+  const [isTermsAgreed, setIsTermsAgreed] = useState(false);
 
-  const isFormValid = isEmailValid && isUserNameValid;
+  const isFormValid = isEmailValid && isUserNameValid && isTermsAgreed;
 
   return (
     <form action={dispatch}>
@@ -23,7 +25,13 @@ export const SignupForm = () => {
           setIsUserNameValid={setIsUserNameValid}
         />
       </div>
-      <FormButton disabled={!isFormValid}>회원가입</FormButton>
+      <TermsAgreement setIsTermsAgreed={setIsTermsAgreed} />
+      <FormButton
+        className='w-full h-12 p-2.5 font-bold bg-black rounded'
+        disabled={!isFormValid}
+      >
+        가입하기
+      </FormButton>
       {state?.message}
     </form>
   );

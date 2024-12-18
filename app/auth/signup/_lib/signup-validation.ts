@@ -7,7 +7,7 @@ export const validateSignupData = (formData: FormData) => {
       email: z.string().email({ message: '올바른 이메일을 입력해 주세요.' }),
       password: z
         .string()
-        .min(8, { message: '비밀번호는 8자 이상이어야 합니다.' })
+        .min(10, { message: '비밀번호는 10자 이상이어야 합니다.' })
         .refine((val) => /[a-z]/.test(val), {
           message: '비밀번호에는 최소 하나의 소문자가 포함되어야 합니다.',
         })

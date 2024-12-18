@@ -18,6 +18,7 @@ import SearchIcon from '@/public/SearchIcon';
 import UsersIcon from '@/public/UsersIcon';
 import { format } from 'date-fns';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function MainPageBody() {
   const [meetingsData, setMeetingsData] = useState<IMeeting[]>([]);
@@ -220,54 +221,53 @@ export default function MainPageBody() {
           </div>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
             {filteredMeetings.map((meeting) => (
-              <div
-                key={meeting.id}
-                className='h-[298px] border rounded-lg shadow-md hover:shadow-lg bg-white flex flex-col'
-              >
-                <div className='w-full h-[148px] flex justify-center items-center bg-[#D9D9D9]'>
-                  <Image
-                    src={meeting.thumbnail}
-                    alt='meeting-thumbnail-image'
-                    width={360}
-                    height={148}
-                    style={{ width: 360, height: 148 }}
-                  />
-                </div>
-                <div className='flex flex-row p-4'>
-                  <div className='w-[87.8px] h-[132px] -mt-10 mr-3 flex justify-center items-center'>
+              <Link href={`/meeting-detail/${meeting.id}}`} key={meeting.id}>
+                <div className='h-[298px] border rounded-lg shadow-md hover:shadow-lg bg-white flex flex-col'>
+                  <div className='w-full h-[148px] flex justify-center items-center bg-[#D9D9D9]'>
                     <Image
-                      src={meeting.bookImage}
-                      alt='meeting-bookcover-image'
+                      src={meeting.thumbnail}
+                      alt='meeting-thumbnail-image'
                       width={360}
                       height={148}
                       style={{ width: 360, height: 148 }}
                     />
                   </div>
-                  <div>
-                    <h3 className='text-lg font-semibold mb-3'>
-                      {meeting.name}
-                    </h3>
-                    <div className='flex flex-row gap-[2px]'>
-                      <UsersIcon width={16} height={16} />
-                      <p className='text-sm text-gray-600'>
-                        {meeting.currentCapacity}명 / {meeting.maxCapacity}명
-                      </p>
+                  <div className='flex flex-row p-4'>
+                    <div className='w-[87.8px] h-[132px] -mt-10 mr-3 flex justify-center items-center'>
+                      <Image
+                        src={meeting.bookImage}
+                        alt='meeting-bookcover-image'
+                        width={360}
+                        height={148}
+                        style={{ width: 360, height: 148 }}
+                      />
                     </div>
-                    <div className='flex flex-row gap-[2px]'>
-                      <CalendarDotIcon width={16} height={16} />
-                      <p className='text-sm text-gray-600'>
-                        {meeting.gatheringWeek / 7}주 동안
-                      </p>
-                    </div>
-                    <div className='flex flex-row gap-[2px]'>
-                      <BookIcon width={24} height={18} />
-                      <p className='text-sm text-gray-600'>
-                        매일 {meeting.readingTimeGoal}분
-                      </p>
+                    <div>
+                      <h3 className='text-lg font-semibold mb-3'>
+                        {meeting.name}
+                      </h3>
+                      <div className='flex flex-row gap-[2px]'>
+                        <UsersIcon width={16} height={16} />
+                        <p className='text-sm text-gray-600'>
+                          {meeting.currentCapacity}명 / {meeting.maxCapacity}명
+                        </p>
+                      </div>
+                      <div className='flex flex-row gap-[2px]'>
+                        <CalendarDotIcon width={16} height={16} />
+                        <p className='text-sm text-gray-600'>
+                          {meeting.gatheringWeek / 7}주 동안
+                        </p>
+                      </div>
+                      <div className='flex flex-row gap-[2px]'>
+                        <BookIcon width={24} height={18} />
+                        <p className='text-sm text-gray-600'>
+                          매일 {meeting.readingTimeGoal}분
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

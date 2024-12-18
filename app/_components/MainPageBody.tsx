@@ -19,6 +19,7 @@ import UsersIcon from '@/public/UsersIcon';
 import { format } from 'date-fns';
 import Image from 'next/image';
 import Link from 'next/link';
+import Link from 'next/link';
 
 export default function MainPageBody() {
   const [meetingsData, setMeetingsData] = useState<IMeeting[]>([]);
@@ -221,7 +222,7 @@ export default function MainPageBody() {
           </div>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
             {filteredMeetings.map((meeting) => (
-              <Link href={`/meeting-detail/${meeting.id}`} key={meeting.id}>
+              <Link href={`/meeting-detail/${meeting.id}}`} key={meeting.id}>
                 <div className='h-[298px] border rounded-lg shadow-md hover:shadow-lg bg-white flex flex-col'>
                   <div className='w-full h-[148px] flex justify-center items-center bg-[#D9D9D9]'>
                     <Image

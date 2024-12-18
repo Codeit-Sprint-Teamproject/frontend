@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import EyeIcon from '../../_svg/EyeIcon';
+import EyeIconClosed from '../../_svg/EyeIconClosed';
 import { CheckDuplicateButton } from './signup-form-duplicateCheckButton';
 import { FormInputField } from '@/app/auth/_components/form-input-field';
 
@@ -34,7 +35,7 @@ export const SignupFormInput = ({
     <div className='flex flex-col gap-[30px]'>
       <div>
         <p className='text-lg font-bold mb-3'>이메일</p>
-        <div className='flex space-x-2'>
+        <div className='flex relative'>
           <FormInputField
             id='email'
             name='email'
@@ -65,13 +66,19 @@ export const SignupFormInput = ({
             disabled={pending}
           />
           <button
-            className='absolute top-3 right-2.5'
+            className='absolute top-[10px] right-4'
             onClick={togglePasswordVisibility}
             type='button'
           >
-            <EyeIcon
-              className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
-            />
+            {showPassword ? (
+              <EyeIcon
+                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
+              />
+            ) : (
+              <EyeIconClosed
+                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
+              />
+            )}
           </button>
         </div>
       </div>
@@ -87,19 +94,25 @@ export const SignupFormInput = ({
             disabled={pending}
           />
           <button
-            className='absolute top-3 right-2.5'
+            className='absolute top-[10px] right-4'
             onClick={togglePasswordVisibility}
             type='button'
           >
-            <EyeIcon
-              className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
-            />
+            {showPassword ? (
+              <EyeIcon
+                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
+              />
+            ) : (
+              <EyeIconClosed
+                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
+              />
+            )}
           </button>
         </div>
       </div>
       <div>
         <p className='text-lg font-bold mb-3'>닉네임</p>
-        <div className='flex space-x-2 mb-[30px]'>
+        <div className='flex space-x-2 mb-[30px] relative items-center'>
           <FormInputField
             id='userName'
             name='userName'

@@ -17,7 +17,7 @@ export const SignupForm = () => {
   const isFormValid = isEmailValid && isUserNameValid && isTermsAgreed;
 
   return (
-    <form action={dispatch}>
+    <form action={dispatch} className='max-w-[380px]'>
       <div className='flex flex-col space-y-2'>
         <SignupFormInput
           errors={state?.errors}
@@ -26,13 +26,13 @@ export const SignupForm = () => {
         />
       </div>
       <TermsAgreement setIsTermsAgreed={setIsTermsAgreed} />
+      {state?.message}
       <FormButton
-        className='w-full h-12 p-2.5 font-bold bg-black rounded'
+        className='w-full h-12 p-2.5 font-bold bg-black rounded mb-10'
         disabled={!isFormValid}
       >
         가입하기
       </FormButton>
-      {state?.message}
     </form>
   );
 };

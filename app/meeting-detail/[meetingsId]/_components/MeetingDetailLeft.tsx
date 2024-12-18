@@ -13,7 +13,7 @@ export default function MeetingDetailLeft() {
       </div>
       <div className='h-[36px] flex flex-row items-center mt-[15px]'>
         <div className='w-[2rem] h-[2rem] border-[0.925px] border-[#D1D5DB] bg-white rounded-full flex justify-center items-center'>
-          <UserIcon width='36px' height='36px' />
+          <UserIcon width={36} height={36} />
         </div>
         <div className='font-bold ml-[14px]'>닉네임</div>
       </div>
@@ -24,11 +24,11 @@ export default function MeetingDetailLeft() {
       </div>
       <div className='h-[24px] flex flex-row justify-center items-center gap-6 mt-[36px]'>
         <div className='flex flex-row gap-2'>
-          <ShareIcon width='24px' height='24px' />
+          <ShareIcon width={24} height={24} />
           <span>공유하기</span>
         </div>
         <div className='flex flex-row gap-2'>
-          <HeartIcon width='25px' height='25px' />
+          <HeartIcon width={25} height={25} />
           <span>찜하기</span>
         </div>
       </div>

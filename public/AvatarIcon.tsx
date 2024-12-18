@@ -1,14 +1,14 @@
 interface AvartarProps {
-  width: string;
-  height: string;
+  width: number;
+  height: number;
 }
 
 const Avatar = ({ width, height }: AvartarProps) => {
   return (
     <>
       <svg
-        width={width}
-        height={height}
+        width={`${width}px`}
+        height={`${height}px`}
         viewBox='0 0 23 23'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'

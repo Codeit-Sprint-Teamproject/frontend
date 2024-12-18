@@ -12,8 +12,8 @@ import { Switch } from '@/components/ui/switch';
 import BookIcon from '@/public/BookIcon';
 import CalendarDotIcon from '@/public/CalendarDotIcon';
 import CalendarIcon from '@/public/CalendarIcon';
-import ChevronDown from '@/public/ChevronDown';
-import RotateCw from '@/public/RotateCw';
+import ChevronDownIcon from '@/public/ChevronDownIcon';
+import RotateCwIcon from '@/public/RotateCwIcon';
 import SearchIcon from '@/public/SearchIcon';
 import UsersIcon from '@/public/UsersIcon';
 import { format } from 'date-fns';
@@ -145,7 +145,7 @@ export default function MainPageBody() {
                 onClick={resetFilters}
               >
                 초기화
-                <RotateCw width={24} height={24} />
+                <RotateCwIcon width={24} height={24} />
               </div>
             )}
             <div className='bg-gray-300 py-[5px] px-[10px] rounded-[30px] hover:bg-gray-400 duration-150 ml-2 flex flex-row gap-2 items-center font-bold'>
@@ -205,7 +205,7 @@ export default function MainPageBody() {
                 items={['10분', '10분 ~ 30분', '30분 ~ 1시간', '1시간 이상']}
                 onSelect={(value) => handleFilterChange('targetTime', value)}
               />
-              <ChevronDown width={24} height={24} />
+              <ChevronDownIcon width={24} height={24} />
             </div>
             <div className='py-[5px] px-[10px] flex items-center ml-2 gap-2'>
               <Label htmlFor='recruiting-only'>모집중만 보기</Label>

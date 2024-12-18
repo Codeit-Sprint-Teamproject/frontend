@@ -1,14 +1,14 @@
 interface starFillProps {
-  width: string;
-  height: string;
+  width: number;
+  height: number;
 }
 
 const StarFill = ({ width, height }: starFillProps) => {
   return (
     <>
       <svg
-        width={width}
-        height={height}
+        width={`${width}px`}
+        height={`${height}px`}
         viewBox='0 0 37 36'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'

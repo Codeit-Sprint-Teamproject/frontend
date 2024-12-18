@@ -1,5 +1,5 @@
 import BookInfo from './BookInfo';
-import BookOpenIcon from '@/public/BookOpenIcon';
+import BookIcon from '@/public/BookIcon';
 import CalendarDotIcon from '@/public/CalendarDotIcon';
 import UsersIcon from '@/public/UsersIcon';
 
@@ -22,11 +22,11 @@ export default function MeetingDetailRight() {
       </div>
       {/* 모임 규칙 */}
       <div className='grid grid-cols-[1fr_2fr] w-[30%] gap-3'>
-        <UsersIcon width='25px' height='25px' />
+        <UsersIcon width={25} height={25} />
         <div>참여 인원</div>
-        <BookOpenIcon width='25px' height='25px' />
+        <BookIcon width={25} height={25} />
         <div>독서 시간</div>
-        <CalendarDotIcon width='25px' height='25px' />
+        <CalendarDotIcon width={25} height={25} />
         <div>독서 기간</div>
       </div>
       {/* 모임 시작, 종료일 */}

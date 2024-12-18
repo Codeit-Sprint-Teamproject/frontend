@@ -1,14 +1,14 @@
 interface ShareIconProps {
-  width: string;
-  height: string;
+  width: number;
+  height: number;
 }
 
 const ShareIcon = ({ width, height }: ShareIconProps) => {
   return (
     <>
       <svg
-        width={width}
-        height={height}
+        width={`${width}px`}
+        height={`${height}px`}
         viewBox='0 0 25 24'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'

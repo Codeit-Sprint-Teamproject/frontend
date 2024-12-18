@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import BookInfo from './BookInfo';
-import BookOpenIcon from '@/public/BookOpenIcon';
-import ChevronDown from '@/public/ChevronDownIcon';
+import BookIcon from '@/public/BookIcon';
+import ChevronDownIcon from '@/public/ChevronDownIcon';
 import UserIcon from '@/public/UserIcon';
 
 const bookTitle = '디 에센셜: 한강(무선 보급판)';
@@ -79,7 +79,7 @@ export default function MeetingInfo() {
               className='cursor-pointer flex flex-row justify-end'
             >
               <span>접기</span>
-              <ChevronDown width='24px' height='24px' />
+              <ChevronDownIcon width={24} height={24} />
             </div>
           ) : (
             <div
@@ -105,7 +105,7 @@ export default function MeetingInfo() {
             <div className='mt-[10px] py-[16px] px-[12px] gap-[7px] flex flex-col bg-[#F8F8F8] text-[18px]'>
               <div className='flex flex-row items-center justify-start gap-[6px] text-[14px] text-gray-400'>
                 <div className='flex flex-row py-[2px] px-[6px] rounded-[2px] bg-[#E0E0E0] gap-[4px] w-[45px] items-center justify-center'>
-                  <BookOpenIcon width='14px' height='14px' />
+                  <BookIcon width={14} height={14} />
                   <span className=''>책</span>
                 </div>
                 <span>{bookTitle}</span>
@@ -135,7 +135,7 @@ export default function MeetingInfo() {
             <span className='font-bold'>모임장</span>을 소개할게요
           </h3>
           <div className='mt-[40px] flex flex-row justify-start items-center gap-[20px]'>
-            <UserIcon width='60px' height='60px' />
+            <UserIcon width={60} height={60} />
             <h3 className='text-[24px]'>{meetingLeader}</h3>
           </div>
           <div className='mt-[36px] flex flex-col text-[18px]'>

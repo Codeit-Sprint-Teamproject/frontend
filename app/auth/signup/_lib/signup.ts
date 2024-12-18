@@ -32,16 +32,7 @@ export async function userSignup(prevState: State, formData: FormData) {
     password,
   });
 
-  if (!response.success) {
-    if (response.message === 'Duplicate email') {
-      return {
-        errors: {
-          email: ['이메일이 이미 존재합니다.'],
-        },
-        message: '이메일 중복',
-      };
-    }
-
+  if (response.status !== 200) {
     return {
       message: `회원가입 실패: ${response.message}`,
     };

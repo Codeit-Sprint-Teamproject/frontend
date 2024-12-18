@@ -1,7 +1,7 @@
 import { Progress } from '@/components/ui/progress';
-import Avatar from '@/public/Avatar';
-import StarBlank from '@/public/StarBlank';
-import StarFill from '@/public/StarFill';
+import AvatarIcon from '@/public/AvatarIcon';
+import StarBlankIcon from '@/public/StarBlankIcon';
+import StarFillIcon from '@/public/StarFillIcon';
 
 export default function MeetingReviews() {
   /* (희원) 임시 값 사용 -> 데이터 api 받아올 예정 */
@@ -53,11 +53,11 @@ export default function MeetingReviews() {
             <span className='text-[54px] font-bold'>4.2</span>
             <div className='flex flex-row'>
               {Array.from({ length: Math.floor(starScore) }).map((_, index) => (
-                <StarFill key={index} width='36px' height='36px' />
+                <StarFillIcon key={index} width={36} height={36} />
               ))}
               {Array.from({ length: 5 - Math.floor(starScore) }).map(
                 (_, index) => (
-                  <StarBlank key={index} width='36px' height='36px' />
+                  <StarBlankIcon key={index} width={36} height={36} />
                 ),
               )}
             </div>
@@ -93,19 +93,19 @@ export default function MeetingReviews() {
                   className='p-[20px] h-[195px] border-b-2 border-gray-100'
                 >
                   <div className='flex flex-row items-center'>
-                    <Avatar width='24px' height='24px' />
+                    <AvatarIcon width={24} height={24} />
                     <span className='ml-[4px] mr-[24px]'>
                       {reviewData.userName}
                     </span>
                     {Array.from({
                       length: reviewData.starScore,
                     }).map((__, index) => (
-                      <StarFill key={index} width='16px' height='16px' />
+                      <StarFillIcon key={index} width={16} height={16} />
                     ))}
                     {Array.from({
                       length: 5 - reviewData.starScore,
                     }).map((__, index) => (
-                      <StarBlank key={index} width='16px' height='16px' />
+                      <StarBlankIcon key={index} width={16} height={16} />
                     ))}
                   </div>
                   <div className='mt-[10px] flex flex-col'>

@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import Calendar from 'react-calendar';
-import NextIcon from '../_svg/NextIcon';
-import PrevIcon from '../_svg/PrevIcon';
 import './CustomReadingCalendar.css';
+import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
+import SlidePrevIcon from '@/components/common/icons/SlidePrevIcon';
 import { format, isToday } from 'date-fns';
 import Image from 'next/image';
 
@@ -52,8 +52,8 @@ export default function MyReadingCalendar() {
         view='month'
         formatMonthYear={(locale, date) => format(date, 'yyyy년 M월')}
         formatDay={(locale, date) => format(date, 'd')}
-        prevLabel={<PrevIcon />}
-        nextLabel={<NextIcon />}
+        prevLabel={<SlidePrevIcon className='w-6 h-6' />}
+        nextLabel={<SlideNextIcon className='w-6 h-6' />}
         prev2Label={null}
         next2Label={null}
         calendarType='hebrew'

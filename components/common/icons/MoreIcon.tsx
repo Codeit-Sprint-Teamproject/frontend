@@ -1,10 +1,7 @@
-type Props = { width: number; height: number };
-
-export default function MoreIcon({ width, height }: Props) {
+export default function MoreIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width={width}
-      height={height}
+      {...props}
       viewBox='0 0 25 25'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

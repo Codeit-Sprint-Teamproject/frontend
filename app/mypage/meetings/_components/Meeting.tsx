@@ -1,8 +1,8 @@
 import Heart from '../_svg/Heart';
 import { useTabContext } from './TabContext';
 import { formatDateWithWeekday } from '@/app/_utils/dateFormatter';
-import ImageIcon from '@/app/mypage/_svg/ImageIcon';
-import MoreIcon from '@/app/mypage/_svg/MoreIcon';
+import Avatar from '@/components/common/icons/Avatar';
+import MoreIcon from '@/components/common/icons/MoreIcon';
 import { MyMeetingList } from '@/types/meeting';
 import Image from 'next/image';
 
@@ -34,11 +34,11 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
         </div>
         <div className='flex items-center gap-1.5 w-full h-[56px] px-2.5 py-1.5 bg-[#E4E4E4] rounded'>
           <div className='flex -space-x-4 items-center'>
-            <ImageIcon width={44} height={44} />
-            <ImageIcon width={44} height={44} />
-            <ImageIcon width={44} height={44} />
+            <Avatar className='w-11 h-11' />
+            <Avatar className='w-11 h-11' />
+            <Avatar className='w-11 h-11' />
             <div className='p-2.5 rounded-full w-11 h-11 bg-[#DFDFDF]'>
-              <MoreIcon width={25} height={25} />
+              <MoreIcon />
             </div>
           </div>
           <p className='text-sm'>

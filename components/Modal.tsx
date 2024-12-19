@@ -1,7 +1,7 @@
 'use client';
 
 import ModalPortal from './ModalPortal';
-import CloseBtn from '@/app/mypage/_svg/CloseBtn';
+import CloseIcon from '@/components/common/icons/CloseIcon';
 import { useModalStore } from '@/store/modal';
 
 export default function Modal() {
@@ -16,7 +16,7 @@ export default function Modal() {
             <div className='flex flex-col p-2 w-[520px]'>
               {content}
               <button className='absolute top-2 right-2' onClick={closeModal}>
-                <CloseBtn />
+                <CloseIcon />
               </button>
             </div>
           </div>

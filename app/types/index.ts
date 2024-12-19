@@ -18,6 +18,7 @@ export interface IMeeting {
   publisher: string;
   publishDate: string;
   star: number;
+  author: string;
   thumbnail: string;
   gatheringWeek: number;
 }

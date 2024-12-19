@@ -9,6 +9,7 @@ export default function PendingReviewBox() {
   const { data: reviews } = useQuery({
     queryKey: ['reviews', 'best'],
     queryFn: getBestAndPendingReviews,
+    staleTime: 60 * 1000,
   });
   if (!reviews) return null;
   const { bookResponseList } = reviews;

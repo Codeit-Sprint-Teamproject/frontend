@@ -112,7 +112,7 @@ export const SignupFormInput = ({
       </div>
       <div>
         <p className='text-lg font-bold mb-3'>닉네임</p>
-        <div className='flex space-x-2 mb-[30px] relative items-center'>
+        <div className='flex space-x-2 mb-[30px] relative '>
           <FormInputField
             id='userName'
             name='userName'

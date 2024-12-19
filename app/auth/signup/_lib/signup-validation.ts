@@ -3,7 +3,10 @@ import { z } from 'zod';
 export const validateSignupData = (formData: FormData) => {
   const SignupSchema = z
     .object({
-      userName: z.string().min(1, { message: '이름을 입력해 주세요.' }),
+      userName: z
+        .string()
+        .min(1, { message: '이름을 입력해 주세요.' })
+        .max(10, { message: '닉네임은 10자 이하여야 합니다.' }),
       email: z.string().email({ message: '올바른 이메일을 입력해 주세요.' }),
       password: z
         .string()

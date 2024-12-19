@@ -19,7 +19,7 @@ export async function userLogIn(prevState: State, formData: FormData) {
   if (!validationResult.success) {
     return {
       errors: validationResult.errors,
-      message: '다시 시도해 주세요.',
+      message: '',
     };
   }
 

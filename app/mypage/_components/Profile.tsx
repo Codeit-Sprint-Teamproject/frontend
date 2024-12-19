@@ -1,10 +1,10 @@
 'use client';
 
 import EditIcon from '../_svg/EditIcon';
-import ImageIcon from '../_svg/ImageIcon';
 import MyMeetingList from './MyMeetingList';
 import ProfileModifyForm from './ProfileModifyForm';
 import Modal from '@/components/Modal';
+import Avatar from '@/components/common/icons/Avatar';
 import { useProfileQuery } from '@/hooks/userProfileQuery';
 import { useModalStore } from '@/store/modal';
 import Image from 'next/image';
@@ -34,7 +34,7 @@ export default function Profile() {
             alt='프로필'
           />
         ) : (
-          <ImageIcon width={64} height={64} />
+          <Avatar width={64} height={64} />
         )}
         <div className='flex items-center justify-between w-3/4'>
           <div className='w-44'>

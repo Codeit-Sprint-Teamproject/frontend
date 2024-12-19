@@ -2,8 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { getBestAndPendingReviews } from '../_lib/getBestAndPendingReviews';
-import SlideNextIcon from '@/app/_components/common/icons/SlideNextIcon';
-import SlidePrevIcon from '@/app/_components/common/icons/SlidePrevIcon';
+import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
+import SlidePrevIcon from '@/components/common/icons/SlidePrevIcon';
 
 export default function PendingReviewBox() {
   const { data: reviews } = useQuery({
@@ -12,6 +12,7 @@ export default function PendingReviewBox() {
   });
   if (!reviews) return null;
   const { bookResponseList } = reviews;
+  // TODO (유진) 사용자가 없을 때 보이지 않도록 수정할 예정
   if (!bookResponseList?.length) {
     return (
       <div className='flex flex-col'>

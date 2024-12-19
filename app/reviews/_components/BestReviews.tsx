@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getBestAndPendingReviews } from '../_lib/getBestAndPendingReviews';
 import BestReviewCard from './BestReviewCard';
-import SlideNextIcon from '@/app/_components/common/icons/SlideNextIcon';
-import SlidePrevIcon from '@/app/_components/common/icons/SlidePrevIcon';
+import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
+import SlidePrevIcon from '@/components/common/icons/SlidePrevIcon';
 
 export default function BestReviews() {
   const [index, setIndex] = useState(0);

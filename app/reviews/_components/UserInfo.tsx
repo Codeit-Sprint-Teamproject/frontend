@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { getBestAndPendingReviews } from '../_lib/getBestAndPendingReviews';
-import SlideNextIcon from '@/app/_components/common/icons/SlideNextIcon';
+import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
 
 export default function UserInfo() {
   const { data: reviews } = useQuery({

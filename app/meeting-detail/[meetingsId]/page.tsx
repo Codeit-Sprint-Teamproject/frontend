@@ -1,3 +1,5 @@
+'use client';
+
 import MeetingDetailLeft from './_components/MeetingDetailLeft';
 import MeetingDetailRight from './_components/MeetingDetailRight';
 import MeetingDetailTabs from './_components/MeetingDetailTabs';

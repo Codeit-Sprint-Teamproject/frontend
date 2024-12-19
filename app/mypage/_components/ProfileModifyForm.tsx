@@ -3,7 +3,7 @@
 import { Controller, useForm } from 'react-hook-form';
 import { checkCurrentPassword } from '../_lib/profile';
 import { profileSchema } from '../_lib/profileSchema';
-import ImageIcon from '../_svg/ImageIcon';
+import Avatar from '@/components/common/icons/Avatar';
 import { useProfileQuery } from '@/hooks/userProfileQuery';
 import { useModalStore } from '@/store/modal';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -87,7 +87,7 @@ export default function ProfileModifyForm() {
               alt='프로필'
             />
           ) : (
-            <ImageIcon width={64} height={64} />
+            <Avatar className='w-16 h-16' />
           )}
           <Controller
             name='file'

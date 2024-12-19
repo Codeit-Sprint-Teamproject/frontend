@@ -1,5 +1,5 @@
-import PageNext from '../_svg/PageNext';
-import PagePrev from '../_svg/PagePrev';
+import PageNext from '@/components/common/icons/PageNext';
+import PagePrev from '@/components/common/icons/PageNext';
 
 type Props = {
   page: number;

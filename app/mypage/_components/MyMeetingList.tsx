@@ -1,8 +1,8 @@
-import ImageIcon from '../_svg/ImageIcon';
-import MoreIcon from '../_svg/MoreIcon';
-import NextIcon from '../_svg/NextIcon';
-import PrevIcon from '../_svg/PrevIcon';
 import { formatDateWithWeekday } from '@/app/_utils/dateFormatter';
+import Avatar from '@/components/common/icons/Avatar';
+import MoreIcon from '@/components/common/icons/MoreIcon';
+import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
+import SlidePrevIcon from '@/components/common/icons/SlidePrevIcon';
 import { MeetingList } from '@/types/meeting';
 import Image from 'next/image';
 import 'swiper/css';
@@ -18,7 +18,7 @@ export default function MyMeetingList({ meetingList = [] }: Props) {
   return (
     <div className='relative w-full'>
       <div className='swiper-button-prev'>
-        <PrevIcon />
+        <SlidePrevIcon className='w-6 h-6' />
       </div>
       <Swiper
         className='relative z-0'
@@ -52,11 +52,11 @@ export default function MyMeetingList({ meetingList = [] }: Props) {
                   </div>
                   <div className='flex items-center gap-1.5 w-[400px] h-[56px] px-2.5 py-1.5 bg-[#E4E4E4] rounded'>
                     <div className='flex -space-x-4 items-center'>
-                      <ImageIcon width={44} height={44} />
-                      <ImageIcon width={44} height={44} />
-                      <ImageIcon width={44} height={44} />
+                      <Avatar className='w-11 h-11' />
+                      <Avatar className='w-11 h-11' />
+                      <Avatar className='w-11 h-11' />
                       <div className='p-2.5 rounded-full w-11 h-11 bg-[#DFDFDF]'>
-                        <MoreIcon width={25} height={25} />
+                        <MoreIcon className='w-6 h-6' />
                       </div>
                     </div>
                     <p className='text-sm'>
@@ -69,7 +69,7 @@ export default function MyMeetingList({ meetingList = [] }: Props) {
           ),
         )}{' '}
         <div className='swiper-button-next'>
-          <NextIcon />
+          <SlideNextIcon className='w-6 h-6' />
         </div>
       </Swiper>
     </div>

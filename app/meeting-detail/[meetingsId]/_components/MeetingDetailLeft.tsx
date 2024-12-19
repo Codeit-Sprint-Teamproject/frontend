@@ -1,21 +1,33 @@
+import { useMeetingContext } from '../_lib/MeetingDetailContext';
 import HeartIcon from '@/public/HeartIcon';
 import ShareIcon from '@/public/ShareIcon';
 import UserIcon from '@/public/UserIcon';
+import Image from 'next/image';
 
 export default function MeetingDetailLeft() {
+  const { meetingData, loading, error } = useMeetingContext();
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: 데이터를 불러오지 못했습니다.</div>;
+
   return (
     <div className='w-[336px] flex flex-col'>
-      <div className='h-[189px] flex justify-center items-center bg-gray-300'>
-        이미지 영역
+      <div className='h-[189px] flex justify-center items-center relative bg-gray-300'>
+        <Image
+          src={`${meetingData?.thumbnail}`}
+          alt='meeting-thumbnail'
+          layout='fill'
+          objectFit='cover'
+        />
       </div>
       <div className='h-[60px] text-[20px] mt-[17px] font-bold'>
-        [매일 30분 읽기] 한강 디에센셜 함께 읽어요!
+        {meetingData?.name}
       </div>
       <div className='h-[36px] flex flex-row items-center mt-[15px]'>
         <div className='w-[2rem] h-[2rem] border-[0.925px] border-[#D1D5DB] bg-white rounded-full flex justify-center items-center'>
           <UserIcon width={36} height={36} />
         </div>
-        <div className='font-bold ml-[14px]'>닉네임</div>
+        <div className='font-bold ml-[14px]'>{meetingData?.owner}</div>
       </div>
       <div className='h-[65px] mt-[21px]'>
         <button className='w-full h-full bg-gray-300 font-bold'>

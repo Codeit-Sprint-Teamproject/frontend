@@ -3,11 +3,14 @@ import { z } from 'zod';
 export const validateSignupData = (formData: FormData) => {
   const SignupSchema = z
     .object({
-      userName: z.string().min(1, { message: '이름을 입력해 주세요.' }),
+      userName: z
+        .string()
+        .min(1, { message: '이름을 입력해 주세요.' })
+        .max(10, { message: '닉네임은 10자 이하여야 합니다.' }),
       email: z.string().email({ message: '올바른 이메일을 입력해 주세요.' }),
       password: z
         .string()
-        .min(10, { message: '비밀번호는 10자 이상이어야 합니다.' })
+        .min(8, { message: '비밀번호는 8자 이상이어야 합니다.' })
         .refine((val) => /[a-z]/.test(val), {
           message: '비밀번호에는 최소 하나의 소문자가 포함되어야 합니다.',
         })

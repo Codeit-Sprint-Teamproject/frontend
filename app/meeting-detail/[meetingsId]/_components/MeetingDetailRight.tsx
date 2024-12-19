@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useMeetingContext } from '../_lib/MeetingDetailContext';
 import { calculateEndDate } from '../_utils/calculateEndDate';
+import { calculateRemainingDays } from '../_utils/calculateRemainDays';
 import BookInfo from './BookInfo';
 import BookIcon from '@/public/BookIcon';
 import CalendarDotIcon from '@/public/CalendarDotIcon';
@@ -12,15 +13,18 @@ export default function MeetingDetailRight() {
   const { meetingData, loading, error } = useMeetingContext();
   const [endDate, setEndDate] = useState<string>('');
   const [meetingDuration, setMeetingDuration] = useState(0);
+  const [remainDays, setRemainDays] = useState(0);
 
   useEffect(() => {
     if (meetingData?.startDate && meetingData?.gatheringWeek) {
-      const res = calculateEndDate(
+      const calEndDate = calculateEndDate(
         meetingData.startDate,
         meetingData.gatheringWeek,
       );
-      setEndDate(res);
+      setEndDate(calEndDate);
+      const calRemainDays = calculateRemainingDays(calEndDate);
       setMeetingDuration(meetingData.gatheringWeek / 7);
+      setRemainDays(calRemainDays);
     }
   }, [meetingData]);
 
@@ -33,7 +37,7 @@ export default function MeetingDetailRight() {
         모집중
       </div>
       <div className='h-[49px] mt-[13px] font-bold text-3xl'>
-        N일뒤 모임이 시작됩니다.
+        {remainDays}일 뒤 모임이 시작됩니다.
       </div>
       <div className='grid grid-cols-[1fr_2fr] w-[40%] gap-3'>
         <UsersIcon width={25} height={25} />

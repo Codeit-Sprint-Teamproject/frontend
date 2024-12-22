@@ -22,3 +22,15 @@ export type PendingBookReview = {
   image: string;
   gatheringId: number;
 };
+export type BookReview = {
+  id: number;
+  userId: string;
+  title: string;
+  apprCd: string;
+  content: string;
+  likes: number;
+  createTime: string;
+  userName: string;
+  bookImage: string;
+  userLikeCk?: boolean;
+};

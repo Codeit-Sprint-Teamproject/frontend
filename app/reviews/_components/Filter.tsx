@@ -5,9 +5,13 @@ import DropDownThinIcon from '../_svg/DropDownThinIcon';
 import DropUpThinIcon from '../_svg/DropUpThinIcon';
 import { BookReviewFilter } from '@/types/review';
 
-export default function Filter() {
+type Props = {
+  filter: BookReviewFilter;
+  onFilterChange: (filter: BookReviewFilter) => void;
+};
+
+export default function Filter({ filter, onFilterChange }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [filter, setFilter] = useState<BookReviewFilter>('ALL');
   const filters = [
     { label: '전체 보기', value: 'ALL' },
     { label: '🤗 따뜻한 위로', value: 'CS' },
@@ -19,9 +23,6 @@ export default function Filter() {
   ];
   const toggleOpen = () => {
     setIsOpen(!isOpen);
-  };
-  const changeFilter = (value: BookReviewFilter) => {
-    setFilter(value);
   };
   const applyButtonStyle = (value: BookReviewFilter) => {
     if (filter === value) {
@@ -35,14 +36,14 @@ export default function Filter() {
           <button
             key={value}
             className={`p-2.5 border rounded-full ${applyButtonStyle(value as BookReviewFilter)}`}
-            onClick={() => changeFilter(value as BookReviewFilter)}
+            onClick={() => onFilterChange(value as BookReviewFilter)}
           >
             {label}
           </button>
         ))}
         {!isOpen && (
           <div className='flex items-center w-18'>
-            <button className='flex items-center h-11 pl-2 border rounded-full'>
+            <div className='flex items-center h-11 pl-2 border rounded-full'>
               <span className='blur-[0.5px]'>📚</span>
               <button
                 className='w-11 h-11 rounded-full border'
@@ -50,7 +51,7 @@ export default function Filter() {
               >
                 <DropDownThinIcon className='w-7 h-7 mx-auto' />
               </button>
-            </button>
+            </div>
           </div>
         )}
         {isOpen && (
@@ -67,7 +68,7 @@ export default function Filter() {
           <button
             key={value}
             className={`p-2.5 border rounded-full  ${applyButtonStyle(value as BookReviewFilter)}`}
-            onClick={() => changeFilter(value as BookReviewFilter)}
+            onClick={() => onFilterChange(value as BookReviewFilter)}
           >
             {label}
           </button>

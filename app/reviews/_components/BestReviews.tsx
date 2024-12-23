@@ -26,7 +26,7 @@ export default function BestReviews() {
   const total = bookReviews?.length || 0;
 
   return (
-    <div>
+    <div className='w-full'>
       <h3 className='font-bold mb-4'>모읽러가 선정한 Best 리뷰</h3>
       <div>
         {Array.isArray(bookReviews) && bookReviews?.length > 0 && (

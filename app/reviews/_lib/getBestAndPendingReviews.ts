@@ -1,14 +1,14 @@
 import { fetchAPIClient } from '@/lib/fetchAPI.client';
 import { BestBookReview, PendingBookReview } from '@/types/book';
 
-export type ReviewePageResponse = {
+export type ReviewPageResponse = {
   bookReviews?: BestBookReview[];
   bookResponseList: PendingBookReview[];
   total?: number;
 };
 
 export const getBestAndPendingReviews =
-  async (): Promise<ReviewePageResponse> => {
+  async (): Promise<ReviewPageResponse> => {
     const res = await fetchAPIClient('/api/review', 'GET');
     if (res.code === 'SUCCESS') {
       return res.result;

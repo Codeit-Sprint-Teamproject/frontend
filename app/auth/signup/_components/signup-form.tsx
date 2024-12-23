@@ -24,15 +24,25 @@ export const SignupForm = () => {
           setIsEmailValid={setIsEmailValid}
           setIsUserNameValid={setIsUserNameValid}
         />
+        <div className='h-6'>
+          {state?.message && (
+            <p className='text-sm text-error'>{state.message}</p>
+          )}
+        </div>
       </div>
       <TermsAgreement setIsTermsAgreed={setIsTermsAgreed} />
-      {state?.message}
       <FormButton
-        className='w-full h-12 p-2.5 font-bold bg-black rounded mb-10'
+        className='w-full h-12 p-2.5 font-bold bg-black rounded mb-6'
         disabled={!isFormValid}
       >
         가입하기
       </FormButton>
+      <div className='flex items-center justify-center gap-2 text-sm text-gray-500 mb-9'>
+        <p>이미 회원이신가요?</p>
+        <a href='/auth/login' className='hover:underline'>
+          로그인하기
+        </a>
+      </div>
     </form>
   );
 };

@@ -9,12 +9,36 @@ export const LoginForm = () => {
   const initialState = { message: '', errors: {} };
   const [state, dispatch] = useFormState(userLogIn, initialState);
   return (
-    <form action={dispatch}>
+    <form action={dispatch} className='max-w-[380px]'>
       <div className='flex flex-col space-y-2'>
         <LoginFormInput errors={state?.errors} />
+        <div className='h-6'>
+          {state?.message && (
+            <p className='text-sm text-error'>{state.message}</p>
+          )}
+        </div>
       </div>
-      <FormButton disabled={false}>로그인</FormButton>
-      {state?.message}
+      <div className='flex flex-col mt-[32px] gap-5'>
+        <FormButton
+          className='w-full h-12 p-2.5 text-base font-bold bg-black text-white rounded'
+          disabled={false}
+        >
+          로그인
+        </FormButton>
+        <div className='flex items-center justify-center gap-2 text-sm text-gray-500'>
+          <a href='#' className='hover:underline'>
+            아이디(이메일) 찾기
+          </a>
+          <span className='text-gray-300'>|</span>
+          <a href='#' className='hover:underline'>
+            비밀번호 찾기
+          </a>
+          <span className='text-gray-300'>|</span>
+          <a href='/auth/signup' className='hover:underline'>
+            회원가입
+          </a>
+        </div>
+      </div>
     </form>
   );
 };

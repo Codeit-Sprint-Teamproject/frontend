@@ -44,7 +44,7 @@ export default function TermsAgreement({ setIsTermsAgreed }: Props) {
   };
 
   return (
-    <div className='flex flex-col gap-[18px] mt-[18px] my-[90px]'>
+    <div className='flex flex-col gap-[18px] mb-[50px]'>
       <p className='text-lg font-bold'>약관동의</p>
       <div className='items-top flex space-x-2 border p-[18px] rounded'>
         <Checkbox

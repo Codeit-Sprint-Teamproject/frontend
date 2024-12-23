@@ -1,6 +1,6 @@
 import React from 'react';
-import CheckIcon from '../_svg/CheckIcon';
-import XIcon from '../_svg/XIcon';
+import CheckIcon from '../../_svg/CheckIcon';
+import XIcon from '../../_svg/XIcon';
 import { Input } from '@/components/ui/input';
 
 interface FormInputFieldProps {
@@ -50,7 +50,7 @@ export const FormInputField = ({
   );
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='relative flex flex-col gap-2'>
       <Input
         className={`w-[380px] h-11 px-2.5 py-1.5 rounded-lg focus-visible:ring-transparent transition-all ${
           errors.length
@@ -92,7 +92,7 @@ export const FormInputField = ({
           errors.length === 0,
         )}
       {errors.length > 0 && id !== 'password' && id !== 'confirmPassword' && (
-        <div className='flex flex-col gap-1'>
+        <div className='absolute top-full mt-1 flex flex-col gap-1'>
           {errors.map((error: string) => (
             <p
               key={error}

@@ -37,8 +37,16 @@ export async function userLogIn(prevState: State, formData: FormData) {
       const parsedError = JSON.parse(errorMessage);
       const detailedMessage =
         parsedError.message || '알 수 없는 오류가 발생했습니다.';
+
+      let translatedMessage = '로그인 실패: 알 수 없는 오류가 발생했습니다.';
+      if (detailedMessage === 'This user does not exist') {
+        translatedMessage = '존재하지 않는 유저입니다.';
+      } else if (detailedMessage === 'Login information mismatch') {
+        translatedMessage = '로그인 정보가 일치하지 않습니다.';
+      }
+
       return {
-        message: `로그인 실패: ${detailedMessage}`,
+        message: translatedMessage,
       };
     } catch (e) {
       console.error('JSON 파싱 오류:', e);

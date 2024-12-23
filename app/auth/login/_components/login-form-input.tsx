@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import EyeIcon from '../../_svg/EyeIcon';
-import { FormInputField } from '@/app/auth/_components/form-input-field';
+import EyeIconClosed from '../../_svg/EyeIconClosed';
+import { FormInputField } from './login-form-input-field';
 
 interface FormInputProps {
   errors?: {
@@ -20,28 +21,46 @@ export const LoginFormInput = ({ errors }: FormInputProps) => {
   };
 
   return (
-    <div>
-      <FormInputField
-        id='email'
-        name='email'
-        type='text'
-        placeholder='이메일을 입력하세요'
-        errors={errors?.email}
-        disabled={pending}
-      />
-      <FormInputField
-        id='password'
-        name='password'
-        type={showPassword ? 'text' : 'password'}
-        placeholder='비밀번호를 입력하세요'
-        errors={errors?.password}
-        disabled={pending}
-      />
-      <button onClick={togglePasswordVisibility} type='button'>
-        <EyeIcon
-          className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
+    <div className='flex flex-col gap-[30px]'>
+      <div>
+        <p className='text-lg font-bold mb-3'>이메일</p>
+        <FormInputField
+          id='email'
+          name='email'
+          type='text'
+          placeholder='abc@email.com'
+          errors={errors?.email}
+          disabled={pending}
         />
-      </button>
+      </div>
+      <div>
+        <p className='text-lg font-bold mb-3'>비밀번호</p>
+        <div className='relative'>
+          <FormInputField
+            id='password'
+            name='password'
+            type={showPassword ? 'text' : 'password'}
+            placeholder='8자 이상의 비밀번호'
+            errors={errors?.password}
+            disabled={pending}
+          />
+          <button
+            className='absolute top-[10px] right-4'
+            onClick={togglePasswordVisibility}
+            type='button'
+          >
+            {showPassword ? (
+              <EyeIcon
+                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
+              />
+            ) : (
+              <EyeIconClosed
+                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
+              />
+            )}
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

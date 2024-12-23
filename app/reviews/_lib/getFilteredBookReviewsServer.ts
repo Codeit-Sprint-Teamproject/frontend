@@ -6,7 +6,7 @@ type BookReviewResponse = {
   bookReviews: BookReview[];
   hasNext?: boolean;
 };
-const SIZE = 2;
+const SIZE = 10;
 
 export const getFilteredBookReviewsServer = async (
   filter: BookReviewFilter,

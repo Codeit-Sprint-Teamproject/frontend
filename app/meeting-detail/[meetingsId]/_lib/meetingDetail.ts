@@ -2,7 +2,7 @@
 
 import { fetchAPIServer } from '@/lib/fetchAPI.server';
 
-export async function fetchMeetingDetails(gatheringId: number) {
+export const getMeetingDetails = async (gatheringId: number) => {
   const endpoint = `/api/gatheringSearch/${gatheringId}`;
   const method = 'GET';
 
@@ -13,4 +13,4 @@ export async function fetchMeetingDetails(gatheringId: number) {
   }
 
   return data;
-}
+};

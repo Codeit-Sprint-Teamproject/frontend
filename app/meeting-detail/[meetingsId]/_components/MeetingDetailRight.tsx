@@ -13,7 +13,7 @@ export default function MeetingDetailRight({ data }: IMeetingDetail) {
     data.startDate.toString(),
     data.gatheringWeek,
   );
-  const RemainDays = calculateRemainingDays(endDate);
+  const remainDays = calculateRemainingDays(endDate);
   const meetingDuration = data.gatheringWeek / 7;
 
   return (
@@ -22,7 +22,7 @@ export default function MeetingDetailRight({ data }: IMeetingDetail) {
         모집중
       </div>
       <div className='h-[49px] mt-[13px] font-bold text-3xl'>
-        {RemainDays}일 뒤 모임이 시작됩니다.
+        {remainDays}일 뒤 모임이 시작됩니다.
       </div>
       <div className='grid grid-cols-[1fr_2fr] w-[40%] gap-3'>
         <UsersIcon width={25} height={25} />

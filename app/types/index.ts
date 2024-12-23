@@ -35,3 +35,29 @@ export interface IFilterState {
   recruitingOnly: boolean;
   targetTime: string | null;
 }
+
+export interface IMeetingDetail {
+  data: {
+    id: number;
+    owner: string;
+    name: string;
+    content: string;
+    gatheringWeek: number;
+    endDate: string;
+    startDate: string;
+    minCapacity: number;
+    maxCapacity: number;
+    currentCapacity: number;
+    createdTime: Date;
+    updatedTime: Date;
+    gatheringStatus: string;
+    bookTitle: string;
+    bookImage: string;
+    publisher: string;
+    publishDate: string;
+    star: number;
+    author: string;
+    thumbnail: string;
+    readingTimeGoal: number;
+  };
+}

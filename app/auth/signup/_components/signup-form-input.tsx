@@ -5,7 +5,7 @@ import { useFormStatus } from 'react-dom';
 import EyeIcon from '../../_svg/EyeIcon';
 import EyeIconClosed from '../../_svg/EyeIconClosed';
 import { CheckDuplicateButton } from './signup-form-duplicateCheckButton';
-import { FormInputField } from '@/app/auth/_components/form-input-field';
+import { FormInputField } from '@/app/auth/signup/_components/signup-form-input-field';
 
 interface SignupFormInputProps {
   errors?: {
@@ -89,7 +89,7 @@ export const SignupFormInput = ({
             id='confirmPassword'
             name='confirmPassword'
             type={showPassword ? 'text' : 'password'}
-            placeholder='비밀번호를 다시 입력하세요'
+            placeholder='8자 이상의 비밀번호'
             errors={errors?.confirmPassword}
             disabled={pending}
           />

@@ -34,7 +34,7 @@ export default function Filter({
 
   return (
     <div className='flex flex-col gap-2 mb-9'>
-      <div className='flex flex-wrap gap-2 relative'>
+      <div className='flex flex-wrap gap-2'>
         {filters.slice(0, 4).map(({ label, value }) => (
           <button
             key={value}

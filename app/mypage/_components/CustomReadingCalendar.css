@@ -1,21 +1,25 @@
-.react-calendar {
+.reading-calendar {
+  position: relative;
+  width: 600px;
+}
+.reading-calendar .react-calendar {
   width: 600px;
   height: 680px;
   padding: 15px;
   border: 1px solid #d9d9d9;
 }
-.react-calendar__navigation {
+.reading-calendar .react-calendar__navigation {
   width: 255px;
   display: flex;
   height: 44px;
   margin-left: 10px;
   margin-bottom: 20px;
 }
-.react-calendar__navigation__label {
+.reading-calendar .react-calendar__navigation__label {
   font-size: 26px;
 }
-.react-calendar__navigation__prev-button,
-.react-calendar__navigation__next-button {
+.reading-calendar .react-calendar__navigation__prev-button,
+.reading-calendar .react-calendar__navigation__next-button {
   width: 40px;
   height: 40px;
   display: flex;
@@ -24,11 +28,11 @@
   border: 1px solid;
   border-radius: 50%;
 }
-.react-calendar__navigation__label {
+.reading-calendar .react-calendar__navigation__label {
   width: 133px;
   font-weight: 600;
 }
-.react-calendar__month-view__weekdays {
+.reading-calendar .react-calendar__month-view__weekdays {
   width: 100%;
   height: 17px;
   text-align: center;
@@ -36,13 +40,13 @@
   color: rgba(0, 0, 0, 0.5);
   margin-bottom: 12px;
 }
-.react-calendar__month-view__weekdays abbr {
+.reading-calendar .react-calendar__month-view__weekdays abbr {
   text-decoration: none;
 }
-.react-calendar__month-view__days {
+.reading-calendar .react-calendar__month-view__days {
   width: 568px;
 }
-.react-calendar__month-view__days button {
+.reading-calendar .react-calendar__month-view__days button {
   position: relative;
   width: 70.86px;
   height: 102.2px;
@@ -50,16 +54,11 @@
   justify-content: center;
   margin-bottom: 12px;
 }
-.react-calendar__month-view__days__day abbr {
+.reading-calendar .react-calendar__month-view__days__day abbr {
   position: relative;
   z-index: 1;
 }
-.react-calendar__navigation__today-button {
-  border: 1px solid;
-  width: 60px;
-  height: 40px;
-}
-.react-calendar__navigation__today-button {
+.reading-calendar .react-calendar__navigation__today-button {
   position: absolute;
   top: 16px;
   right: 16px;
@@ -68,13 +67,13 @@
   border: 1px solid #d9d9d9;
   border-radius: 4px;
 }
-.book-cover {
+.reading-calendar .book-cover {
   position: absolute;
   bottom: 0;
   left: 1/6;
   border: 3px solid white;
 }
-.book-count {
+.reading-calendar .book-count {
   position: absolute;
   bottom: 0;
   right: 4px;
@@ -87,7 +86,7 @@
   background-color: white;
   color: black;
 }
-.today-tile {
+.reading-calendar .today-tile {
   background-color: black;
   border: 1px solid black;
   color: white;

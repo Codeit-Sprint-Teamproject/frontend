@@ -32,7 +32,7 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
       </div>
       <div className='flex flex-row justify-center items-center text-xs mt-4'>
         <InfoIcon width={14} height={14} />
-        채팅방은 모임 시작일부터 입장 가능합니다.
+        <span className='ml-2'>채팅방은 모임 시작일부터 입장 가능합니다.</span>
       </div>
       <div className='h-[24px] flex flex-row justify-center items-center gap-6 mt-5'>
         <div className='flex flex-row gap-2'>

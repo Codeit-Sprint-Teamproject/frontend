@@ -1,11 +1,28 @@
 import BookIcon from '../_svg/BookIcon';
 import CommentIcon from '../_svg/CommentIcon';
 import LikeIcon from '../_svg/LikeIcon';
+import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
 import { BestBookReview } from '@/types/book';
 
 export default function BestReviewCard({ review }: { review: BestBookReview }) {
-  const { title, content, userName, writerReviewCnt, likes, commentCnt } =
-    review;
+  const {
+    id,
+    title,
+    content,
+    userName,
+    writerReviewCnt,
+    likes,
+    commentCnt,
+    userLikeCk,
+  } = review;
+  const { likeMutation, unlikeMutation } = useReviewLikeQuery(id);
+  const handleLike = () => {
+    if (userLikeCk) {
+      unlikeMutation();
+    } else {
+      likeMutation();
+    }
+  };
   return (
     <div className='flex flex-col gap-4 w-[512px] h-[189px] bg-[#F4F4F4] px-[15px] py-2.5'>
       <h3 className='flex items-center gap-1 font-bold'>
@@ -23,7 +40,11 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
         </div>
         <div className='flex gap-5'>
           <div className='flex gap-2'>
-            <LikeIcon className='w-5 h-5' />
+            <button onClick={handleLike}>
+              <LikeIcon
+                className={`w-5 h-5 ${userLikeCk ? 'fill-black' : ''}`}
+              />
+            </button>
             <span>{likes}</span>
           </div>
           <div className='flex gap-2'>

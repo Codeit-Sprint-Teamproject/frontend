@@ -6,14 +6,13 @@ type BookReviewResponse = {
   bookReviews: BookReview[];
   hasNext?: boolean;
 };
-const SIZE = 10;
 
 export const getFilteredBookReviewsServer = async (
   filter: BookReviewFilter,
   pageParam: number,
 ): Promise<BookReviewResponse> => {
   const res = await fetchAPIServer(
-    `/api/review/search/tag?tag=${filter}&page=${pageParam}&size=${SIZE}`,
+    `/api/review/search/tag?tag=${filter}&page=${pageParam}`,
     'GET',
   );
   if (res.code === 'SUCCESS') {

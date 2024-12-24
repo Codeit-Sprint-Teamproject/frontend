@@ -14,7 +14,7 @@ export default async function ReviewsPage() {
     queryFn: getBestAndPendingReviewsServer,
   });
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ['reviews', 'ALL'],
+    queryKey: ['reviews', 'filter', 'ALL'],
     queryFn: ({ pageParam = 0 }) =>
       getFilteredBookReviewsServer('ALL', pageParam),
     initialPageParam: 0,

@@ -7,7 +7,7 @@ import { BookReviewFilter } from '@/types/review';
 
 export const useReviewsInfinityQuery = (filter: BookReviewFilter) => {
   return useInfiniteQuery<BookReviewResponse, Error>({
-    queryKey: ['reviews', filter],
+    queryKey: ['reviews', 'filter', filter],
     queryFn: ({ pageParam = 0 }) =>
       getFilteredBookReviews(filter, pageParam as number),
     getNextPageParam: (lastPage, allPages) => {

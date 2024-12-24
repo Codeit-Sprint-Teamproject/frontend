@@ -4,6 +4,7 @@ import { useFormState } from 'react-dom';
 import { FormButton } from '../../_components/form-button';
 import { userLogIn } from '../_lib/login';
 import { LoginFormInput } from './login-form-input';
+import Link from 'next/link';
 
 export const LoginForm = () => {
   const initialState = { message: '', errors: {} };
@@ -26,17 +27,17 @@ export const LoginForm = () => {
           로그인
         </FormButton>
         <div className='flex items-center justify-center gap-2 text-sm text-gray-500'>
-          <a href='#' className='hover:underline'>
+          <Link href='#' className='hover:underline'>
             아이디(이메일) 찾기
-          </a>
+          </Link>
           <span className='text-gray-300'>|</span>
-          <a href='#' className='hover:underline'>
+          <Link href='#' className='hover:underline'>
             비밀번호 찾기
-          </a>
+          </Link>
           <span className='text-gray-300'>|</span>
-          <a href='/auth/signup' className='hover:underline'>
+          <Link href='/auth/signup' className='hover:underline'>
             회원가입
-          </a>
+          </Link>
         </div>
       </div>
     </form>

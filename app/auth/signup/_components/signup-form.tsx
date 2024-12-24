@@ -6,6 +6,7 @@ import { userSignup } from '../_lib/signup';
 import TermsAgreement from './TermsAgreement';
 import { SignupFormInput } from './signup-form-input';
 import { FormButton } from '@/app/auth/_components/form-button';
+import Link from 'next/link';
 
 export const SignupForm = () => {
   const initialState = { message: '', errors: {} };
@@ -39,9 +40,9 @@ export const SignupForm = () => {
       </FormButton>
       <div className='flex items-center justify-center gap-2 text-sm text-gray-500 mb-9'>
         <p>이미 회원이신가요?</p>
-        <a href='/auth/login' className='hover:underline'>
+        <Link href='/auth/login' className='hover:underline'>
           로그인하기
-        </a>
+        </Link>
       </div>
     </form>
   );

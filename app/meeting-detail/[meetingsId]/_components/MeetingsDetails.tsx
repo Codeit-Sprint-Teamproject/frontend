@@ -6,6 +6,7 @@ import { getMeetingDetails } from '../_lib/meetingDetail';
 import MeetingDetailLeft from './MeetingDetailLeft';
 import MeetingDetailRight from './MeetingDetailRight';
 import MeetingDetailTabs from './MeetingDetailTabs';
+import PageLocator from './PageLocator';
 
 interface MeetingDetailsProps {
   gatheringId: number;
@@ -28,12 +29,17 @@ const MeetingDetails = ({ gatheringId }: MeetingDetailsProps) => {
     );
 
   return (
-    <div className='flex flex-col items-center justify-start mt-[131px] w-[1060px] h-[2000px] mb-20 mx-auto '>
-      <div className='w-full h-[670px] flex flex-row justify-between'>
-        <MeetingDetailLeft data={data.result} />
-        <MeetingDetailRight data={data.result} />
+    <div className='flex flex-col mt-20 w-[1060px] h-[2000px] mb-20 mx-auto'>
+      <PageLocator pagePath={['홈']} currentPage='모임' />
+      <div className='flex flex-row items-start justify-between mt-2'>
+        <div className='w-[337px] sticky top-10'>
+          <MeetingDetailLeft data={data.result} />
+        </div>
+        <div className='w-[654px] flex flex-col'>
+          <MeetingDetailRight data={data.result} />
+          <MeetingDetailTabs gatheringId={gatheringId} />
+        </div>
       </div>
-      <MeetingDetailTabs gatheringId={gatheringId} />
     </div>
   );
 };

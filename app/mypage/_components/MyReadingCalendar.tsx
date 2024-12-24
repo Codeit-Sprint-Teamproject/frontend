@@ -38,15 +38,15 @@ export default function MyReadingCalendar() {
           src='/book.png'
           className='book-cover'
           alt={data.title}
-          width={60}
-          height={85}
+          width={54}
+          height={81}
         />
         <span className='book-count'>+1</span>
       </>
     ) : null;
   };
   return (
-    <div className='relative w-[600px] px-[22px]'>
+    <div className='reading-calendar'>
       <Calendar
         locale='ko'
         view='month'
@@ -66,7 +66,7 @@ export default function MyReadingCalendar() {
         }
       />
       <button
-        className='react-calendar__navigation__today-button'
+        className='reading-calendar react-calendar__navigation__today-button'
         onClick={goToThisMonth}
       >
         오늘

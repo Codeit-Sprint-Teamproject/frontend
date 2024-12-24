@@ -2,7 +2,7 @@ import { LoginForm } from './_components/login-form';
 
 export default function LoginPage() {
   return (
-    <div className='flex flex-col justify-center items-center mt-[144px]'>
+    <div className='flex flex-col justify-center items-center mt-[72px]'>
       <p className='mb-2.5 text-base font-medium'>
         모여서 읽고 싶은 지금, 모읽지
       </p>

@@ -17,7 +17,7 @@ export const useReviewLikeQuery = (id: number) => {
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === 'reviews') {
-          if (queryKey[1] !== 'best') {
+          if (queryKey[1] === 'filter') {
             const value: InfiniteData<BookReviewResponse> | undefined =
               queryClient.getQueryData(queryKey);
 
@@ -72,7 +72,7 @@ export const useReviewLikeQuery = (id: number) => {
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === 'reviews') {
-          if (queryKey[1] !== 'best') {
+          if (queryKey[1] === 'filter') {
             const value: InfiniteData<BookReviewResponse> | undefined =
               queryClient.getQueryData(queryKey);
 
@@ -131,7 +131,7 @@ export const useReviewLikeQuery = (id: number) => {
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === 'reviews') {
-          if (queryKey[1] !== 'best') {
+          if (queryKey[1] === 'filter') {
             const value: InfiniteData<BookReviewResponse> | undefined =
               queryClient.getQueryData(queryKey);
 
@@ -186,7 +186,7 @@ export const useReviewLikeQuery = (id: number) => {
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === 'reviews') {
-          if (queryKey[1] !== 'best') {
+          if (queryKey[1] === 'filter') {
             const value: InfiniteData<BookReviewResponse> | undefined =
               queryClient.getQueryData(queryKey);
 

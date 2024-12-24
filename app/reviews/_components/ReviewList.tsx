@@ -9,6 +9,7 @@ import { BookReviewFilter } from '@/types/review';
 
 export default function ReviewList() {
   const [filter, setFilter] = useState<BookReviewFilter>('ALL');
+  const [isOpen, setIsOpen] = useState(false);
   const { isLoading, data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useReviewsInfinityQuery(filter);
 
@@ -25,10 +26,12 @@ export default function ReviewList() {
     <section>
       <Filter
         filter={filter}
+        isOpen={isOpen}
         onFilterChange={(newFilter) => setFilter(newFilter)}
+        onToggle={() => setIsOpen((prev) => !prev)}
       />
       <InfiniteScroll
-        className='flex flex-col gap-9'
+        className='flex flex-col gap-7'
         isFetching={isFetchingNextPage}
         list={reviews}
         renderItem={(review) => <Review key={review.id} review={review} />}

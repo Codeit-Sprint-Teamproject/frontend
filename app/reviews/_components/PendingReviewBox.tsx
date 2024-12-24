@@ -1,16 +1,11 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { getBestAndPendingReviews } from '../_lib/getBestAndPendingReviews';
 import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
 import SlidePrevIcon from '@/components/common/icons/SlidePrevIcon';
+import { useReviewQuery } from '@/hooks/useReviewQuery';
 
 export default function PendingReviewBox() {
-  const { data: reviews } = useQuery({
-    queryKey: ['reviews', 'best'],
-    queryFn: getBestAndPendingReviews,
-    staleTime: 60 * 1000,
-  });
+  const { reviews } = useReviewQuery();
   if (!reviews) return null;
   const { bookResponseList } = reviews;
   // TODO (유진) 사용자가 없을 때 보이지 않도록 수정할 예정

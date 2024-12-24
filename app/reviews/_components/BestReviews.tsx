@@ -1,19 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getBestAndPendingReviews } from '../_lib/getBestAndPendingReviews';
 import BestReviewCard from './BestReviewCard';
 import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
 import SlidePrevIcon from '@/components/common/icons/SlidePrevIcon';
+import { useReviewQuery } from '@/hooks/useReviewQuery';
 
 export default function BestReviews() {
   const [index, setIndex] = useState(0);
-  const { data: reviews } = useQuery({
-    queryKey: ['reviews', 'best'],
-    queryFn: getBestAndPendingReviews,
-    staleTime: 60 * 1000,
-  });
+  const { reviews } = useReviewQuery();
+
   const handlePrev = () => {
     setIndex(index - 1);
   };
@@ -29,7 +25,7 @@ export default function BestReviews() {
     <div className='w-full'>
       <h3 className='font-bold mb-4'>모읽러가 선정한 Best 리뷰</h3>
       <div>
-        {Array.isArray(bookReviews) && bookReviews?.length > 0 && (
+        {bookReviews && bookReviews?.length > 0 && (
           <BestReviewCard review={bookReviews?.[index]} />
         )}
       </div>

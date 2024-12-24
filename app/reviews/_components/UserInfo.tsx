@@ -1,15 +1,10 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { getBestAndPendingReviews } from '../_lib/getBestAndPendingReviews';
 import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
+import { useReviewQuery } from '@/hooks/useReviewQuery';
 
 export default function UserInfo() {
-  const { data: reviews } = useQuery({
-    queryKey: ['reviews', 'best'],
-    queryFn: getBestAndPendingReviews,
-    staleTime: 60 * 1000,
-  });
+  const { reviews } = useReviewQuery();
 
   if (!reviews) return null;
   const { total } = reviews;

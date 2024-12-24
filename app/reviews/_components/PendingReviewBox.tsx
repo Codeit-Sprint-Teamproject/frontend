@@ -1,5 +1,6 @@
 'use client';
 
+import NoPendingReviewBox from './NoPendingReviewBox';
 import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
 import SlidePrevIcon from '@/components/common/icons/SlidePrevIcon';
 import { useReviewQuery } from '@/hooks/useReviewQuery';
@@ -8,22 +9,9 @@ export default function PendingReviewBox() {
   const { reviews } = useReviewQuery();
   if (!reviews) return null;
   const { bookResponseList } = reviews;
-  // TODO (유진) 사용자가 없을 때 보이지 않도록 수정할 예정
+
   if (!bookResponseList?.length) {
-    return (
-      <div className='flex flex-col'>
-        <p className='font-bold mb-1'>새로운 리뷰를 기다리고 있어요!</p>
-        <div className='w-[372px] h-[249px] bg-[#F6F6F6] text-center'>
-          <h3 className='text-xl font-bold mt-12'>
-            리뷰하고 싶은 책이 있나요?
-          </h3>
-          <p className='mt-3'>모읽지에서 작성해 보세요!</p>
-          <button className='w-80 h-14 bg-[#C5C5C5] font-bold mt-14'>
-            독서 리뷰 작성하기
-          </button>
-        </div>
-      </div>
-    );
+    return <NoPendingReviewBox />;
   }
   return (
     // TODO (유진) 데이터 받아서 변경할 예정

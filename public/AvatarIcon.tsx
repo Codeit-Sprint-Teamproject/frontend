@@ -3,7 +3,7 @@ interface AvartarProps {
   height: number;
 }
 
-const Avatar = ({ width, height }: AvartarProps) => {
+const AvatarIcon = ({ width, height }: AvartarProps) => {
   return (
     <>
       <svg
@@ -36,4 +36,4 @@ const Avatar = ({ width, height }: AvartarProps) => {
     </>
   );
 };
-export default Avatar;
+export default AvatarIcon;

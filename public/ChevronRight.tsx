@@ -1,0 +1,7 @@
+export default function ChevronRight(props: React.SVGProps<SVGSVGElement>){
+  return (
+    <svg {...props} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.25 10.5L8.75 7L5.25 3.5" stroke="black" stroke-width="1.16667" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  );
+}

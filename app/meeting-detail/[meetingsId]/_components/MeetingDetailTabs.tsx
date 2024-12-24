@@ -4,7 +4,11 @@ import { useState } from 'react';
 import MeetingInfo from './MeetingInfo';
 import MeetingReviews from './MeetingReviews';
 
-export default function MeetingDetailTabs() {
+interface MeetingInfo {
+  gatheringId: number;
+}
+
+export default function MeetingDetailTabs({ gatheringId }: MeetingInfo) {
   const [activeTab, setActiveTab] = useState<string>('meeting-info');
 
   const tabs = [
@@ -14,7 +18,6 @@ export default function MeetingDetailTabs() {
 
   return (
     <div className='w-full mt-[72px]'>
-      {/* 탭 제목 */}
       <ul className='flex flex-row gap-4 border-b-[1px]'>
         {tabs.map((tab) => (
           <li
@@ -26,11 +29,9 @@ export default function MeetingDetailTabs() {
           </li>
         ))}
       </ul>
-      {/* 탭 내용 */}
       <div className='mt-6'>
-        {/* 탭 내용 작성 */}
         {activeTab === 'meeting-info' ? (
-          <MeetingInfo />
+          <MeetingInfo gatheringId={gatheringId} />
         ) : (
           <>
             <MeetingReviews />

@@ -61,3 +61,17 @@ export interface IMeetingDetail {
     readingTimeGoal: number;
   };
 }
+export interface IMeetingInfo {
+  id: number;
+  name: string;
+  content: string;
+  readingTimeGoal: number;
+  owner: string;
+  bookTitle: string;
+  bookImage: string;
+  publisher: string;
+  publishDate: string;
+  star: number;
+  author: string;
+  introduce: string;
+}

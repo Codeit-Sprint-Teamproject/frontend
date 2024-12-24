@@ -1,6 +1,7 @@
 import MSWComponent from './_components/MSWComponent';
 import QueryProvider from './_providers/QueryProvider';
 import './globals.css';
+import GNB from '@/components/GNB';
 
 export default function RootLayout({
   children,
@@ -13,6 +14,7 @@ export default function RootLayout({
         <MSWComponent />
         <QueryProvider>
           <div id='modal'></div>
+          <GNB />
           {children}
         </QueryProvider>
       </body>

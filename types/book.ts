@@ -11,6 +11,7 @@ export type BestBookReview = {
   commentCnt: number;
   writerReviewCnt: number;
   userName: string;
+  userLikeCk?: boolean;
 };
 export type PendingBookReview = {
   id: number;
@@ -21,4 +22,17 @@ export type PendingBookReview = {
   start: number;
   image: string;
   gatheringId: number;
+};
+export type BookReview = {
+  id: number;
+  userId: string;
+  title: string;
+  apprCd: string;
+  content: string;
+  likes: number;
+  createTime: string;
+  userName: string;
+  bookImage: string;
+  userLikeCk?: boolean;
+  commentCnt?: number;
 };

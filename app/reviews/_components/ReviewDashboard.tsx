@@ -1,5 +1,6 @@
 import BestReviews from './BestReviews';
 import PendingReviewBox from './PendingReviewBox';
+import ReviewList from './ReviewList';
 import UserInfo from './UserInfo';
 
 export default function ReviewDashboard() {
@@ -9,7 +10,10 @@ export default function ReviewDashboard() {
         <UserInfo />
         <PendingReviewBox />
       </div>
-      <BestReviews />
+      <div className='flex flex-col items-center gap-11'>
+        <BestReviews />
+        <ReviewList />
+      </div>
     </div>
   );
 }

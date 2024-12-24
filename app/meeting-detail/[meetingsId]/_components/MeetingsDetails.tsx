@@ -33,7 +33,7 @@ const MeetingDetails = ({ gatheringId }: MeetingDetailsProps) => {
         <MeetingDetailLeft data={data.result} />
         <MeetingDetailRight data={data.result} />
       </div>
-      <MeetingDetailTabs data={data.result} />
+      <MeetingDetailTabs gatheringId={gatheringId} />
     </div>
   );
 };

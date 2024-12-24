@@ -4,7 +4,6 @@
 }
 .reading-calendar .react-calendar {
   width: 600px;
-  height: 680px;
   padding: 15px;
   border: 1px solid #d9d9d9;
 }
@@ -16,7 +15,8 @@
   margin-bottom: 20px;
 }
 .reading-calendar .react-calendar__navigation__label {
-  font-size: 26px;
+  font-size: 24px;
+  color: #262626;
 }
 .reading-calendar .react-calendar__navigation__prev-button,
 .reading-calendar .react-calendar__navigation__next-button {
@@ -27,6 +27,7 @@
   align-items: center;
   border: 1px solid;
   border-radius: 50%;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
 }
 .reading-calendar .react-calendar__navigation__label {
   width: 133px;
@@ -37,7 +38,7 @@
   height: 17px;
   text-align: center;
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+  color: #6a6a6a;
   margin-bottom: 12px;
 }
 .reading-calendar .react-calendar__month-view__weekdays abbr {
@@ -56,6 +57,7 @@
 }
 .reading-calendar .react-calendar__month-view__days__day abbr {
   position: relative;
+  font-size: 14px;
   z-index: 1;
 }
 .reading-calendar .react-calendar__navigation__today-button {
@@ -66,30 +68,30 @@
   height: 40px;
   border: 1px solid #d9d9d9;
   border-radius: 4px;
+  color: #6a6a6a;
 }
 .reading-calendar .book-cover {
   position: absolute;
   bottom: 0;
-  left: 1/6;
   border: 3px solid white;
 }
 .reading-calendar .book-count {
   position: absolute;
   bottom: 0;
-  right: 4px;
-  width: 23px;
-  height: 16px;
-  font-size: 10px;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  padding: 1px 5px;
+  right: 0;
+  width: 26px;
+  height: 18px;
+  font-size: 12px;
+  border: 1px solid #ececec;
+  border-radius: 2px;
   background-color: white;
-  color: black;
+  color: #6a6a6a;
+  box-shadow:
+    0px 1px 2px 0px rgba(0, 0, 0, 0.16),
+    0px 0px 1px 0px rgba(0, 0, 0, 0.12);
 }
 .reading-calendar .today-tile {
-  background-color: black;
-  border: 1px solid black;
-  color: white;
+  background-color: #eaf7f2;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }

@@ -38,8 +38,8 @@ export default function MyReadingCalendar() {
           src='/book.png'
           className='book-cover'
           alt={data.title}
-          width={60}
-          height={85}
+          width={54}
+          height={81}
         />
         <span className='book-count'>+1</span>
       </>

@@ -19,15 +19,25 @@ export type PendingBookReview = {
   author: string;
   publisher: string;
   publisherDate: string;
-  start: number;
+  star: number;
   image: string;
   gatheringId: number;
 };
+type BookReviewRating = 'SG' | 'NG' | 'NONE';
+export type BookReviewTag =
+  | 'BAD'
+  | 'CS'
+  | 'DP'
+  | 'FIND'
+  | 'FUN'
+  | 'KL'
+  | 'SAD'
+  | 'TIME';
 export type BookReview = {
   id: number;
-  userId: string;
+  userId: number;
   title: string;
-  apprCd: string;
+  apprCd: BookReviewRating;
   content: string;
   likes: number;
   createTime: string;
@@ -35,4 +45,13 @@ export type BookReview = {
   bookImage: string;
   userLikeCk?: boolean;
   commentCnt?: number;
+};
+export type BookReviewDetail = Omit<BookReview, 'bookImage'> & {
+  bookdId: number;
+  tagCd: string;
+  writerReviewCnt: number;
+  userName: string;
+};
+export type BookDetail = Omit<PendingBookReview, 'gatheringId'> & {
+  gatheringExists?: boolean;
 };

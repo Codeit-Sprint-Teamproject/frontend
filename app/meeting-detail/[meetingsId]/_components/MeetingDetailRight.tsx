@@ -3,6 +3,7 @@
 import { calculateEndDate } from '../_utils/calculateEndDate';
 import { calculateRemainingDays } from '../_utils/calculateRemainDays';
 import BookInfo from './BookInfo';
+import { formatDateForDetailPageHeader } from '@/app/_utils/dateFormatter';
 import { IMeetingDetail } from '@/app/types';
 import BookIcon from '@/public/BookIcon';
 import CalendarDotIcon from '@/public/CalendarDotIcon';
@@ -38,11 +39,15 @@ export default function MeetingDetailRight({ data }: IMeetingDetail) {
       <div className='h-[98px] flex flex-row justify-around items-center mt-10 bg-[#F8F8F8]'>
         <div className='w-full h-[90%] flex flex-col justify-center items-center text-xl border-r-[1px] border-[rgba(0, 0, 0, 0.10)]'>
           <span>시작일</span>
-          <span className='font-bold'>{data?.startDate}</span>
+          <span className='font-bold'>
+            {formatDateForDetailPageHeader(data?.startDate)}
+          </span>
         </div>
         <div className='w-full h-[90%] flex flex-col justify-center items-center text-xl'>
           <span>종료일</span>
-          <span className='font-bold'>{endDate}</span>
+          <span className='font-bold'>
+            {formatDateForDetailPageHeader(data?.endDate)}
+          </span>
         </div>
       </div>
       <h3 className='font-bold text-xl mt-10'>함께 읽을 책</h3>

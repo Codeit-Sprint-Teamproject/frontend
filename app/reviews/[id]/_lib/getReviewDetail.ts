@@ -3,7 +3,7 @@ import { BookDetail, BookReviewDetail } from '@/types/book';
 import { BookReviewComment } from '@/types/review';
 
 export type ReviewDetailResponse = {
-  bookReview?: BookReviewDetail;
+  bookReview: BookReviewDetail;
   bookResponse: BookDetail;
   commentList?: BookReviewComment[];
 };

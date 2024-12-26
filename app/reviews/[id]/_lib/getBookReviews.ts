@@ -2,7 +2,7 @@ import { fetchAPIClient } from '@/lib/fetchAPI.client';
 import { BookReviewByTitle } from '@/types/book';
 
 const size = 3;
-type BookReviewListResponse = {
+export type BookReviewListResponse = {
   bookReviews: BookReviewByTitle[];
   total: number;
 };

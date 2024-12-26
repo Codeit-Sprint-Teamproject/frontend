@@ -25,6 +25,7 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
         <div className='font-bold ml-[14px]'>{data?.owner}</div>
         <MeetingOwnerIcon width={16} height={16} className='ml-1' />
       </div>
+      {/* TODO (희원) 모임 참여하기 버튼 연결하기 */}
       <div className='h-[65px] mt-[21px]'>
         <button className='w-full h-full text-lg bg-gray-300 font-bold'>
           모임 참여하기
@@ -34,6 +35,7 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
         <InfoIcon width={14} height={14} />
         <span className='ml-2'>채팅방은 모임 시작일부터 입장 가능합니다.</span>
       </div>
+      {/* TODO (희원) 모임 공유하기, 찜하기 버튼 연결하기 */}
       <div className='h-[24px] flex flex-row justify-center items-center gap-6 mt-5'>
         <div className='flex flex-row gap-2'>
           <ShareIcon width={24} height={24} />

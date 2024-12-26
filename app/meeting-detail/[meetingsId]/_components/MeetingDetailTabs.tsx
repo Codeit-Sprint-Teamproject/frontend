@@ -13,7 +13,7 @@ export default function MeetingDetailTabs({ gatheringId }: MeetingInfo) {
 
   const tabs = [
     { id: 'meeting-info', title: '모임 소개' },
-    { id: 'meeting-reviews', title: '모임 리뷰' },
+    { id: 'meeting-reviews', title: '모임 후기' },
   ];
 
   return (

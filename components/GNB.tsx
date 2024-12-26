@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { fetchAPIClient } from '@/lib/fetchAPI.client';
 import Logo from '@/public/Logo';
+import useUserStore, { UserProps } from '@/store/userStore';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -16,9 +18,9 @@ const GNB = () => {
   const pathname = usePathname();
   const isAuthPage = pathname === '/auth/signup';
   const isSearchPage = pathname === '/search';
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const user = useUserStore((state) => state.user);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -60,7 +62,7 @@ const GNB = () => {
         />
       </div>
       {isLoggedIn ? (
-        <LoggedInMenu isSearchPage={isSearchPage} />
+        <LoggedInMenu user={user} isSearchPage={isSearchPage} />
       ) : (
         <LoggedOutMenu isSearchPage={isSearchPage} />
       )}
@@ -85,13 +87,18 @@ const NavButton = ({
         ? 'pointer-events-none after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-customGrey-800'
         : ''
     }`}
-    disabled={active}
   >
     <Link href={href}>{label}</Link>
   </Button>
 );
 
-const LoggedInMenu = ({ isSearchPage }: { isSearchPage: boolean }) => (
+const LoggedInMenu = ({
+  user,
+  isSearchPage,
+}: {
+  user: UserProps | null;
+  isSearchPage: boolean;
+}) => (
   <div className='flex items-center gap-6'>
     {!isSearchPage && <SearchBar />}
     <Link href='/mypage/meetings'>
@@ -99,7 +106,17 @@ const LoggedInMenu = ({ isSearchPage }: { isSearchPage: boolean }) => (
     </Link>
     <BellIcon className='h-7 w-7' />
     <Link href='/mypage'>
-      <Avatar width={32} height={32} />
+      {user?.profile ? (
+        <Image
+          src={user.profile}
+          alt='User Profile'
+          width={32}
+          height={32}
+          className='rounded-full'
+        />
+      ) : (
+        <Avatar width={32} height={32} />
+      )}
     </Link>
     <Button
       asChild

@@ -7,8 +7,11 @@ import BookInfo from './BookInfo';
 import { IMeetingInfo } from '@/app/types';
 import AvatarIcon from '@/public/AvatarIcon';
 import ChevronDownIcon from '@/public/ChevronDownIcon';
+import ChevronUpIcon from '@/public/ChevronUpIcon';
 import ClosedBookIcon from '@/public/ClosedBookIcon';
+import InfoIcon from '@/public/InfoIcon';
 
+// TODO (희원) 예상 독서량에 필요한 데이터가 API에 없는상태 : API수정되는대로 로직수정하고 아래주석제거
 // const expectedReadingAmount = targetTime * goalDays;
 
 interface MeetingInfoProps {
@@ -29,9 +32,9 @@ export default function MeetingInfo({ gatheringId }: MeetingInfoProps) {
       setMeetingInfo(data.result);
     }
   }, [data]);
+  console.log(meetingInfo);
 
   const [bookMoreInfoToggle, setBooMoreInfoToggle] = useState(false);
-  // const meetingDuration = 모임기간(일) / 7
 
   const bookMoreInfoButtonHandler = () => {
     setBooMoreInfoToggle(!bookMoreInfoToggle);
@@ -49,8 +52,11 @@ export default function MeetingInfo({ gatheringId }: MeetingInfoProps) {
   return (
     <>
       <div className='w-full'>
+        {/* TODO (희원) 모임기간에 대한 API데이터가 없음 : 백엔드에 요청완료, 수정되는대로 코드수정 */}
         <div>
-          <h2 className='text-2xl font-bold'>주 동안</h2>
+          <h2 className='text-2xl font-bold'>
+            {meetingInfo?.gatheringWeek}주 동안
+          </h2>
           <h2 className='text-2xl'>
             <span className='font-bold'></span>
             함께 읽어요
@@ -67,7 +73,10 @@ export default function MeetingInfo({ gatheringId }: MeetingInfoProps) {
           </div>
         </div>
         <div className='mt-[23px] border-b-[1px] border-[rgba(0, 0, 0, 0.10)]'>
-          <h6 className='text-18px font-bold'>책소개</h6>
+          <div className='flex flex-row gap-2'>
+            <h6 className='text-18px font-bold'>책소개</h6>
+            <InfoIcon width={24} height={24} />
+          </div>
           <div
             className={`relative mt-[10px] ${bookMoreInfoToggle ? '' : 'h-[70px] overflow-y-hidden'}`}
           >
@@ -79,17 +88,18 @@ export default function MeetingInfo({ gatheringId }: MeetingInfoProps) {
           {bookMoreInfoToggle ? (
             <div
               onClick={() => bookMoreInfoButtonHandler()}
-              className='cursor-pointer flex flex-row justify-end'
+              className='cursor-pointer flex flex-row justify-end mb-3'
             >
-              <span>접기</span>
-              <ChevronDownIcon width={24} height={24} />
+              <span className='mr-1'>접어두기</span>
+              <ChevronUpIcon width={24} height={24} />
             </div>
           ) : (
             <div
               onClick={() => bookMoreInfoButtonHandler()}
-              className='cursor-pointer flex flex-row justify-end'
+              className='cursor-pointer flex flex-row justify-end mb-3'
             >
-              <span>더보기</span>
+              <span className='mr-1'>더보기</span>
+              <ChevronDownIcon width={24} height={24} />
             </div>
           )}
         </div>
@@ -104,7 +114,7 @@ export default function MeetingInfo({ gatheringId }: MeetingInfoProps) {
         </div>
         <div className='pb-[28px] border-b-[1px] border-[rgba(0, 0, 0, 0.10)]'>
           <div className='mt-[40px] '>
-            <h6 className='text-[18px] font-bold'>독서 가이드</h6>
+            <h6 className='text-lg font-bold'>독서 가이드</h6>
             <div className='mt-[10px] py-[16px] px-[12px] gap-[7px] flex flex-col bg-[#F8F8F8] text-[18px]'>
               <div className='flex flex-row items-center justify-start gap-[6px] text-[14px] text-gray-400'>
                 <div className='flex flex-row py-[2px] px-[6px] rounded-[2px] bg-[#E0E0E0] gap-[4px] w-[45px] items-center justify-center'>
@@ -113,6 +123,8 @@ export default function MeetingInfo({ gatheringId }: MeetingInfoProps) {
                 </div>
                 <span>{meetingInfo?.bookTitle}</span>
               </div>
+              {/* TODO (희원) 전체 책페이지에 대한 API 데이터 없음 : 백엔드에
+              요청완료, 수정되는대로 아래 로직 완성 + 주석제거 */}
               {/* {expectedReadingAmount >= totalPages ? (
                 <span className='font-bold text-[18px]'>
                   모임 기간 안에 완독할 가능성이 높은 책이에요!
@@ -121,7 +133,10 @@ export default function MeetingInfo({ gatheringId }: MeetingInfoProps) {
                 <></>
               )} */}
               <span>전체 페이지 수 </span>
-              <span>기간 내 예상 독서량 364페이지 이상</span>
+              <div className='flex flex-row'>
+                <span className='mr-2'>기간 내 예상 독서량 364페이지 이상</span>
+                <InfoIcon width={24} height={24} color='#A9A9A9' />
+              </div>
             </div>
             <div className='mt-[20px] flex flex-col text-[18px]'>
               <span>

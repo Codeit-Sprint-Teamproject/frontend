@@ -34,6 +34,7 @@ export default function MeetingDetailRight({ data }: IMeetingDetail) {
         <CalendarDotIcon width={25} height={25} />
         <div>{meetingDuration}주 동안</div>
       </div>
+      {/* TODO (희원) 시작일, 종료일 날짜 데이터 출력하는 형식 변경  YYYY-MM-DD -> MM월 DD일 X요일 */}
       <div className='h-[98px] flex flex-row justify-around items-center mt-10 bg-[#F8F8F8]'>
         <div className='w-full h-[90%] flex flex-col justify-center items-center text-xl border-r-[1px] border-[rgba(0, 0, 0, 0.10)]'>
           <span>시작일</span>
@@ -53,6 +54,7 @@ export default function MeetingDetailRight({ data }: IMeetingDetail) {
         publishDate={data?.publishDate}
         star={data?.star}
       >
+        {/* TODO (희원) 독서 리뷰보러가기 : 독서 리뷰 페이지 연결하기 */}
         <button className='w-full h-[49px] mt-[7px] bg-[#CCCCCC] font-medium text-lg'>
           독서 리뷰 보러가기
         </button>

@@ -1,15 +1,21 @@
 import PageNext from '@/components/common/icons/PageNext';
-import PagePrev from '@/components/common/icons/PageNext';
+import PagePrev from '@/components/common/icons/PagePrev';
 
 type Props = {
   page: number;
   totalPage: number;
   onPageChange: (page: number) => void;
+  className?: string;
 };
 
-export default function Pagination({ page, totalPage, onPageChange }: Props) {
+export default function Pagination({
+  page,
+  totalPage,
+  onPageChange,
+  className,
+}: Props) {
   return (
-    <div className='flex justify-center gap-2 mt-20 absolute bottom-10 left-1/3'>
+    <div className={className}>
       <button onClick={() => onPageChange(page - 1)} disabled={!page}>
         <PagePrev className='w-8 h-8' />
       </button>

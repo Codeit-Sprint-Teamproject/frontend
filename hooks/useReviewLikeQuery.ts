@@ -3,6 +3,8 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
+import { BookReviewListResponse } from '@/app/reviews/[id]/_lib/getBookReviews';
+import { ReviewDetailResponse } from '@/app/reviews/[id]/_lib/getReviewDetail';
 import { ReviewPageResponse } from '@/app/reviews/_lib/getBestAndPendingReviews';
 import { BookReviewResponse } from '@/app/reviews/_lib/getFilteredBookReviews';
 import { toggleReviewLike } from '@/app/reviews/_lib/toggleReviewLike';
@@ -64,6 +66,37 @@ export const useReviewLikeQuery = (id: number) => {
               }
             }
           }
+          if (queryKey[1] === 'detail') {
+            const value: ReviewDetailResponse | undefined =
+              queryClient.getQueryData(queryKey);
+            if (value && value.bookReview) {
+              const snapshot = { ...value };
+              snapshot.bookReview = {
+                ...snapshot.bookReview,
+                userLikeCk: true,
+                likes: (snapshot.bookReview?.likes || 0) + 1,
+              };
+              queryClient.setQueryData(queryKey, snapshot);
+            }
+          }
+          if (queryKey[1] === 'book') {
+            const value: BookReviewListResponse | undefined =
+              queryClient.getQueryData(queryKey);
+            if (value && value.bookReviews) {
+              const index = value.bookReviews.findIndex((r) => r.id === id);
+
+              if (index > -1) {
+                const snapshot = { ...value };
+                value.bookReviews = [...value.bookReviews];
+                snapshot.bookReviews[index] = {
+                  ...snapshot.bookReviews[index],
+                  userLikeCk: true,
+                  likes: snapshot.bookReviews[index]?.likes + 1,
+                };
+                queryClient.setQueryData(queryKey, snapshot);
+              }
+            }
+          }
         }
       });
     },
@@ -114,6 +147,37 @@ export const useReviewLikeQuery = (id: number) => {
                   ...snapshot.bookReviews[index],
                   userLikeCk: false,
                   likes: snapshot.bookReviews[index].likes - 1,
+                };
+                queryClient.setQueryData(queryKey, snapshot);
+              }
+            }
+          }
+          if (queryKey[1] === 'detail') {
+            const value: ReviewDetailResponse | undefined =
+              queryClient.getQueryData(queryKey);
+            if (value && value.bookReview) {
+              const snapshot = { ...value };
+              snapshot.bookReview = {
+                ...snapshot.bookReview,
+                userLikeCk: false,
+                likes: (snapshot.bookReview?.likes || 0) - 1,
+              };
+              queryClient.setQueryData(queryKey, snapshot);
+            }
+          }
+          if (queryKey[1] === 'book') {
+            const value: BookReviewListResponse | undefined =
+              queryClient.getQueryData(queryKey);
+            if (value && value.bookReviews) {
+              const index = value.bookReviews.findIndex((r) => r.id === id);
+
+              if (index > -1) {
+                const snapshot = { ...value };
+                value.bookReviews = [...value.bookReviews];
+                snapshot.bookReviews[index] = {
+                  ...snapshot.bookReviews[index],
+                  userLikeCk: false,
+                  likes: snapshot.bookReviews[index]?.likes - 1,
                 };
                 queryClient.setQueryData(queryKey, snapshot);
               }
@@ -178,6 +242,37 @@ export const useReviewLikeQuery = (id: number) => {
               }
             }
           }
+          if (queryKey[1] === 'detail') {
+            const value: ReviewDetailResponse | undefined =
+              queryClient.getQueryData(queryKey);
+            if (value && value.bookReview) {
+              const snapshot = { ...value };
+              snapshot.bookReview = {
+                ...snapshot.bookReview,
+                userLikeCk: false,
+                likes: (snapshot.bookReview?.likes || 0) - 1,
+              };
+              queryClient.setQueryData(queryKey, snapshot);
+            }
+          }
+          if (queryKey[1] === 'book') {
+            const value: BookReviewListResponse | undefined =
+              queryClient.getQueryData(queryKey);
+            if (value && value.bookReviews) {
+              const index = value.bookReviews.findIndex((r) => r.id === id);
+
+              if (index > -1) {
+                const snapshot = { ...value };
+                value.bookReviews = [...value.bookReviews];
+                snapshot.bookReviews[index] = {
+                  ...snapshot.bookReviews[index],
+                  userLikeCk: false,
+                  likes: snapshot.bookReviews[index]?.likes - 1,
+                };
+                queryClient.setQueryData(queryKey, snapshot);
+              }
+            }
+          }
         }
       });
     },
@@ -229,6 +324,37 @@ export const useReviewLikeQuery = (id: number) => {
                   ...snapshot.bookReviews[index],
                   userLikeCk: true,
                   likes: snapshot.bookReviews[index].likes + 1,
+                };
+                queryClient.setQueryData(queryKey, snapshot);
+              }
+            }
+          }
+          if (queryKey[1] === 'detail') {
+            const value: ReviewDetailResponse | undefined =
+              queryClient.getQueryData(queryKey);
+            if (value && value.bookReview) {
+              const snapshot = { ...value };
+              snapshot.bookReview = {
+                ...snapshot.bookReview,
+                userLikeCk: true,
+                likes: (snapshot.bookReview?.likes || 0) + 1,
+              };
+              queryClient.setQueryData(queryKey, snapshot);
+            }
+          }
+          if (queryKey[1] === 'book') {
+            const value: BookReviewListResponse | undefined =
+              queryClient.getQueryData(queryKey);
+            if (value && value.bookReviews) {
+              const index = value.bookReviews.findIndex((r) => r.id === id);
+
+              if (index > -1) {
+                const snapshot = { ...value };
+                value.bookReviews = [...value.bookReviews];
+                snapshot.bookReviews[index] = {
+                  ...snapshot.bookReviews[index],
+                  userLikeCk: true,
+                  likes: snapshot.bookReviews[index]?.likes + 1,
                 };
                 queryClient.setQueryData(queryKey, snapshot);
               }

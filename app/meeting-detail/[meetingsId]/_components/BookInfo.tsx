@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Rating } from 'react-simple-star-rating';
 import Image from 'next/image';
 
 interface BookInfoProps {
@@ -32,17 +33,29 @@ const BookInfo = ({
               objectFit='cover'
             />
           </div>
-          <div className='ml-[18px]'>
+          <div className='w-[400px] ml-[18px] flex flex-col'>
             <span className='text-xl font-bold'>{bookTitle}</span>
-            <div className='grid grid-cols-[1fr_2fr] mt-[9px]'>
-              <span>저자</span>
-              <span className='ml-4'>{author}</span>
-              <span>출판</span>
-              <span className='ml-4'>{publisher}</span>
-              <span>발행일</span>
-              <span className='ml-4'>{publishDate}</span>
-              <span>평점</span>
-              <span className='ml-4'>☆☆☆☆☆ {`${star}`}</span>
+            <div className='flex flex-row'>
+              <div className='flex flex-col'>
+                <span>저자</span>
+                <span>출판</span>
+                <span>발행일</span>
+                <span>평점</span>
+              </div>
+              <div className='flex flex-col items-start'>
+                <span className='ml-4'>{author}</span>
+                <span className='ml-4'>{publisher}</span>
+                <span className='ml-4'>{publishDate}</span>
+                <div className='flex flex-row items-center gap-1'>
+                  <Rating
+                    size={20}
+                    readonly
+                    initialValue={star / 2}
+                    SVGstyle={{ display: 'inline' }}
+                  />
+                  {`${star}`}
+                </div>
+              </div>
             </div>
           </div>
         </div>

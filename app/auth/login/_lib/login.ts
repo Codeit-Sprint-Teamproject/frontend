@@ -3,18 +3,21 @@
 import { setCookie } from '../../_utils/cookie';
 import { validateLoginData } from './login-validation';
 import { fetchAPIServer } from '@/lib/fetchAPI.server';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
-export type State = {
-  error?: {
+export async function userLogIn(formData: FormData): Promise<{
+  user?: {
+    id: number;
+    name: string;
+    email: string;
+    profile: string | null;
+    roles: string;
+  };
+  errors?: {
     email?: string[];
     password?: string[];
   };
-  message: string | null;
-};
-
-export async function userLogIn(prevState: State, formData: FormData) {
+  message: string;
+}> {
   const validationResult = validateLoginData(formData);
 
   if (!validationResult.success) {
@@ -31,7 +34,6 @@ export async function userLogIn(prevState: State, formData: FormData) {
     password,
   });
 
-  console.log('test:', response);
   if (response.status !== 200) {
     try {
       const errorMessage = response.error?.message || '{}';
@@ -50,18 +52,36 @@ export async function userLogIn(prevState: State, formData: FormData) {
         message: translatedMessage,
       };
     } catch (e) {
-      console.error('JSON 파싱 오류:', e);
+      const errorMsg = e instanceof Error ? e.message : '알 수 없는 오류';
       return {
-        message: '로그인 실패: 알 수 없는 오류가 발생했습니다.',
+        message: `로그인 실패: ${errorMsg}`,
       };
     }
-  } else {
-    setCookie('token', response.result.token, {
-      httpOnly: false,
-      secure: true,
-      maxAge: 60 * 60 * 24 * 1,
-    });
-    revalidatePath('/');
-    redirect('/');
   }
+
+  const {
+    usersId,
+    userName,
+    email: userEmail,
+    profile,
+    roles,
+    token,
+  } = response.result;
+
+  setCookie('token', token, {
+    httpOnly: false,
+    secure: true,
+    maxAge: 60 * 60 * 24, // 1 day
+  });
+
+  return {
+    user: {
+      id: usersId,
+      name: userName,
+      email: userEmail,
+      profile,
+      roles,
+    },
+    message: '',
+  };
 }

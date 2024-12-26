@@ -55,3 +55,7 @@ export type BookReviewDetail = Omit<BookReview, 'bookImage'> & {
 export type BookDetail = Omit<PendingBookReview, 'gatheringId'> & {
   gatheringExists?: boolean;
 };
+export type BookReviewByTitle = Omit<
+  BookReview,
+  'apprCd' | 'userName' | 'bookImage'
+>;

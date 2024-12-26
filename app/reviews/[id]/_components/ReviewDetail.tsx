@@ -40,7 +40,7 @@ export default function ReviewDetail() {
     gatheringExists,
   } = bookResponse as BookDetail;
   return (
-    <section className='w-[700px] mt-[60px] ml-[190px]'>
+    <section className='w-[700px] ml-[190px]'>
       <div className='px-[30px] pt-8'>
         <div className='pb-5 border-b'>
           <h2 className='text-[32px] font-bold mb-4'>{reviewTitle}</h2>
@@ -61,7 +61,13 @@ export default function ReviewDetail() {
           <div className='text-lg w-[535px]'>{content}</div>
           <div className='border p-4 rounded-sm'>
             <div className='flex gap-2.5 mb-2.5'>
-              <Image src={image} width={95} height={140} alt='책 표지' />
+              <Image
+                src={image}
+                className='w-[95px] h-[140px]'
+                width={95}
+                height={140}
+                alt='책 표지'
+              />
               <div>
                 <h3 className='mb-2'>{title}</h3>
                 <p className='text-customGrey-500'>

@@ -2,7 +2,7 @@ import { fetchAPIServer } from '@/lib/fetchAPI.server';
 import { BookDetail, BookReviewDetail } from '@/types/book';
 import { BookReviewComment } from '@/types/review';
 
-type ReviewDetailResponse = {
+export type ReviewDetailResponse = {
   bookReview?: BookReviewDetail;
   bookResponse: BookDetail;
   commentList?: BookReviewComment[];

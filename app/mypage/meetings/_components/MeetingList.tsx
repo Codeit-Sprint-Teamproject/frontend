@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import Meeting from './Meeting';
-import Pagination from './Pagination';
 import { useTabContext } from './TabContext';
+import Pagination from '@/components/Pagination';
 import { useMyMeetingCountQuery } from '@/hooks/useMyMeetingCountQuery';
 import { useMyMeetingQuery } from '@/hooks/useMyMeetingQuery';
 import { MyMeetingCount } from '@/types/meeting';
@@ -36,7 +36,12 @@ export default function MeetingList() {
           <Meeting key={meeting.id} meeting={meeting} />
         ))}
       </div>
-      <Pagination page={page} totalPage={totalPage} onPageChange={setPage} />
+      <Pagination
+        page={page}
+        totalPage={totalPage}
+        onPageChange={setPage}
+        className='flex justify-center gap-2 mt-20 absolute bottom-10 left-1/3'
+      />
     </div>
   );
 }

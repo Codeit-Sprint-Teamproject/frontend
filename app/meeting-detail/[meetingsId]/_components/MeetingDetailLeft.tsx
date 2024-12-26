@@ -5,8 +5,33 @@ import MeetingOwnerIcon from '@/public/MeetingOwnerIcon';
 import ShareIcon from '@/public/ShareIcon';
 import UserIcon from '@/public/UserIcon';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 export default function MeetingDetailLeft({ data }: IMeetingDetail) {
+  const pathname = usePathname();
+
+  const meetingJoinBtnHandler = () => {
+    alert('모임 참여버튼 클릭');
+  };
+
+  const meetingShareBtnHandler = () => {
+    const baseurl = window.location.origin;
+    const fullUrl = `${baseurl}${pathname}`;
+    navigator.clipboard
+      .writeText(fullUrl)
+      .then(() => {
+        alert('모임 링크가 클립보드에 복사되었습니다!');
+      })
+      .catch((error) => {
+        console.error('URL 복사 중 오류 발생:', error);
+        alert('모임 링크 복사에 실패했습니다. 다시 시도해주세요.');
+      });
+  };
+
+  const meetingBookmarkBtnHandler = () => {
+    alert('모임 찜버튼 클릭');
+  };
+
   return (
     <div className='w-[336px] sticky top-0 flex flex-col'>
       <div className='h-[189px] flex justify-center items-center relative bg-gray-300'>
@@ -27,7 +52,10 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
       </div>
       {/* TODO (희원) 모임 참여하기 버튼 연결하기 */}
       <div className='h-[65px] mt-[21px]'>
-        <button className='w-full h-full text-lg bg-gray-300 font-bold'>
+        <button
+          className='w-full h-full text-lg bg-gray-300 font-bold'
+          onClick={meetingJoinBtnHandler}
+        >
           모임 참여하기
         </button>
       </div>
@@ -37,11 +65,17 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
       </div>
       {/* TODO (희원) 모임 공유하기, 찜하기 버튼 연결하기 */}
       <div className='h-[24px] flex flex-row justify-center items-center gap-6 mt-5'>
-        <div className='flex flex-row gap-2'>
+        <div
+          className='flex flex-row gap-2 cursor-pointer'
+          onClick={meetingShareBtnHandler}
+        >
           <ShareIcon width={24} height={24} />
           <span>공유하기</span>
         </div>
-        <div className='flex flex-row gap-2'>
+        <div
+          className='flex flex-row gap-2 cursor-pointer'
+          onClick={meetingBookmarkBtnHandler}
+        >
           <HeartIcon width={25} height={25} />
           <span>찜하기</span>
         </div>

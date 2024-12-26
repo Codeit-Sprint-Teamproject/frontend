@@ -19,7 +19,7 @@ export default function ReviewDetail() {
     queryFn: () => getReviewDetail(Number(id)),
     staleTime: 60 * 1000,
   });
-  const { likeMutation, unlikeMutation } = useReviewLikeQuery(Number(id));
+  const { handleLike } = useReviewLikeQuery(Number(id));
   if (!review) return null;
   const { bookReview, bookResponse, commentList } = review;
   const {
@@ -41,13 +41,7 @@ export default function ReviewDetail() {
     star,
     gatheringExists,
   } = bookResponse as BookDetail;
-  const handleLike = () => {
-    if (userLikeCk) {
-      unlikeMutation();
-    } else {
-      likeMutation();
-    }
-  };
+
   return (
     <section className='w-[700px] ml-[190px]'>
       <div className='px-[30px] pt-8'>
@@ -118,7 +112,7 @@ export default function ReviewDetail() {
         </div>
         <div className='flex gap-5 mt-6 mb-5'>
           <div className='flex gap-1'>
-            <button onClick={handleLike}>
+            <button onClick={() => handleLike(userLikeCk as boolean)}>
               <LikeIcon
                 className={`w-5 h-5 ${userLikeCk ? 'fill-black' : ''}`}
               />

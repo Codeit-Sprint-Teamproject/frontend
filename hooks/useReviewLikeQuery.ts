@@ -364,6 +364,13 @@ export const useReviewLikeQuery = (id: number) => {
       });
     },
   });
+  const handleLike = (isLike: boolean) => {
+    if (isLike) {
+      unlikeMutation();
+    } else {
+      likeMutation();
+    }
+  };
 
-  return { likeMutation, unlikeMutation };
+  return { handleLike };
 };

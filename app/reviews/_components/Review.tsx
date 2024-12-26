@@ -15,15 +15,8 @@ export default function Review({ review }: { review: BookReview }) {
     commentCnt,
     userLikeCk,
   } = review;
-  const { likeMutation, unlikeMutation } = useReviewLikeQuery(id);
+  const { handleLike } = useReviewLikeQuery(id);
 
-  const handleLike = () => {
-    if (userLikeCk) {
-      unlikeMutation();
-    } else {
-      likeMutation();
-    }
-  };
   return (
     <div className='border w-[520px]'>
       <div className='flex items-center  justify-between px-5'>
@@ -51,7 +44,7 @@ export default function Review({ review }: { review: BookReview }) {
         </div>
         <div className='flex gap-5'>
           <div className='flex gap-1'>
-            <button onClick={handleLike}>
+            <button onClick={() => handleLike(userLikeCk as boolean)}>
               <LikeIcon
                 className={`w-5 h-5 ${userLikeCk ? 'fill-black' : ''}`}
               />

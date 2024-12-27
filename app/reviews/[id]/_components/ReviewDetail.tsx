@@ -3,12 +3,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { ReviewDetailResponse, getReviewDetail } from '../_lib/getReviewDetail';
 import CommentList from './CommentList';
+import DropDown from './DropDown';
 import GatheringAction from './GatheringAction';
 import ReviewTag from './ReviewTag';
 import CommentIcon from '@/app/reviews/_svg/CommentIcon';
 import LikeIcon from '@/app/reviews/_svg/LikeIcon';
-import MoreIcon from '@/components/common/icons/MoreIcon';
 import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
+import { useReviewQuery } from '@/hooks/useReviewQuery';
+import useUserStore from '@/store/userStore';
 import { BookDetail, BookReviewDetail } from '@/types/book';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -19,8 +21,17 @@ export default function ReviewDetail() {
     queryKey: ['reviews', 'detail', id],
     queryFn: () => getReviewDetail(Number(id)),
     staleTime: 60 * 1000,
+    enabled: !!id,
   });
+  const { user } = useUserStore();
   const { handleLike } = useReviewLikeQuery(Number(id));
+  const { deleteReviewMutate } = useReviewQuery();
+  const handleDelete = () => {
+    if (window.confirm('삭제된 글은 복구할 수 없습니다. 삭제하시겠습니까?')) {
+      console.log('삭제');
+      deleteReviewMutate(Number(id));
+    }
+  };
   if (!review) return null;
   const { bookReview, bookResponse, commentList } = review;
   const {
@@ -56,9 +67,7 @@ export default function ReviewDetail() {
                 {createTime.replace(/-/g, '.')}
               </p>
             </div>
-            <button>
-              <MoreIcon className='w-6 h-6 stroke-customGrey-300' />
-            </button>
+            {user?.name === userName && <DropDown onDelete={handleDelete} />}
           </div>
         </div>
         <div className='flex flex-col gap-8 px-7.5 py-5'>

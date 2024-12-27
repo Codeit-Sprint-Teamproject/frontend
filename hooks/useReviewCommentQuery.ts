@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addComment } from '@/app/reviews/[id]/_lib/comment';
+import { addComment, deleteComment } from '@/app/reviews/[id]/_lib/comment';
 
 export const useReveiwCommentQuery = () => {
   const queryClient = useQueryClient();
@@ -10,6 +10,12 @@ export const useReveiwCommentQuery = () => {
       queryClient.invalidateQueries({ queryKey: ['reviews'] });
     },
   });
+  const { mutate: deleteCommentMutate } = useMutation({
+    mutationFn: (id: number) => deleteComment(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reviews'] });
+    },
+  });
 
-  return { addCommentMutate };
+  return { addCommentMutate, deleteCommentMutate };
 };

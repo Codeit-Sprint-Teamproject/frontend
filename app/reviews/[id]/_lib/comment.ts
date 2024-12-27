@@ -7,3 +7,6 @@ export const addComment = async (reviewId: number, content: string) => {
     parent: 0,
   });
 };
+export const deleteComment = async (id: number) => {
+  return await fetchAPIClient(`/api/review/${id}/comment`, 'DELETE');
+};

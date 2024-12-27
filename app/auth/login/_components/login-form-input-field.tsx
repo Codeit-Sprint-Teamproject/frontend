@@ -27,7 +27,7 @@ export const FormInputField = ({
     <div className='relative flex flex-col gap-2'>
       <Input
         className={`w-[380px] h-11 px-2.5 py-1.5 text-sm rounded-lg focus-visible:ring-transparent transition-all ${
-          errors.length && 'border-red-600 focus:border-red-600'
+          errors.length && 'border-customRed '
         }`}
         id={id}
         name={name}

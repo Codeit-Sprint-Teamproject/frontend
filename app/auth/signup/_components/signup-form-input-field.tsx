@@ -26,7 +26,7 @@ export const FormInputField = ({
 
   const getColorClass = (errorCondition: boolean, isInitial: boolean) => {
     if (isInitial) return 'text-gray-500';
-    return errorCondition ? 'text-error' : 'text-green-500';
+    return errorCondition ? 'text-customRed' : 'text-customGreen-500';
   };
 
   const getIcon = (errorCondition: boolean, isInitial: boolean) => {
@@ -55,8 +55,8 @@ export const FormInputField = ({
         className={`w-[380px] h-11 px-2.5 py-1.5 rounded-lg focus-visible:ring-transparent transition-all ${
           errors.length
             ? errors.includes('사용 가능합니다.')
-              ? 'border border-green-500 focus:border-green-500'
-              : 'border border-red-600 focus:border-red-600'
+              ? 'border border-customGreen-500 focus:border-customGreen-500'
+              : 'border border-customRed focus:border-customRed'
             : 'border border-gray-300'
         }`}
         id={id}
@@ -97,7 +97,9 @@ export const FormInputField = ({
             <p
               key={error}
               className={`flex items-center gap-1.5 text-sm font-normal ${
-                error === '사용 가능합니다.' ? 'text-green-500' : 'text-error'
+                error === '사용 가능합니다.'
+                  ? 'text-customGreen-500'
+                  : 'text-customRed'
               }`}
             >
               {React.createElement(
@@ -105,8 +107,8 @@ export const FormInputField = ({
                 {
                   className: `w-4 h-4 ${
                     error === '사용 가능합니다.'
-                      ? 'text-green-500'
-                      : 'text-error'
+                      ? 'text-customGreen-500'
+                      : 'text-customRed'
                   }`,
                 },
               )}

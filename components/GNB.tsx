@@ -16,7 +16,6 @@ import { usePathname } from 'next/navigation';
 
 const GNB = () => {
   const pathname = usePathname();
-  const isAuthPage = pathname === '/auth/signup';
   const isSearchPage = pathname === '/search';
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -38,28 +37,20 @@ const GNB = () => {
 
   if (loading) return <GNB.Skeleton />;
 
-  if (isAuthPage) {
-    return (
-      <div className='sticky top-0 z-10 flex h-[72px] w-full items-center justify-between border-b bg-white px-[190px] py-[11px]'>
-        <Link href='/'>
-          <Logo />
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div className='sticky top-0 z-[2] flex h-[72px] w-full items-center justify-between border-b bg-white px-[190px]'>
       <div className='flex h-full items-center justify-center gap-[60px]'>
         <Link href='/'>
           <Logo />
         </Link>
-        <NavButton label='모임 찾기' href='/' active={pathname === '/'} />
-        <NavButton
-          label='독서 리뷰'
-          href='/reviews'
-          active={pathname === '/reviews'}
-        />
+        <div className='flex gap-10 h-full'>
+          <NavButton label='모임 찾기' href='/' active={pathname === '/'} />
+          <NavButton
+            label='독서 리뷰'
+            href='/reviews'
+            active={pathname === '/reviews'}
+          />
+        </div>
       </div>
       {isLoggedIn ? (
         <LoggedInMenu user={user} isSearchPage={isSearchPage} />
@@ -82,7 +73,7 @@ const NavButton = ({
   <Button
     asChild
     variant='ghost'
-    className={`relative h-full text-[16px] font-bold text-customGrey-800 ${
+    className={`relative h-full px-1 text-[16px] font-bold text-customGrey-800 ${
       active
         ? 'pointer-events-none after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-customGrey-800'
         : ''

@@ -50,13 +50,9 @@ export const LoginFormInput = ({ errors }: FormInputProps) => {
             type='button'
           >
             {showPassword ? (
-              <EyeIcon
-                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
-              />
+              <EyeIconClosed className='h-6 w-6 text-customGrey-300' />
             ) : (
-              <EyeIconClosed
-                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
-              />
+              <EyeIcon className='h-6 w-6 text-customGrey-300' />
             )}
           </button>
         </div>

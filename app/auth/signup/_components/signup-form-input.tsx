@@ -71,13 +71,9 @@ export const SignupFormInput = ({
             type='button'
           >
             {showPassword ? (
-              <EyeIcon
-                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
-              />
+              <EyeIconClosed className='h-6 w-6 text-customGrey-300' />
             ) : (
-              <EyeIconClosed
-                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
-              />
+              <EyeIcon className='h-6 w-6 text-customGrey-300' />
             )}
           </button>
         </div>
@@ -99,20 +95,16 @@ export const SignupFormInput = ({
             type='button'
           >
             {showPassword ? (
-              <EyeIcon
-                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
-              />
+              <EyeIconClosed className='h-6 w-6 text-customGrey-300' />
             ) : (
-              <EyeIconClosed
-                className={`transition-all duration-300 h-6 w-6 ${showPassword ? 'text-gray-700' : 'text-gray-400'}`}
-              />
+              <EyeIcon className='h-6 w-6 text-customGrey-300' />
             )}
           </button>
         </div>
       </div>
       <div>
         <p className='text-lg font-bold mb-3'>닉네임</p>
-        <div className='flex space-x-2 mb-[30px] relative '>
+        <div className='flex space-x-2 relative '>
           <FormInputField
             id='userName'
             name='userName'

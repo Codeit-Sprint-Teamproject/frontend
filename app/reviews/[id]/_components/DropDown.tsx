@@ -9,8 +9,9 @@ import {
 
 type Props = {
   onDelete: () => void;
+  onUpdate: () => void;
 };
-export default function DropDown({ onDelete }: Props) {
+export default function DropDown({ onDelete, onUpdate }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -19,7 +20,10 @@ export default function DropDown({ onDelete }: Props) {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-[108px] border px-1.5 py-2 flex flex-col items-center gap-3 bg-white rounded-sm overflow-hidden'>
-        <DropdownMenuItem className='outline-none cursor-pointer hover:bg-customGrey-50'>
+        <DropdownMenuItem
+          className='outline-none cursor-pointer hover:bg-customGrey-50'
+          onClick={onUpdate}
+        >
           수정하기
         </DropdownMenuItem>
         <DropdownMenuSeparator className='w-full border' />

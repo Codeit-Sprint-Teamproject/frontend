@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import CommentInput from './CommentInput';
 import ConfirmModal from './ConfirmModal';
 import DropDown from './DropDown';
 import Avatar from '@/components/common/icons/Avatar';
@@ -11,10 +13,11 @@ type Props = {
   comment: BookReviewComment;
 };
 export default function CommentItem({ comment }: Props) {
+  const [isEditing, setIsEditing] = useState(false);
   const { user } = useUserStore();
   const { id, userName, content, createTime, profile } = comment;
   const { openModal } = useModalStore();
-  const { deleteCommentMutate } = useReveiwCommentQuery();
+  const { deleteCommentMutate, updateCommentMutate } = useReveiwCommentQuery();
   const handleDelete = () => {
     openModal(
       <ConfirmModal
@@ -23,6 +26,27 @@ export default function CommentItem({ comment }: Props) {
       />,
     );
   };
+  const handleUpdate = (text: string) => {
+    const updated = {
+      commentId: comment?.id as number,
+      reviewId: id,
+      content: text,
+    };
+    const options = {
+      onSuccess: () => setIsEditing(false),
+    };
+    updateCommentMutate(updated, options);
+  };
+  if (isEditing)
+    return (
+      <CommentInput
+        id={id}
+        isEditing={isEditing}
+        comment={comment}
+        onUpdate={handleUpdate}
+        onCancel={() => setIsEditing(false)}
+      />
+    );
   return (
     <li className='py-4 border-b last:border-none'>
       <div className='flex justify-between'>
@@ -34,7 +58,12 @@ export default function CommentItem({ comment }: Props) {
           )}
           <p>{userName}</p>
         </div>
-        {user?.name === userName && <DropDown onDelete={handleDelete} />}
+        {user?.name === userName && (
+          <DropDown
+            onDelete={handleDelete}
+            onUpdate={() => setIsEditing(true)}
+          />
+        )}
       </div>
       <div className='flex flex-col gap-2.5 ml-10'>
         {content}

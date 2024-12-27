@@ -1,17 +1,34 @@
+import { postJoinMeeting } from '../_lib/meetingDetail';
 import { IMeetingDetail } from '@/app/types';
 import HeartIcon from '@/public/HeartIcon';
 import InfoIcon from '@/public/InfoIcon';
 import MeetingOwnerIcon from '@/public/MeetingOwnerIcon';
 import ShareIcon from '@/public/ShareIcon';
 import UserIcon from '@/public/UserIcon';
+import Error from 'next/error';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+
+interface ExtendedError extends Error {
+  message: string;
+  code?: string;
+}
 
 export default function MeetingDetailLeft({ data }: IMeetingDetail) {
   const pathname = usePathname();
 
-  const meetingJoinBtnHandler = () => {
-    alert('모임 참여버튼 클릭');
+  const meetingJoinBtnHandler = async () => {
+    try {
+      await postJoinMeeting(data.id);
+      alert('모임에 성공적으로 참여하였습니다!');
+    } catch (error) {
+      const err = error as ExtendedError;
+      if (err.message.includes('ALREADY_JOINED')) {
+        alert('이미 이 모임에 참여 중입니다.');
+        return;
+      }
+      alert(`에러 발생 : ${err.message}`);
+    }
   };
 
   const meetingShareBtnHandler = () => {

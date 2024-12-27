@@ -1,5 +1,3 @@
-'use client';
-
 import { calculateEndDate } from '../_utils/calculateEndDate';
 import { calculateRemainingDays } from '../_utils/calculateRemainDays';
 import BookInfo from './BookInfo';
@@ -16,6 +14,11 @@ export default function MeetingDetailRight({ data }: IMeetingDetail) {
   );
   const remainDays = calculateRemainingDays(endDate);
   const meetingDuration = data.gatheringWeek / 7;
+
+  // TODO (희원) 통합검색 API준비되면 연결할 예정
+  const bookReviewBtnHandler = () => {
+    alert('독서 리뷰 페이지로 이동');
+  };
 
   return (
     <div className='w-[654px] min-h-[600px] rounded-[4px] border-[1px] py-[23px] px-[24px] border-[rgba(0,0,0,0.3)] flex flex-col '>
@@ -35,7 +38,7 @@ export default function MeetingDetailRight({ data }: IMeetingDetail) {
         <CalendarDotIcon width={25} height={25} />
         <div>{meetingDuration}주 동안</div>
       </div>
-      <div className='h-[98px] flex flex-row justify-around items-center mt-10 bg-[#F8F8F8]'>
+      <div className='h-[98px] flex flex-row justify-around items-center mt-4 bg-[#F8F8F8]'>
         <div className='w-full h-[90%] flex flex-col justify-center items-center text-xl border-r-[1px] border-[rgba(0, 0, 0, 0.10)]'>
           <span>시작일</span>
           <span className='font-bold'>
@@ -58,8 +61,10 @@ export default function MeetingDetailRight({ data }: IMeetingDetail) {
         publishDate={data?.publishDate}
         star={data?.star}
       >
-        {/* TODO (희원) 독서 리뷰보러가기 : 독서 리뷰 페이지 연결하기 */}
-        <button className='w-full h-[49px] mt-[7px] bg-[#CCCCCC] font-medium text-lg'>
+        <button
+          className='w-full h-[49px] mt-[7px] bg-[#CCCCCC] font-medium text-lg'
+          onClick={bookReviewBtnHandler}
+        >
           독서 리뷰 보러가기
         </button>
       </BookInfo>

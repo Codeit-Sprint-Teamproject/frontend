@@ -1,4 +1,4 @@
-import { postJoinMeeting } from '../_lib/meetingDetail';
+import { postJoinMeeting, postWishMeeting } from '../_lib/meetingDetail';
 import { IMeetingDetail } from '@/app/types';
 import HeartIcon from '@/public/HeartIcon';
 import InfoIcon from '@/public/InfoIcon';
@@ -45,8 +45,13 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
       });
   };
 
-  const meetingBookmarkBtnHandler = () => {
-    alert('모임 찜버튼 클릭');
+  const meetingBookmarkBtnHandler = async () => {
+    try {
+      await postWishMeeting(data.id);
+      alert('모임을 성공적으로 찜했습니다!');
+    } catch (error) {
+      alert(`에러 발생 : ${error}`);
+    }
   };
 
   return (
@@ -67,7 +72,6 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
         <div className='font-bold ml-[14px]'>{data?.owner}</div>
         <MeetingOwnerIcon width={16} height={16} className='ml-1' />
       </div>
-      {/* TODO (희원) 모임 참여하기 버튼 연결하기 */}
       <div className='h-[65px] mt-[21px]'>
         <button
           className='w-full h-full text-lg bg-gray-300 font-bold'
@@ -80,7 +84,6 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
         <InfoIcon width={14} height={14} />
         <span className='ml-2'>채팅방은 모임 시작일부터 입장 가능합니다.</span>
       </div>
-      {/* TODO (희원) 모임 공유하기, 찜하기 버튼 연결하기 */}
       <div className='h-[24px] flex flex-row justify-center items-center gap-6 mt-5'>
         <div
           className='flex flex-row gap-2 cursor-pointer'

@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { ReviewDetailResponse, getReviewDetail } from '../_lib/getReviewDetail';
 import CommentList from './CommentList';
+import GatheringAction from './GatheringAction';
 import ReviewTag from './ReviewTag';
 import CommentIcon from '@/app/reviews/_svg/CommentIcon';
 import LikeIcon from '@/app/reviews/_svg/LikeIcon';
@@ -88,16 +89,7 @@ export default function ReviewDetail() {
                 </p>
               </div>
             </div>
-            {gatheringExists && (
-              <div className='flex justify-between items-center w-full h-14 bg-customGrey-50 p-2 rounded-[2px]'>
-                <p className='text-customGrey-800'>
-                  현재 모집 중인 모임이 있어요.
-                </p>
-                <button className='px-3 py-2 bg-customGreen-50 text-customGreen-600 rounded-sm'>
-                  보러 가기
-                </button>
-              </div>
-            )}
+            <GatheringAction status={gatheringExists as boolean} />
           </div>
         </div>
         <div>

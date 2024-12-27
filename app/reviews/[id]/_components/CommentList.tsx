@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getReviewDetail } from '../_lib/getReviewDetail';
+import CommentInput from './CommentInput';
 import Avatar from '@/components/common/icons/Avatar';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -18,20 +19,7 @@ export default function CommentList() {
         <h3 className='text-lg font-bold'>
           댓글 {review?.commentList?.length}
         </h3>
-        <div className='flex flex-col gap-3 border p-5 rounded-sm'>
-          <div className='flex gap-2'>
-            <div className='w-8 h-8 bg-[#D9D9D9] rounded-full'></div>
-            <p>jenny</p>
-          </div>
-          <input
-            type='text'
-            className='w-full mb-2.5 placeholder-customGrey-300'
-            placeholder='리뷰에 대한 댓글을 남겨보세요'
-          />
-          <button className='ml-auto px-3 py-2 bg-customGrey-100 text-customGrey-300 rounded-sm'>
-            댓글 작성
-          </button>
-        </div>
+        <CommentInput />
       </div>
       <ul>
         {review?.commentList?.map(

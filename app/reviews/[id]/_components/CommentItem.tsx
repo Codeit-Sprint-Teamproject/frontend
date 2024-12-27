@@ -1,6 +1,8 @@
+import ConfirmModal from './ConfirmModal';
 import DropDown from './DropDown';
 import Avatar from '@/components/common/icons/Avatar';
 import { useReveiwCommentQuery } from '@/hooks/useReviewCommentQuery';
+import { useModalStore } from '@/store/modal';
 import useUserStore from '@/store/userStore';
 import { BookReviewComment } from '@/types/review';
 import Image from 'next/image';
@@ -11,14 +13,15 @@ type Props = {
 export default function CommentItem({ comment }: Props) {
   const { user } = useUserStore();
   const { id, userName, content, createTime, profile } = comment;
+  const { openModal } = useModalStore();
   const { deleteCommentMutate } = useReveiwCommentQuery();
   const handleDelete = () => {
-    if (
-      window.confirm('삭제된 댓글글은 복구할 수 없습니다. 삭제하시겠습니까?')
-    ) {
-      deleteCommentMutate(id);
-    } else {
-    }
+    openModal(
+      <ConfirmModal
+        title='댓글을 삭제 하시겠습니까?'
+        onDelete={() => deleteCommentMutate(Number(id))}
+      />,
+    );
   };
   return (
     <li className='py-4 border-b last:border-none'>

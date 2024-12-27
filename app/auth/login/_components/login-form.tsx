@@ -45,7 +45,7 @@ export const LoginForm = () => {
           )}
         </div>
       </div>
-      <div className='flex flex-col mt-[32px] gap-5'>
+      <div className='flex flex-col mt-2 gap-5'>
         <FormButton
           disabled={false}
           className='w-full h-12 p-2.5 text-base font-bold bg-black text-white rounded'

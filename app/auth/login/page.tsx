@@ -1,12 +1,13 @@
 import { LoginForm } from './_components/login-form';
+import Logo from '@/public/Logo';
 
 export default function LoginPage() {
   return (
-    <div className='flex flex-col justify-center items-center mt-[72px]'>
-      <p className='mb-2.5 text-base font-medium'>
-        모여서 읽고 싶은 지금, 모읽지
-      </p>
-      <h2 className='text-2xl font-bold mb-12'>로그인</h2>
+    <div className='flex flex-col justify-center items-center mt-[70px]'>
+      <p className='mb-3 text-[14px] font-medium'>모여서 읽고 싶은 지금</p>
+      <span className='mb-[51px]'>
+        <Logo />
+      </span>
       <LoginForm />
     </div>
   );

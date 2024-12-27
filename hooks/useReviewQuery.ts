@@ -1,11 +1,20 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteBookReview } from '@/app/reviews/[id]/_lib/deleteBookReview';
+import {
+  ReviewDetailResponse,
+  getReviewDetail,
+} from '@/app/reviews/[id]/_lib/getReviewDetail';
 import { useRouter } from 'next/navigation';
 
-export const useReviewQuery = () => {
+export const useReviewQuery = (id: string) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-
+  const { data: review } = useQuery<ReviewDetailResponse>({
+    queryKey: ['reviews', 'detail', id],
+    queryFn: () => getReviewDetail(Number(id)),
+    staleTime: 60 * 1000,
+    enabled: !!id,
+  });
   const { mutate: deleteReviewMutate } = useMutation({
     mutationFn: (id: number) => deleteBookReview(id),
     onSuccess: () => {
@@ -16,5 +25,5 @@ export const useReviewQuery = () => {
     },
   });
 
-  return { deleteReviewMutate };
+  return { review, deleteReviewMutate };
 };

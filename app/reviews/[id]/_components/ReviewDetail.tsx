@@ -1,7 +1,5 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { ReviewDetailResponse, getReviewDetail } from '../_lib/getReviewDetail';
 import CommentList from './CommentList';
 import ConfirmModal from './ConfirmModal';
 import DropDown from './DropDown';
@@ -20,16 +18,11 @@ import { useParams } from 'next/navigation';
 
 export default function ReviewDetail() {
   const { id } = useParams();
-  const { data: review } = useQuery<ReviewDetailResponse>({
-    queryKey: ['reviews', 'detail', id],
-    queryFn: () => getReviewDetail(Number(id)),
-    staleTime: 60 * 1000,
-    enabled: !!id,
-  });
+  const { review, deleteReviewMutate } = useReviewQuery(id as string);
   const { user } = useUserStore();
   const { handleLike } = useReviewLikeQuery(Number(id));
   const { isOpen, openModal } = useModalStore();
-  const { deleteReviewMutate } = useReviewQuery();
+
   const handleDelete = () => {
     openModal(
       <ConfirmModal

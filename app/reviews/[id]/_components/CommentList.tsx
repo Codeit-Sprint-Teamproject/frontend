@@ -1,16 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
-import { getReviewDetail } from '../_lib/getReviewDetail';
+'use client';
+
 import CommentInput from './CommentInput';
 import CommentItem from './CommentItem';
+import { useReviewQuery } from '@/hooks/useReviewQuery';
 import { useParams } from 'next/navigation';
 
 export default function CommentList() {
   const { id } = useParams();
-  const { data: review } = useQuery({
-    queryKey: ['reviews', 'detail', id],
-    queryFn: () => getReviewDetail(Number(id)),
-    staleTime: 60 * 1000,
-  });
+  const { review } = useReviewQuery(id as string);
 
   return (
     <div className='pt-5 border-t'>

@@ -4,16 +4,8 @@ import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
 import { BookReviewByTitle } from '@/types/book';
 
 export default function ReviewCard({ review }: { review: BookReviewByTitle }) {
-  const { likeMutation, unlikeMutation } = useReviewLikeQuery(review.id);
+  const { handleLike } = useReviewLikeQuery(review.id);
   const { title, content, likes, commentCnt, userLikeCk } = review;
-
-  const handleLike = () => {
-    if (userLikeCk) {
-      unlikeMutation();
-    } else {
-      likeMutation();
-    }
-  };
 
   return (
     <li className='flex flex-col gap-2 py-5 border-b'>
@@ -21,7 +13,7 @@ export default function ReviewCard({ review }: { review: BookReviewByTitle }) {
       <div className='w-[287px] h-12 line-clamp-2'>{content}</div>
       <div className='flex gap-5 mt-2'>
         <div className='flex gap-1'>
-          <button onClick={handleLike}>
+          <button onClick={() => handleLike(userLikeCk as boolean)}>
             <LikeIcon className={`w-5 h-5 ${userLikeCk ? 'fill-black' : ''}`} />
           </button>
           <p>{likes}</p>

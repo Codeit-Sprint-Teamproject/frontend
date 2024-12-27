@@ -17,11 +17,11 @@ export default function Pagination({
   return (
     <div className={className}>
       <button onClick={() => onPageChange(page - 1)} disabled={!page}>
-        <PagePrev className='w-8 h-8' />
+        <PagePrev className='w-6 h-6' />
       </button>
       {Array.from({ length: totalPage }, (_, index) => (
         <button
-          className={`p-2 ${page === index ? 'font-bold' : ''}`}
+          className={`p-2 ${page === index ? 'font-bold text-customGreen-500' : 'text-customGrey-500'}`}
           key={index}
           onClick={() => onPageChange(index)}
         >
@@ -32,7 +32,7 @@ export default function Pagination({
         onClick={() => onPageChange(page + 1)}
         disabled={page === totalPage - 1}
       >
-        <PageNext className='w-8 h-8' />
+        <PageNext className='w-6 h-6' />
       </button>
     </div>
   );

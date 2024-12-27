@@ -15,14 +15,8 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
     commentCnt,
     userLikeCk,
   } = review;
-  const { likeMutation, unlikeMutation } = useReviewLikeQuery(id);
-  const handleLike = () => {
-    if (userLikeCk) {
-      unlikeMutation();
-    } else {
-      likeMutation();
-    }
-  };
+  const { handleLike } = useReviewLikeQuery(id);
+
   return (
     <div className='flex flex-col gap-5 w-[522px]  bg-customGreen-50 px-4 py-5'>
       <div className='flex items-center gap-1 text-sm'>
@@ -32,8 +26,10 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
         </div>
         <h3 className='text-customGrey-800'>{title}</h3>
       </div>
-      <div className='w-full h-16'>{content}</div>
-      <div className='flex gap-3 justify-between items-center'>
+      <div className='w-full h-[115px] text-customGrey-800 line-clamp-5'>
+        {content}
+      </div>
+      <div className='flex gap-3 justify-between items-center mt-2.5'>
         <div className='flex gap-3'>
           <div className='w-10 h-10 bg-[#D9D9D9] rounded-full'></div>
           <div className='flex flex-col'>
@@ -45,7 +41,7 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
         </div>
         <div className='flex gap-5'>
           <div className='flex items-center gap-1'>
-            <button onClick={handleLike}>
+            <button onClick={() => handleLike(userLikeCk as boolean)}>
               <LikeIcon
                 className={`w-5 h-5 stroke-customGrey-500 ${userLikeCk ? 'fill-black' : ''}`}
               />

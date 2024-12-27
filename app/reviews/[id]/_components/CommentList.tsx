@@ -19,7 +19,7 @@ export default function CommentList() {
         <h3 className='text-lg font-bold'>
           댓글 {review?.commentList?.length}
         </h3>
-        <CommentInput />
+        <CommentInput id={Number(id)} />
       </div>
       <ul>
         {review?.commentList?.map(

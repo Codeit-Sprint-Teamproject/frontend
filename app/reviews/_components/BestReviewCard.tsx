@@ -26,8 +26,10 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
         </div>
         <h3 className='text-customGrey-800'>{title}</h3>
       </div>
-      <div className='w-full h-16'>{content}</div>
-      <div className='flex gap-3 justify-between items-center'>
+      <div className='w-full h-[115px] text-customGrey-800 line-clamp-5'>
+        {content}
+      </div>
+      <div className='flex gap-3 justify-between items-center mt-2.5'>
         <div className='flex gap-3'>
           <div className='w-10 h-10 bg-[#D9D9D9] rounded-full'></div>
           <div className='flex flex-col'>

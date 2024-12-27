@@ -24,7 +24,7 @@ export default function Review({ review }: { review: BookReview }) {
         <span className='text-sm text-customGrey-500'>이 책을 추천해요</span>
       </div>
       <div className='w-11/12 border border-customGrey-100 mx-auto'></div>
-      <div className='flex gap-4 px-5 py-3'>
+      <div className='flex gap-2.5 px-5 py-3'>
         <Image
           src={bookImage}
           width={132}
@@ -32,7 +32,9 @@ export default function Review({ review }: { review: BookReview }) {
           className='w-[132px] h-[198px]'
           alt='책 표지'
         />
-        <p className='w-full'>{review.content}</p>
+        <p className='w-[326px] h-full text-customGrey-800 line-clamp-[8]'>
+          {review.content}
+        </p>
       </div>
       <div className='w-11/12 border border-customGrey-100 mx-auto'></div>
       <div className='flex justify-between items-center px-5 py-3'>

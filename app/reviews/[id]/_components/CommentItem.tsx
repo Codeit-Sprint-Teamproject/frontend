@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CommentInput from './CommentInput';
 import ConfirmModal from './ConfirmModal';
 import DropDown from './DropDown';
+import { formatTimeWithDate } from '@/app/_utils/dateFormatter';
 import Avatar from '@/components/common/icons/Avatar';
 import { useReveiwCommentQuery } from '@/hooks/useReviewCommentQuery';
 import { useModalStore } from '@/store/modal';
@@ -67,7 +68,9 @@ export default function CommentItem({ comment }: Props) {
       </div>
       <div className='flex flex-col gap-2.5 ml-10'>
         {content}
-        <p className='text-customGrey-300'>{createTime}</p>
+        <p className='text-sm text-customGrey-300'>
+          {formatTimeWithDate(createTime)}
+        </p>
       </div>
     </li>
   );

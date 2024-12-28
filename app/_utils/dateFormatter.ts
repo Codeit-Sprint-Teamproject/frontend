@@ -1,4 +1,5 @@
-import { format } from 'date-fns';
+import { differenceInDays, format, formatDistance } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 /**
  * Date 객체를 YYYY-MM-DDTHH:mm:ss의 문자열 타입으로 변환합니다.
@@ -26,4 +27,25 @@ export const formatDateWithWeekday = (date: Date): string => {
       weekday: 'short',
     })
     .replace(/(.*?\..*?)\./, '$1');
+};
+
+export const formatTimeWithDate = (dateTime: string) => {
+  const date = new Date(dateTime);
+  const now = new Date();
+
+  const daysDiff = differenceInDays(now, date);
+
+  if (daysDiff < 1) {
+    return formatDistance(date, now, { addSuffix: true, locale: ko });
+  } else if (daysDiff === 1) {
+    return '1일 전';
+  } else {
+    return new Date(date)
+      .toLocaleString('ko', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+      .replace(/\.$/, '');
+  }
 };

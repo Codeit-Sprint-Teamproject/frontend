@@ -50,7 +50,7 @@ export interface IMeetingDetail {
     currentCapacity: number;
     createdTime: Date;
     updatedTime: Date;
-    gatheringStatus: string;
+    gatheringStatus: 'FULL' | 'ACTIVE' | 'DELETED' | 'COMPLETED' | 'RECRUITING';
     bookTitle: string;
     bookImage: string;
     publisher: string;

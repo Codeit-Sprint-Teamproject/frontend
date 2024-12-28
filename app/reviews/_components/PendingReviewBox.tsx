@@ -3,12 +3,12 @@
 import NoPendingReviewBox from './NoPendingReviewBox';
 import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
 import SlidePrevIcon from '@/components/common/icons/SlidePrevIcon';
-import { useReviewQuery } from '@/hooks/useReviewQuery';
+import { useBestReviewQuery } from '@/hooks/useBestReviewQuery';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function PendingReviewBox() {
-  const { reviews } = useReviewQuery();
+  const { reviews } = useBestReviewQuery();
   if (!reviews) return null;
   const { bookResponseList } = reviews;
 

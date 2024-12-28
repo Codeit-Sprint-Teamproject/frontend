@@ -1,26 +1,36 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { ReviewDetailResponse, getReviewDetail } from '../_lib/getReviewDetail';
 import CommentList from './CommentList';
+import ConfirmModal from './ConfirmModal';
+import DropDown from './DropDown';
 import GatheringAction from './GatheringAction';
 import ReviewTag from './ReviewTag';
 import CommentIcon from '@/app/reviews/_svg/CommentIcon';
 import LikeIcon from '@/app/reviews/_svg/LikeIcon';
-import MoreIcon from '@/components/common/icons/MoreIcon';
+import Modal from '@/components/Modal';
 import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
+import { useReviewQuery } from '@/hooks/useReviewQuery';
+import { useModalStore } from '@/store/modal';
+import useUserStore from '@/store/userStore';
 import { BookDetail, BookReviewDetail } from '@/types/book';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 export default function ReviewDetail() {
   const { id } = useParams();
-  const { data: review } = useQuery<ReviewDetailResponse>({
-    queryKey: ['reviews', 'detail', id],
-    queryFn: () => getReviewDetail(Number(id)),
-    staleTime: 60 * 1000,
-  });
+  const { review, deleteReviewMutate } = useReviewQuery(id as string);
+  const { user } = useUserStore();
   const { handleLike } = useReviewLikeQuery(Number(id));
+  const { isOpen, openModal } = useModalStore();
+
+  const handleDelete = () => {
+    openModal(
+      <ConfirmModal
+        title='게시글을 삭제 하시겠습니까?'
+        onDelete={() => deleteReviewMutate(Number(id))}
+      />,
+    );
+  };
   if (!review) return null;
   const { bookReview, bookResponse, commentList } = review;
   const {
@@ -56,9 +66,7 @@ export default function ReviewDetail() {
                 {createTime.replace(/-/g, '.')}
               </p>
             </div>
-            <button>
-              <MoreIcon className='w-6 h-6 stroke-customGrey-300' />
-            </button>
+            {user?.name === userName && <DropDown onDelete={handleDelete} />}
           </div>
         </div>
         <div className='flex flex-col gap-8 px-7.5 py-5'>
@@ -118,6 +126,7 @@ export default function ReviewDetail() {
         </div>
         <CommentList />
       </div>
+      {isOpen && <Modal width='w-[300px] h-[120px]' />}
     </section>
   );
 }

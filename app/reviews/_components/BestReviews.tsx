@@ -4,11 +4,11 @@ import { useState } from 'react';
 import BestReviewCard from './BestReviewCard';
 import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
 import SlidePrevIcon from '@/components/common/icons/SlidePrevIcon';
-import { useReviewQuery } from '@/hooks/useReviewQuery';
+import { useBestReviewQuery } from '@/hooks/useBestReviewQuery';
 
 export default function BestReviews() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { reviews } = useReviewQuery();
+  const { reviews } = useBestReviewQuery();
 
   const handlePrev = () => {
     setCurrentIndex(currentIndex - 1);

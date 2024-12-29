@@ -1,6 +1,5 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { useBookContext } from '../../_components/BookContext';
 import BookSearchModal from './BookSearchModal';
 import Modal from '@/components/Modal';
@@ -9,17 +8,14 @@ import { useModalStore } from '@/store/modal';
 
 export default function BookSelector() {
   const { isOpen, openModal, closeModal } = useModalStore();
-  const queryClient = useQueryClient();
   const { book, setBook } = useBookContext();
   const handleOpen = () => {
     openModal(<BookSearchModal onSelect={handleSelect} />);
   };
   const handleClose = () => {
-    queryClient.removeQueries({ queryKey: ['books', 'search'] });
     setBook({ id: null, title: null });
   };
   const handleSelect = () => {
-    queryClient.removeQueries({ queryKey: ['books', 'search'] });
     closeModal();
   };
   return (

@@ -55,7 +55,7 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
   };
 
   return (
-    <div className='w-[336px] sticky top-0 flex flex-col'>
+    <div className='w-[336px] flex flex-col'>
       <div className='h-[189px] flex justify-center items-center relative bg-gray-300'>
         <Image
           src={`${data?.thumbnail}`}

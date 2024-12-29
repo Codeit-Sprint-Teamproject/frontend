@@ -59,3 +59,4 @@ export type BookReviewByTitle = Omit<
   BookReview,
   'apprCd' | 'userName' | 'bookImage'
 >;
+export type SearchedBook = Omit<PendingBookReview, 'gatheringId'>;

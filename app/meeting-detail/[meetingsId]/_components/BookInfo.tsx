@@ -35,23 +35,26 @@ const BookInfo = ({
           </div>
           <div className='w-[400px] ml-[18px] flex flex-col'>
             <span className='text-xl font-bold'>{bookTitle}</span>
-            <div className='flex flex-row'>
+            <div className='flex flex-row mt-2'>
               <div className='flex flex-col'>
                 <span>저자</span>
                 <span>출판</span>
                 <span>발행일</span>
-                <span>평점</span>
+                <span className='mt-[2px]'>평점</span>
               </div>
               <div className='flex flex-col items-start'>
                 <span className='ml-4'>{author}</span>
                 <span className='ml-4'>{publisher}</span>
                 <span className='ml-4'>{publishDate}</span>
-                <div className='flex flex-row items-center gap-1'>
+                <div className='ml-4 flex flex-row items-center gap-1'>
                   <Rating
                     size={20}
                     readonly
                     initialValue={star / 2}
+                    allowFraction={true}
                     SVGstyle={{ display: 'inline' }}
+                    fillColor='black'
+                    style={{ marginBottom: '2px' }}
                   />
                   {`${star}`}
                 </div>

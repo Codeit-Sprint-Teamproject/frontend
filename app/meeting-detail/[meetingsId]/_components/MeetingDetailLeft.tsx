@@ -1,5 +1,10 @@
 import { postJoinMeeting, postWishMeeting } from '../_lib/meetingDetail';
 import { IMeetingDetail } from '@/app/types';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
 import HeartIcon from '@/public/HeartIcon';
 import InfoIcon from '@/public/InfoIcon';
 import MeetingOwnerIcon from '@/public/MeetingOwnerIcon';
@@ -85,13 +90,20 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
         <span className='ml-2'>채팅방은 모임 시작일부터 입장 가능합니다.</span>
       </div>
       <div className='h-[24px] flex flex-row justify-center items-center gap-6 mt-6'>
-        <div
-          className='flex flex-row gap-2 cursor-pointer'
-          onClick={meetingShareBtnHandler}
-        >
-          <ShareIcon width={24} height={24} />
-          <span>공유하기</span>
-        </div>
+        <HoverCard>
+          <HoverCardTrigger>
+            <div
+              className='flex flex-row gap-2 cursor-pointer hover:'
+              onClick={meetingShareBtnHandler}
+            >
+              <ShareIcon width={24} height={24} />
+              <span>공유하기</span>
+            </div>
+          </HoverCardTrigger>
+          <HoverCardContent className='w-auto h-10 bg-black text-white py-2 px-4 text-center'>
+            모임을 공유하고 함께 독서해보세요!
+          </HoverCardContent>
+        </HoverCard>
         <div
           className='flex flex-row gap-2 cursor-pointer'
           onClick={meetingBookmarkBtnHandler}

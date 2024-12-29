@@ -22,6 +22,10 @@ export default function BookSearchModal({ onSelect }: Props) {
       setErrorMessage('검색어를 입력해주세요.');
       return;
     }
+    if (text.length < 3) {
+      setErrorMessage('책의 제목을 3자 이상 입력해주세요');
+      return;
+    }
     setIsLoading(true);
     try {
       const res = await searchBookByName(text);

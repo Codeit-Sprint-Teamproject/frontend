@@ -2,15 +2,18 @@
 
 import { useState } from 'react';
 import { DefaultError, useQuery } from '@tanstack/react-query';
-import { searchBookByName } from '../../_lib/searchBookByName';
 import BookInfo from './BookInfo';
+import { useBookContext } from '@/app/reviews/_components/BookContext';
+import { searchBookByName } from '@/app/reviews/_lib/searchBookByName';
 import SearchIcon from '@/components/common/icons/SearchIcon';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SearchedBook } from '@/types/book';
 
-export default function BookSearchModal() {
+type Props = { onSelect: () => void };
+export default function BookSearchModal({ onSelect }: Props) {
   const [text, setText] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const { book } = useBookContext();
   const {
     isLoading,
     data: books,
@@ -63,7 +66,11 @@ export default function BookSearchModal() {
         books && books.map((book) => <BookInfo key={book.id} book={book} />)
       )}
       <div className='px-2 pt-5 pb-2'>
-        <button className='w-full h-12 px-3 py-2 bg-customGreen-500 text-white rounded-sm'>
+        <button
+          className='w-full h-12 px-3 py-2 bg-customGreen-500 text-white rounded-sm disabled:bg-customGrey-100 disabled:text-customGrey-300'
+          onClick={onSelect}
+          disabled={!book.id}
+        >
           확인
         </button>
       </div>

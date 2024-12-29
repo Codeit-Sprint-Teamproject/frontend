@@ -1,19 +1,26 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { useBookContext } from '../../_components/BookContext';
 import BookSearchModal from './BookSearchModal';
 import Modal from '@/components/Modal';
 import SearchIcon from '@/components/common/icons/SearchIcon';
 import { useModalStore } from '@/store/modal';
 
 export default function BookSelector() {
-  const { isOpen, openModal } = useModalStore();
+  const { isOpen, openModal, closeModal } = useModalStore();
   const queryClient = useQueryClient();
+  const { book, setBook } = useBookContext();
   const handleOpen = () => {
-    openModal(<BookSearchModal />);
+    openModal(<BookSearchModal onSelect={handleSelect} />);
   };
   const handleClose = () => {
     queryClient.removeQueries({ queryKey: ['books', 'search'] });
+    setBook({ id: null, title: null });
+  };
+  const handleSelect = () => {
+    queryClient.removeQueries({ queryKey: ['books', 'search'] });
+    closeModal();
   };
   return (
     <div className='flex flex-col gap-[18px] p-5 bg-customGrey-50 rounded-sm'>
@@ -47,6 +54,7 @@ export default function BookSelector() {
             <SearchIcon className='stroke-customGrey-300' />
           </div>
         </div>
+        {book?.title && <button>{book.title}</button>}
       </div>
       {isOpen && <Modal width='w-[526px] h-[693px]' onClose={handleClose} />}
     </div>

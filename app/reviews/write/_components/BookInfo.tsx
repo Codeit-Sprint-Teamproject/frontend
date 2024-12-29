@@ -1,10 +1,15 @@
+import { useBookContext } from '../../_components/BookContext';
 import { SearchedBook } from '@/types/book';
 import Image from 'next/image';
 
 export default function BookInfo({ book }: { book: SearchedBook }) {
-  const { title, image, author, publisher, publisherDate, star } = book;
+  const { book: selectedBook, setBook } = useBookContext();
+  const { id, title, image, author, publisher, publisherDate, star } = book;
   return (
-    <div className='flex gap-2.5 p-2.5 border-b mt-3 cursor-pointer'>
+    <div
+      className={`flex gap-2.5 p-2.5 border-b mt-3 cursor-pointer ${selectedBook.id === id ? 'bg-customGrey-100' : ''}`}
+      onClick={() => setBook({ id, title })}
+    >
       <Image src={image} width={90} height={135} alt='책 표지' />
       <div className='flex flex-col'>
         <h3 className='text-customGrey-800 mb-2'>{title}</h3>

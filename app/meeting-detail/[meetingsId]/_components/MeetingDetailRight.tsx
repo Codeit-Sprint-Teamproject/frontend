@@ -22,7 +22,7 @@ export default function MeetingDetailRight({ data }: IMeetingDetail) {
 
   return (
     <div className='w-[654px] min-h-[600px] rounded-[4px] border-[1px] py-[23px] px-[24px] border-[rgba(0,0,0,0.3)] flex flex-col '>
-      <div className='w-[84px] h-[36px] py-[6px] px-[10px] box-border text-center rounded-[8px] bg-[#A0A0A0]'>
+      <div className='w-[80px] h-[35px] py-[6px] px-[12px] box-border text-center rounded-[4px] text-customGreen-500 bg-customGreen-50'>
         모집중
       </div>
       <div className='h-[49px] mt-[13px] font-bold text-3xl'>
@@ -62,7 +62,7 @@ export default function MeetingDetailRight({ data }: IMeetingDetail) {
         star={data?.star}
       >
         <button
-          className='w-full h-[49px] mt-[7px] bg-[#CCCCCC] font-medium text-lg'
+          className='w-full h-[49px] mt-[7px] text-customGreen-600 bg-customGreen-50 font-medium text-lg'
           onClick={bookReviewBtnHandler}
         >
           독서 리뷰 보러가기

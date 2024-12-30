@@ -1,3 +1,6 @@
+import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
+import { Form } from './ReviewForm';
+
 const RATING = {
   SG: '추천해요',
   NG: '아쉬웠어요',
@@ -15,23 +18,23 @@ const TAGS = {
 };
 
 type Props = {
-  rating: string;
-  tags: string[];
-  setRating: (rating: string) => void;
-  setTags: (tags: string[]) => void;
+  setValue: UseFormSetValue<Form>;
+  getValues: UseFormGetValues<Form>;
 };
 
-export default function BookFeedback({
-  rating,
-  tags,
-  setRating,
-  setTags,
-}: Props) {
+export default function BookFeedback({ setValue, getValues }: Props) {
+  const rating = getValues('rating') || '';
+  const tags = getValues('tags') || [];
+
   const handleClick = (tag: string) => {
     if (tags.includes(tag)) {
-      setTags(tags.filter((t) => t !== tag));
+      setValue(
+        'tags',
+        tags.filter((t) => t !== tag),
+        { shouldValidate: true },
+      );
     } else if (tags.length < 3) {
-      setTags([...tags, tag]);
+      setValue('tags', [...tags, tag], { shouldValidate: true });
     }
   };
   const applySelectedStyle = (tag: string) => {
@@ -54,7 +57,7 @@ export default function BookFeedback({
             <button
               key={key}
               className={`px-3 py-2.5 text-customGrey-800 border rounded-full ${key === rating ? 'bg-customGreen-500 text-white' : ''}`}
-              onClick={() => setRating(key)}
+              onClick={() => setValue('rating', key, { shouldValidate: true })}
             >
               {rate}
             </button>

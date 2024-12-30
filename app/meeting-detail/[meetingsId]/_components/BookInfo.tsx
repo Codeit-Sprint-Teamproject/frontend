@@ -1,9 +1,6 @@
 import { ReactNode } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import Image from 'next/image';
-import { ReactNode } from 'react';
-import { Rating } from 'react-simple-star-rating';
-import Image from 'next/image';
 
 interface BookInfoProps {
   bookImage?: string;
@@ -13,22 +10,9 @@ interface BookInfoProps {
   publishDate?: string;
   star?: number;
   children?: ReactNode;
-  bookImage?: string;
-  bookTitle?: string;
-  author?: string;
-  publisher?: string;
-  publishDate?: string;
-  star?: number;
 }
 
 const BookInfo = ({
-  bookImage,
-  bookTitle = '책 이름',
-  author = '저자',
-  publisher = '출판사',
-  publishDate = '출판일',
-  star = 10,
-  children,
   bookImage,
   bookTitle = '책 이름',
   author = '저자',
@@ -78,7 +62,6 @@ const BookInfo = ({
             </div>
           </div>
         </div>
-        {children ? <div className='mt-4'>{children}</div> : <></>}
         {children ? <div className='mt-4'>{children}</div> : <></>}
       </div>
     </>

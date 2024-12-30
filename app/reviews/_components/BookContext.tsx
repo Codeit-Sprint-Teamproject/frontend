@@ -5,6 +5,7 @@ import { createContext, useContext, useState } from 'react';
 type BookType = {
   id: number | null;
   title: string | null;
+  gatheringId?: number;
 };
 type BookContextType = {
   book: BookType;

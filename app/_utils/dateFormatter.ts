@@ -9,7 +9,6 @@ export const safeFormatDateTime = (date: Date | null): string | null => {
   return date ? formatDateTime(date) : null;
 };
 
-
 export const formatDateWithWeekday = (date: Date): string => {
   return new Date(date)
     .toLocaleString('ko', {

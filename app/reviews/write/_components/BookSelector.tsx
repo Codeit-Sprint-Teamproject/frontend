@@ -1,14 +1,20 @@
 'use client';
 
-import { useBookContext } from '../../_components/BookContext';
 import BookSearchModal from './BookSearchModal';
+import { useBookContext } from '@/app/reviews/_components/BookContext';
 import Modal from '@/components/Modal';
 import SearchIcon from '@/components/common/icons/SearchIcon';
 import { useModalStore } from '@/store/modal';
+import { MyMeetingBookReview } from '@/types/book';
 
-export default function BookSelector() {
+export default function BookSelector({
+  books,
+}: {
+  books: MyMeetingBookReview[];
+}) {
   const { isOpen, openModal, closeModal } = useModalStore();
   const { book, setBook } = useBookContext();
+
   const handleOpen = () => {
     openModal(<BookSearchModal onSelect={handleSelect} />);
   };
@@ -26,15 +32,14 @@ export default function BookSelector() {
       <div className='flex flex-col gap-2'>
         <p className='text-sm text-customGrey-500'>최근 모임에서 읽은 책</p>
         <div className='flex flex-wrap gap-1.5'>
-          <button className='border rounded-md px-1.5 py-2.5'>
-            디 에션셸: 한강 (무선 보급판)
-          </button>
-          <button className='border rounded-md px-1.5 py-2.5'>
-            고요한 우연
-          </button>
-          <button className='border rounded-md px-1.5 py-2.5'>
-            트렌드 코리아 2025+
-          </button>
+          {books?.map((book) => (
+            <button
+              key={book.gatheringId}
+              className='border rounded-md px-1.5 py-2.5'
+            >
+              {book.title}
+            </button>
+          ))}
         </div>
       </div>
       <div className='flex flex-col gap-2'>

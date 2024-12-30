@@ -23,6 +23,7 @@ export type PendingBookReview = {
   image: string;
   gatheringId: number;
 };
+export type MyMeetingBookReview = PendingBookReview;
 type BookReviewRating = 'SG' | 'NG' | 'NONE';
 export type BookReviewTag =
   | 'BAD'

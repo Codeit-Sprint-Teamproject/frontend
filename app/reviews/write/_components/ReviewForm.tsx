@@ -9,6 +9,7 @@ import BookSelector from './BookSelector';
 import { useBookContext } from '@/app/reviews/_components/BookContext';
 import { getMyMeetingBooks } from '@/app/reviews/_lib/getMyMeetingBooks';
 import { reviewSchema } from '@/app/reviews/_lib/reviewSchema';
+import { useReviewQuery } from '@/hooks/useReviewQuery';
 import useUserStore from '@/store/userStore';
 import { MyMeetingBookReview } from '@/types/book';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,6 +24,7 @@ export type Form = {
 export default function ReviewForm() {
   const { user } = useUserStore();
   const { book } = useBookContext();
+  const { addReviewMutate } = useReviewQuery();
   const { isLoading, data: books = [] } = useQuery<MyMeetingBookReview[]>({
     queryKey: ['books', 'meetings', 'completed'],
     queryFn: getMyMeetingBooks,
@@ -39,9 +41,18 @@ export default function ReviewForm() {
     defaultValues: { bookId: 0, title: '', rating: '', tags: [], content: '' },
     mode: 'onChange',
   });
-  const onSubmit = (data: Form) => {
-    // 제출 로직 추가
-    console.log('data', data);
+  const onSubmit = (form: Form) => {
+    const { bookId, title, rating, tags, content } = form;
+    const review = {
+      bookId,
+      title,
+      apprCd: rating,
+      tag: tags.join(','),
+      content: content,
+      gatheringId: 0,
+      tmprStrgYN: 'N',
+    };
+    addReviewMutate(review);
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {

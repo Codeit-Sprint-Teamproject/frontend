@@ -4,9 +4,10 @@ import {
   ReviewDetailResponse,
   getReviewDetail,
 } from '@/app/reviews/[id]/_lib/getReviewDetail';
+import { Review, createBookReview } from '@/app/reviews/_lib/createBookReview';
 import { useRouter } from 'next/navigation';
 
-export const useReviewQuery = (id: string) => {
+export const useReviewQuery = (id?: string) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { data: review } = useQuery<ReviewDetailResponse>({
@@ -14,6 +15,13 @@ export const useReviewQuery = (id: string) => {
     queryFn: () => getReviewDetail(Number(id)),
     staleTime: 60 * 1000,
     enabled: !!id,
+  });
+  const { mutate: addReviewMutate } = useMutation({
+    mutationFn: (review: Review) => createBookReview(review),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reviews'] });
+      router.replace('/reviews');
+    },
   });
   const { mutate: deleteReviewMutate } = useMutation({
     mutationFn: (id: number) => deleteBookReview(id),
@@ -25,5 +33,5 @@ export const useReviewQuery = (id: string) => {
     },
   });
 
-  return { review, deleteReviewMutate };
+  return { review, addReviewMutate, deleteReviewMutate };
 };

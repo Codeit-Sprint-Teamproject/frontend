@@ -46,9 +46,3 @@ export const formatDateForDetailPageHeader = (date: string): string => {
   const formattedDate = format(currentDate, 'MM월 dd일 EEEE', { locale: ko });
   return formattedDate;
 };
-
-export const formatDateForDetailPageHeader = (date: string): string => {
-  const currentDate = parse(date, 'yyyy-MM-dd', new Date());
-  const formattedDate = format(currentDate, 'MM월 dd일 EEEE', { locale: ko });
-  return formattedDate;
-};

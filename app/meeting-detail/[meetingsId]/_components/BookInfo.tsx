@@ -19,7 +19,6 @@ interface BookInfoProps {
   publisher?: string;
   publishDate?: string;
   star?: number;
-  children?: ReactNode;
 }
 
 const BookInfo = ({

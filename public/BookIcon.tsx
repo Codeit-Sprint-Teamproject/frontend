@@ -1,31 +1,10 @@
-interface BookIconProps{
-  width: number;
-  height: number;
-}
-
-const BookIcon = ({width, height}:BookIconProps) => {
+export default function BookIcon (props: React.SVGProps<SVGSVGElement>) {
   return (
-    <>
-      <svg width={`${width}px`} height={`${height}px`} viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clipPath="url(#clip0_776_1156)">
-        <path d="M3.48639 3.77332H6.9721C7.58842 3.77332 8.17949 4.01814 8.61528 4.45394C9.05108 4.88974 9.29591 5.48081 9.29591 6.09712V14.2305C9.29591 13.7682 9.11229 13.3249 8.78544 12.9981C8.45859 12.6712 8.01529 12.4876 7.55306 12.4876H3.48639V3.77332Z" stroke="black" strokeWidth="1.1619" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M15.1045 3.77332H11.6188C11.0025 3.77332 10.4114 4.01814 9.97561 4.45394C9.53981 4.88974 9.29498 5.48081 9.29498 6.09712V14.2305C9.29498 13.7682 9.4786 13.3249 9.80545 12.9981C10.1323 12.6712 10.5756 12.4876 11.0378 12.4876H15.1045V3.77332Z" stroke="black" strokeWidth="1.1619" strokeLinecap="round" strokeLinejoin="round"/>
-        <g clipPath="url(#clip1_776_1156)">
-        <rect width="8.71428" height="8.71428" transform="translate(10.457 8.42163)" fill="white"/>
-        <path d="M14.8142 16.4083C16.8196 16.4083 18.4452 14.7827 18.4452 12.7774C18.4452 10.7721 16.8196 9.14642 14.8142 9.14642C12.8089 9.14642 11.1833 10.7721 11.1833 12.7774C11.1833 14.7827 12.8089 16.4083 14.8142 16.4083Z" stroke="black" strokeWidth="0.726191" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M14.8143 10.5981V12.7767L16.2667 13.5028" stroke="black" strokeWidth="0.726191" strokeLinecap="round" strokeLinejoin="round"/>
-        </g>
-        </g>
-        <defs>
-        <clipPath id="clip0_776_1156">
-        <rect width="20.3333" height="17.4286" fill="white" transform="translate(0 0.285706)"/>
-        </clipPath>
-        <clipPath id="clip1_776_1156">
-        <rect width="8.71428" height="8.71428" fill="white" transform="translate(10.457 8.42163)"/>
-        </clipPath>
-        </defs>
-      </svg>
-    </>
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
+    <path d="M1.33398 2.60004H5.13397C5.80585 2.60004 6.45022 2.86694 6.92531 3.34203C7.4004 3.81712 7.6673 4.46148 7.6673 5.13336V14C7.6673 13.4961 7.46712 13.0128 7.11081 12.6565C6.75449 12.3002 6.27122 12.1 5.76731 12.1H1.33398V2.60004Z" stroke="black" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M13.9997 7.99847L14 2.60004H10.2C9.52813 2.60004 8.88377 2.86694 8.40868 3.34203C7.93359 3.81712 7.66669 4.46148 7.66669 5.13336V14C7.66669 13.4961 7.86686 13.0128 8.22318 12.6565C8.28992 12.5898 8.54561 12.3749 8.74558 12.2086" stroke="black" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M12.5 14C13.8807 14 15 12.8807 15 11.5C15 10.1193 13.8807 9 12.5 9C11.1193 9 10 10.1193 10 11.5C10 12.8807 11.1193 14 12.5 14Z" stroke="black" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M12.5 10.25V11.5L13.3333 11.9167" stroke="black" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
   );
 }
-export default BookIcon

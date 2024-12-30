@@ -1,57 +1,73 @@
+import { calculateEndDate } from '../_utils/calculateEndDate';
+import { calculateRemainingDays } from '../_utils/calculateRemainDays';
 import BookInfo from './BookInfo';
+import { formatDateForDetailPageHeader } from '@/app/_utils/dateFormatter';
+import { IMeetingDetail } from '@/app/types';
 import BookIcon from '@/public/BookIcon';
 import CalendarDotIcon from '@/public/CalendarDotIcon';
 import UsersIcon from '@/public/UsersIcon';
 
-const bookTitle = '디 에센셜: 한강(무선 보급판)';
-const author = '한강';
-const publisher = '문학동네';
-const publishDate = '2024.06.01';
-const star = 4.2;
+export default function MeetingDetailRight({ data }: IMeetingDetail) {
+  const endDate = calculateEndDate(
+    data.startDate.toString(),
+    data.gatheringWeek,
+  );
+  const remainDays = calculateRemainingDays(endDate);
+  const meetingDuration = data.gatheringWeek / 7;
 
-export default function MeetingDetailRight() {
+  // TODO (희원) 통합검색 API준비되면 연결할 예정
+  const bookReviewBtnHandler = () => {
+    alert('독서 리뷰 페이지로 이동');
+  };
+
   return (
-    <div className='w-[654px] h-[670px] rounded-[4px] border-[1px] border-[rgba(0,0,0,0.3)] flex flex-col py-[23px] px-[24px]'>
-      {/* 모임 상태 */}
-      <div className='w-[84px] h-[36px] py-[6px] px-[10px] box-border text-center rounded-[8px] bg-[#A0A0A0]'>
+    <div className='w-[654px] min-h-[600px] rounded-[4px] border-[1px] py-[23px] px-[24px] border-[rgba(0,0,0,0.3)] flex flex-col '>
+      <div className='w-[80px] h-[35px] py-[6px] px-[12px] box-border text-center rounded-[4px] text-customGreen-500 bg-customGreen-50'>
         모집중
       </div>
-      {/* 모임 안내 문구 */}
       <div className='h-[49px] mt-[13px] font-bold text-3xl'>
-        N일뒤 모임이 시작됩니다.
+        {remainDays}일 뒤 모임이 시작됩니다.
       </div>
-      {/* 모임 규칙 */}
-      <div className='grid grid-cols-[1fr_2fr] w-[30%] gap-3'>
+      <div className='grid grid-cols-[1fr_5fr] w-[40%] gap-3'>
         <UsersIcon width={25} height={25} />
-        <div>참여 인원</div>
+        <div>
+          참여 {data?.currentCapacity}명 / 정원 {data?.maxCapacity}명
+        </div>
         <BookIcon width={25} height={25} />
-        <div>독서 시간</div>
+        <div>매일 {data?.readingTimeGoal}분</div>
         <CalendarDotIcon width={25} height={25} />
-        <div>독서 기간</div>
+        <div>{meetingDuration}주 동안</div>
       </div>
-      {/* 모임 시작, 종료일 */}
-      <div className='h-[98px] flex flex-row justify-around items-center mt-[12px] bg-gray-200'>
-        <div className='flex flex-col justify-center items-center text-xl'>
+      <div className='h-[98px] flex flex-row justify-around items-center mt-4 bg-[#F8F8F8]'>
+        <div className='w-full h-[90%] flex flex-col justify-center items-center text-xl border-r-[1px] border-[rgba(0, 0, 0, 0.10)]'>
           <span>시작일</span>
-          <span className='font-bold'>12월 31일 월요일</span>
+          <span className='font-bold'>
+            {formatDateForDetailPageHeader(data?.startDate)}
+          </span>
         </div>
-        <div className='flex flex-col justify-center items-center text-xl'>
+        <div className='w-full h-[90%] flex flex-col justify-center items-center text-xl'>
           <span>종료일</span>
-          <span className='font-bold'>1월 15일 월요일</span>
+          <span className='font-bold'>
+            {formatDateForDetailPageHeader(data?.endDate)}
+          </span>
         </div>
       </div>
-      {/* 모임에서 읽을 책 정보 */}
-      <h3 className='font-bold text-xl mt-6'>함께 읽을 책</h3>
+      <h3 className='font-bold text-xl mt-10'>함께 읽을 책</h3>
       <BookInfo
-        bookTitle={bookTitle}
-        author={author}
-        publisher={publisher}
-        publishDate={publishDate}
-        star={star}
-      />
-      <button className='h-[49px] mt-[7px] bg-[#D9D9D9] font-medium text-[18px]'>
-        리뷰 보러가기
-      </button>
+        bookImage={data?.bookImage}
+        bookTitle={data?.bookTitle}
+        author={data?.author}
+        publisher={data?.publisher}
+        publishDate={data?.publishDate}
+        star={data?.star}
+      >
+        <button
+          className='w-full h-[49px] mt-[7px] text-customGreen-600 bg-customGreen-50 font-medium text-lg'
+          onClick={bookReviewBtnHandler}
+        >
+          독서 리뷰 보러가기
+        </button>
+      </BookInfo>
     </div>
   );
 }

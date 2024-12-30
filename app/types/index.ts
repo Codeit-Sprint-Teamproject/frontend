@@ -18,6 +18,7 @@ export interface IMeeting {
   publisher: string;
   publishDate: string;
   star: number;
+  author: string;
   thumbnail: string;
   gatheringWeek: number;
 }
@@ -33,4 +34,44 @@ export interface IFilterState {
   startDate: Date | null;
   recruitingOnly: boolean;
   targetTime: string | null;
+}
+
+export interface IMeetingDetail {
+  data: {
+    id: number;
+    owner: string;
+    name: string;
+    content: string;
+    gatheringWeek: number;
+    endDate: string;
+    startDate: string;
+    minCapacity: number;
+    maxCapacity: number;
+    currentCapacity: number;
+    createdTime: Date;
+    updatedTime: Date;
+    gatheringStatus: 'FULL' | 'ACTIVE' | 'DELETED' | 'COMPLETED' | 'RECRUITING';
+    bookTitle: string;
+    bookImage: string;
+    publisher: string;
+    publishDate: string;
+    star: number;
+    author: string;
+    thumbnail: string;
+    readingTimeGoal: number;
+  };
+}
+export interface IMeetingInfo {
+  id: number;
+  name: string;
+  content: string;
+  readingTimeGoal: number;
+  owner: string;
+  bookTitle: string;
+  bookImage: string;
+  publisher: string;
+  publishDate: string;
+  star: number;
+  author: string;
+  introduce: string;
 }

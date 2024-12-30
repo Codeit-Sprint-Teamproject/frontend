@@ -29,10 +29,10 @@ const MeetingDetails = ({ gatheringId }: MeetingDetailsProps) => {
     );
 
   return (
-    <div className='flex flex-col mt-20 w-[1060px] h-[2000px] mb-20 mx-auto'>
+    <div className='flex flex-col mt-20 w-[1060px] mb-20 mx-auto'>
       <PageLocator pagePath={['홈']} currentPage='모임' />
       <div className='flex flex-row items-start justify-between mt-2'>
-        <div className='w-[337px] sticky top-10'>
+        <div className='w-[337px] sticky top-24'>
           <MeetingDetailLeft data={data.result} />
         </div>
         <div className='w-[654px] flex flex-col'>

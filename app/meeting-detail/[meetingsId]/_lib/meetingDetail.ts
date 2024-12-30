@@ -25,7 +25,7 @@ export const getMeetingInfo = async (gatheringId: number) => {
     throw new Error(data.error.message || 'Failed to fetch meeting detail');
   }
 
-  return data;
+  return data.result;
 };
 
 export const postJoinMeeting = async (gatheringId: number) => {

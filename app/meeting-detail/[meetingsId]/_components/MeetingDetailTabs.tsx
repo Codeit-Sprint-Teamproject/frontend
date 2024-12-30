@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import MeetingInfo from './MeetingInfo';
-import MeetingReviews from './MeetingReviews';
 
 interface MeetingInfo {
   gatheringId: number;
@@ -11,10 +10,7 @@ interface MeetingInfo {
 export default function MeetingDetailTabs({ gatheringId }: MeetingInfo) {
   const [activeTab, setActiveTab] = useState<string>('meeting-info');
 
-  const tabs = [
-    { id: 'meeting-info', title: '모임 소개' },
-    { id: 'meeting-reviews', title: '모임 후기' },
-  ];
+  const tabs = [{ id: 'meeting-info', title: '모임 소개' }];
 
   return (
     <div className='w-full mt-[72px]'>
@@ -22,7 +18,7 @@ export default function MeetingDetailTabs({ gatheringId }: MeetingInfo) {
         {tabs.map((tab) => (
           <li
             key={tab.id}
-            className={`text-[22px] font-medium ${activeTab === tab.id ? 'pb-2 border-b-[3px] border-black' : ''}`}
+            className={`text-[22px] font-medium cursor-pointer ${activeTab === tab.id ? 'pb-2 border-b-[3px] border-black' : ''}`}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.title}
@@ -32,10 +28,9 @@ export default function MeetingDetailTabs({ gatheringId }: MeetingInfo) {
       <div className='mt-6'>
         {activeTab === 'meeting-info' ? (
           <MeetingInfo gatheringId={gatheringId} />
+          <MeetingInfo gatheringId={gatheringId} />
         ) : (
-          <>
-            <MeetingReviews />
-          </>
+          <></>
         )}
       </div>
     </div>

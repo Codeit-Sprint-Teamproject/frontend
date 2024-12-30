@@ -9,6 +9,7 @@ export const safeFormatDateTime = (date: Date | null): string | null => {
   return date ? formatDateTime(date) : null;
 };
 
+
 export const formatDateWithWeekday = (date: Date): string => {
   return new Date(date)
     .toLocaleString('ko', {
@@ -38,6 +39,12 @@ export const formatTimeWithDate = (dateTime: string) => {
       })
       .replace(/\.$/, '');
   }
+};
+
+export const formatDateForDetailPageHeader = (date: string): string => {
+  const currentDate = parse(date, 'yyyy-MM-dd', new Date());
+  const formattedDate = format(currentDate, 'MM월 dd일 EEEE', { locale: ko });
+  return formattedDate;
 };
 
 export const formatDateForDetailPageHeader = (date: string): string => {

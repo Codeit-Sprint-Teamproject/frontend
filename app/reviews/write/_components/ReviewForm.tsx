@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import BookFeedback from './BookFeedback';
 import BookSelector from './BookSelector';
 import ReviewInput from './ReviewInput';
 import { getMyMeetingBooks } from '@/app/reviews/_lib/getMyMeetingBooks';
@@ -27,6 +28,12 @@ export default function ReviewForm() {
   return (
     <section className='w-[700px] flex flex-col gap-6 mx-auto mt-12'>
       <BookSelector books={books} />
+      <BookFeedback
+        rating={form.rating}
+        tags={form.tags}
+        setRating={(rating) => setForm((prev) => ({ ...prev, rating }))}
+        setTags={(tags) => setForm((prev) => ({ ...prev, tags }))}
+      />
       <ReviewInput
         content={form.content}
         setContent={(content) => setForm((prev) => ({ ...prev, content }))}

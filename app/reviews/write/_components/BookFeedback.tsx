@@ -1,4 +1,8 @@
-const RATING = ['추천해요', '아쉬웠어요', '평가하지 않을래요'];
+const RATING = {
+  SG: '추천해요',
+  NG: '아쉬웠어요',
+  NONE: '평가하지 않을래요',
+};
 const TAGS = {
   CS: '🤗 따뜻한 위로를 받았어요',
   FUN: '🤩 정말 흥미진진했어요',
@@ -10,7 +14,32 @@ const TAGS = {
   BAD: '😕 기대 이하였어요',
 };
 
-export default function BookFeedback() {
+type Props = {
+  rating: string;
+  tags: string[];
+  setRating: (rating: string) => void;
+  setTags: (tags: string[]) => void;
+};
+
+export default function BookFeedback({
+  rating,
+  tags,
+  setRating,
+  setTags,
+}: Props) {
+  const handleClick = (tag: string) => {
+    if (tags.includes(tag)) {
+      setTags(tags.filter((t) => t !== tag));
+    } else if (tags.length < 3) {
+      setTags([...tags, tag]);
+    }
+  };
+  const applySelectedStyle = (tag: string) => {
+    if (tags.includes(tag)) {
+      return 'bg-customGreen-500 text-white';
+    }
+  };
+
   return (
     <div className='flex flex-col gap-[60px] h-[412px] p-5 bg-customGrey-50 rounded-sm'>
       <div>
@@ -21,12 +50,13 @@ export default function BookFeedback() {
           </span>
         </h3>
         <div className='flex gap-1.5'>
-          {RATING.map((rating, i) => (
+          {Object.entries(RATING).map(([key, rate]) => (
             <button
-              key={i}
-              className='px-3 py-2.5 text-customGrey-800 border rounded-full'
+              key={key}
+              className={`px-3 py-2.5 text-customGrey-800 border rounded-full ${key === rating ? 'bg-customGreen-500 text-white' : ''}`}
+              onClick={() => setRating(key)}
             >
-              {rating}
+              {rate}
             </button>
           ))}
         </div>
@@ -40,7 +70,8 @@ export default function BookFeedback() {
           {Object.entries(TAGS).map(([key, tag]) => (
             <button
               key={key}
-              className='h-10 px-2.5 py-1.5 text-customGrey-800 border rounded-md'
+              className={`h-10 px-2.5 py-1.5 text-customGrey-800 border rounded-md ${applySelectedStyle(key)}`}
+              onClick={() => handleClick(key)}
             >
               {tag}
             </button>

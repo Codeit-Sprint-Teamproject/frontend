@@ -33,7 +33,17 @@ export default function MeetingInfo({ gatheringId }: MeetingInfoProps) {
 
   const bookMoreInfoButtonHandler = () => {
     setBooMoreInfoToggle(!bookMoreInfoToggle);
+    setBooMoreInfoToggle(!bookMoreInfoToggle);
   };
+
+  if (isLoading) return <div>Loading meeting details...</div>;
+
+  if (isError)
+    return (
+      <div>
+        Error: {error instanceof Error ? error.message : 'Unknown error'}
+      </div>
+    );
 
   if (isLoading) return <div>Loading meeting details...</div>;
 
@@ -91,10 +101,14 @@ export default function MeetingInfo({ gatheringId }: MeetingInfoProps) {
             )}
           </div>
           {bookMoreInfoToggle ? (
+          {bookMoreInfoToggle ? (
             <div
               onClick={() => bookMoreInfoButtonHandler()}
               className='cursor-pointer flex flex-row justify-end mb-3'
+              className='cursor-pointer flex flex-row justify-end mb-3'
             >
+              <span className='mr-1'>접어두기</span>
+              <ChevronUpIcon width={24} height={24} />
               <span className='mr-1'>접어두기</span>
               <ChevronUpIcon width={24} height={24} />
             </div>
@@ -102,7 +116,10 @@ export default function MeetingInfo({ gatheringId }: MeetingInfoProps) {
             <div
               onClick={() => bookMoreInfoButtonHandler()}
               className='cursor-pointer flex flex-row justify-end mb-3'
+              className='cursor-pointer flex flex-row justify-end mb-3'
             >
+              <span className='mr-1'>더보기</span>
+              <ChevronDownIcon width={24} height={24} />
               <span className='mr-1'>더보기</span>
               <ChevronDownIcon width={24} height={24} />
             </div>

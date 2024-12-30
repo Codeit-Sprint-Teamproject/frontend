@@ -1,6 +1,7 @@
 'use server';
 
 import { fetchAPIServer } from '@/lib/fetchAPI.server';
+import { cookies } from 'next/headers';
 
 export const getMeetingDetails = async (gatheringId: number) => {
   const endpoint = `/api/gatheringSearch/${gatheringId}`;
@@ -57,11 +58,14 @@ export const postWishMeeting = async (gatheringId: number) => {
     const data = await fetchAPIServer(endpoint, method);
 
     if (data?.error) {
+      console.log(data.erorr);
       throw data.error;
     }
 
     return data;
-  } catch (error: unknown) {
+  } catch (error) {
+    console.log(error);
+
     if (error instanceof Error && error.message.includes('ALREADY_JOINED')) {
       throw new Error('이미 찜한 모임입니다.');
     }
@@ -69,3 +73,10 @@ export const postWishMeeting = async (gatheringId: number) => {
     throw error;
   }
 };
+
+export async function checkToken() {
+  const cookieStore = cookies();
+  const token = cookieStore.get('token')?.value || null;
+
+  return token;
+}

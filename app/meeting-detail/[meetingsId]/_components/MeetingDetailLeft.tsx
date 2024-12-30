@@ -23,7 +23,6 @@ interface ExtendedError extends Error {
 
 export default function MeetingDetailLeft({ data }: IMeetingDetail) {
   const pathname = usePathname();
-
   const meetingJoinBtnHandler = async () => {
     try {
       await postJoinMeeting(data.id);
@@ -39,8 +38,8 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
   };
 
   const meetingShareBtnHandler = () => {
-    const baseurl = window.location.origin;
-    const fullUrl = `${baseurl}${pathname}`;
+    const fullUrl = `http://localhost:3000${pathname}`;
+
     navigator.clipboard
       .writeText(fullUrl)
       .then(() => {
@@ -96,7 +95,7 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
           <Tooltip delayDuration={300}>
             <TooltipTrigger>
               <div
-                className='flex flex-row gap-2 cursor-pointer hover:'
+                className='flex flex-row gap-2 cursor-pointer'
                 onClick={meetingShareBtnHandler}
               >
                 <ShareIcon width={24} height={24} />

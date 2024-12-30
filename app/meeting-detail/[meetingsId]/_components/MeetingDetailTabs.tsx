@@ -22,7 +22,7 @@ export default function MeetingDetailTabs({ gatheringId }: MeetingInfo) {
         {tabs.map((tab) => (
           <li
             key={tab.id}
-            className={`text-[22px] font-medium ${activeTab === tab.id ? 'pb-2 border-b-[3px] border-black' : ''}`}
+            className={`text-[22px] font-medium cursor-pointer ${activeTab === tab.id ? 'pb-2 border-b-[3px] border-black' : ''}`}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.title}

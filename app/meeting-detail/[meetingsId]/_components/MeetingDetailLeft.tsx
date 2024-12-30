@@ -9,8 +9,6 @@ import {
 import HeartIcon from '@/public/HeartIcon';
 import InfoIcon from '@/public/InfoIcon';
 import MeetingOwnerIcon from '@/public/MeetingOwnerIcon';
-import InfoIcon from '@/public/InfoIcon';
-import MeetingOwnerIcon from '@/public/MeetingOwnerIcon';
 import ShareIcon from '@/public/ShareIcon';
 import UserIcon from '@/public/UserIcon';
 import { Arrow } from '@radix-ui/react-tooltip';
@@ -75,13 +73,8 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
       <div className='text-[20px] mt-[16px] font-bold'>{data?.name}</div>
       <div className='h-[36px] flex flex-row items-center mt-[16px]'>
         <div className='w-[32px] h-[32px] border-[0.925px] border-[#D1D5DB] bg-white rounded-full flex justify-center items-center'>
-      <div className='text-[20px] mt-[16px] font-bold'>{data?.name}</div>
-      <div className='h-[36px] flex flex-row items-center mt-[16px]'>
-        <div className='w-[32px] h-[32px] border-[0.925px] border-[#D1D5DB] bg-white rounded-full flex justify-center items-center'>
           <UserIcon width={36} height={36} />
         </div>
-        <div className='font-bold ml-[14px]'>{data?.owner}</div>
-        <MeetingOwnerIcon width={16} height={16} className='ml-1' />
         <div className='font-bold ml-[14px]'>{data?.owner}</div>
         <MeetingOwnerIcon width={16} height={16} className='ml-1' />
       </div>

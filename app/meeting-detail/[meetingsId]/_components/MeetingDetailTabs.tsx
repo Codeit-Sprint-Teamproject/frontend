@@ -28,7 +28,6 @@ export default function MeetingDetailTabs({ gatheringId }: MeetingInfo) {
       <div className='mt-6'>
         {activeTab === 'meeting-info' ? (
           <MeetingInfo gatheringId={gatheringId} />
-          <MeetingInfo gatheringId={gatheringId} />
         ) : (
           <></>
         )}

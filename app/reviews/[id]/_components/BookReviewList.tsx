@@ -12,7 +12,7 @@ export default function BookReviewList({ title }: { title?: string }) {
   const [page, setPage] = useState(0);
   const { data: reviews } = useQuery({
     queryKey: ['reviews', 'book', title, page],
-    queryFn: () => getBookReviews(title as string, page),
+    queryFn: () => getBookReviews(title || '', page),
     enabled: !!title,
     staleTime: 60 * 1000,
   });
@@ -24,9 +24,8 @@ export default function BookReviewList({ title }: { title?: string }) {
         <span className='text-customGreen-500'>{title}</span>의 리뷰 모아보기
       </p>
       <ul className='w-full h-[498px]'>
-        {reviews?.bookReviews.map((review, i) => (
-          // TODO (유진) key 부분 review.id로 변경할 것
-          <ReviewCard key={i} review={review} />
+        {reviews?.bookReviews.map((review) => (
+          <ReviewCard key={review.id} review={review} />
         ))}
       </ul>
       <Pagination

@@ -3,6 +3,7 @@ import LikeIcon from '../_svg/LikeIcon';
 import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
 import { BookReview } from '@/types/book';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function Review({ review }: { review: BookReview }) {
   const {
@@ -16,6 +17,7 @@ export default function Review({ review }: { review: BookReview }) {
     userLikeCk,
   } = review;
   const { handleLike } = useReviewLikeQuery(id);
+  const router = useRouter();
 
   return (
     <div className='border w-[520px]'>
@@ -24,7 +26,10 @@ export default function Review({ review }: { review: BookReview }) {
         <span className='text-sm text-customGrey-500'>이 책을 추천해요</span>
       </div>
       <div className='w-11/12 border border-customGrey-100 mx-auto'></div>
-      <div className='flex gap-2.5 px-5 py-3'>
+      <div
+        className='flex gap-2.5 px-5 py-3 cursor-pointer'
+        onClick={() => router.push(`/reviews/${id}`)}
+      >
         <Image
           src={bookImage}
           width={132}

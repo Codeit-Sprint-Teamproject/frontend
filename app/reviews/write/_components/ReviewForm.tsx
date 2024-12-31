@@ -25,7 +25,7 @@ export type Form = {
 };
 type Props = {
   isEdit?: boolean;
-  initialReview: Form;
+  initialReview?: Form;
   reviewId?: number;
 };
 export default function ReviewForm({

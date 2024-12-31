@@ -52,32 +52,36 @@ export default function BookSelector({
           필수
         </span>
       </h3>
-      <div className='flex flex-col gap-2'>
-        <p className='text-sm text-customGrey-500'>최근 모임에서 읽은 책</p>
-        <div className='flex flex-wrap gap-1.5'>
-          {books?.map(({ id, gatheringId, title }) => (
-            <button
-              key={gatheringId}
-              className={`flex gap-2.5 text-customGrey-800 border rounded-md px-2.5 py-1.5 disabled:bg-customGrey-100 disabled:text-customGrey-300 ${book.gatheringId === gatheringId ? 'bg-customGreen-500 text-white' : ''}`}
-              onClick={() => handleToggle(id, title, gatheringId)}
-              disabled={!!book.id && !book.gatheringId}
-            >
-              {title}
-              {book.gatheringId === gatheringId ? (
-                <ThinCheckIcon />
-              ) : (
-                <PlusIcon className='w-6 h-6' />
-              )}
-            </button>
-          ))}
+      {books?.length > 0 && (
+        <div className='flex flex-col gap-2'>
+          <p className='text-sm text-customGrey-500'>최근 모임에서 읽은 책</p>
+          <div className='flex flex-wrap gap-1.5'>
+            {books?.map(({ id, gatheringId, title }) => (
+              <button
+                key={gatheringId}
+                className={`flex gap-2.5 text-customGrey-800 border rounded-md px-2.5 py-1.5 disabled:bg-customGrey-100 disabled:text-customGrey-300 ${book.gatheringId === gatheringId ? 'bg-customGreen-500 text-white' : ''}`}
+                onClick={() => handleToggle(id, title, gatheringId)}
+                disabled={!!book.id && !book.gatheringId}
+              >
+                {title}
+                {book.gatheringId === gatheringId ? (
+                  <ThinCheckIcon />
+                ) : (
+                  <PlusIcon className='w-6 h-6' />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       <div className='flex flex-col gap-2'>
-        <p className='text-sm text-customGrey-500'>
-          다른 책을 리뷰하고 싶으신가요?
-        </p>
+        {books?.length > 0 && (
+          <p className='text-sm text-customGrey-500'>
+            다른 책을 리뷰하고 싶으신가요?
+          </p>
+        )}
         <button
-          className={`h-11 px-1.5 py-2.5 border text-sm rounded-md cursor-pointer disabled:bg-customGrey-100 ${!book.gatheringId && book.title ? 'border-2 border-customGreen-500 bg-customGreen-50 text-black' : 'border-customGrey-300 bg-white'}`}
+          className={`h-11 px-1.5 py-2.5 border text-sm rounded-md cursor-pointer disabled:bg-customGrey-100 ${!book.gatheringId && book.title ? 'border-2 border-customGreen-500 bg-customGreen-50 text-black' : 'border-customGrey-100 bg-white'}`}
           onClick={handleOpen}
           disabled={!!book.id && !!book?.gatheringId}
         >

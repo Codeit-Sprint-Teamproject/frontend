@@ -52,6 +52,7 @@ export type BookReviewDetail = Omit<BookReview, 'bookImage'> & {
   tagCd: string;
   writerReviewCnt: number;
   userName: string;
+  gatheringId?: number;
 };
 export type BookDetail = Omit<PendingBookReview, 'gatheringId'> & {
   gatheringExists?: boolean;

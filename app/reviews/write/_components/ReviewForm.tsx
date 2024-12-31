@@ -21,12 +21,29 @@ export type Form = {
   rating: string;
   tags: string[];
   content: string;
+  gatheringId: number;
 };
-export default function ReviewForm() {
+type Props = {
+  isEdit?: boolean;
+  initialReview: Form;
+  reviewId?: number;
+};
+export default function ReviewForm({
+  isEdit = false,
+  initialReview = {
+    bookId: 0,
+    title: '',
+    rating: '',
+    tags: [],
+    content: '',
+    gatheringId: 0,
+  },
+  reviewId,
+}: Props) {
   const router = useRouter();
   const { user } = useUserStore();
   const { book } = useBookContext();
-  const { addReviewMutate } = useReviewQuery();
+  const { addReviewMutate, updateReviewMutate } = useReviewQuery();
   const { isLoading, data: books = [] } = useQuery<MyMeetingBookReview[]>({
     queryKey: ['books', 'meetings', 'completed'],
     queryFn: getMyMeetingBooks,
@@ -40,21 +57,25 @@ export default function ReviewForm() {
     handleSubmit,
   } = useForm<Form>({
     resolver: zodResolver(reviewSchema),
-    defaultValues: { bookId: 0, title: '', rating: '', tags: [], content: '' },
+    defaultValues: initialReview,
     mode: 'onChange',
   });
   const onSubmit = (form: Form) => {
-    const { bookId, title, rating, tags, content } = form;
+    const { bookId, title, rating, tags, content, gatheringId } = form;
     const review = {
       bookId,
       title,
       apprCd: rating,
       tag: tags.join(','),
       content: content,
-      gatheringId: 0,
+      gatheringId,
       tmprStrgYN: 'N',
     };
-    addReviewMutate(review);
+    if (!isEdit) {
+      addReviewMutate(review);
+    } else if (reviewId) {
+      updateReviewMutate({ id: reviewId, review });
+    }
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -65,10 +86,11 @@ export default function ReviewForm() {
   useEffect(() => {
     if (book?.id) {
       setValue('bookId', book.id, { shouldValidate: true });
+      setValue('gatheringId', book.gatheringId || 0, { shouldValidate: true });
     } else {
       setValue('bookId', 0, { shouldValidate: true });
     }
-  }, [book?.id, setValue]);
+  }, [book, setValue]);
 
   if (isLoading) return <p>Loading...</p>;
   return (
@@ -112,7 +134,7 @@ export default function ReviewForm() {
           className='h-10 px-3 py-2 bg-customGreen-500 text-white rounded-sm disabled:bg-customGrey-100 disabled:text-customGrey-300'
           disabled={!isValid}
         >
-          리뷰 작성
+          {isEdit ? '리뷰 수정' : '리뷰 작성'}
         </button>
       </div>
     </form>

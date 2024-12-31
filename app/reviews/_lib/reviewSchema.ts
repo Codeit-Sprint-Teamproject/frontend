@@ -6,4 +6,5 @@ export const reviewSchema = z.object({
   rating: z.string().min(2, '책 추천 여부를 선택해주세요.'),
   tags: z.array(z.string()).min(1, '태그를 하나 이상 선택해주세요.'),
   content: z.string().min(1, '리뷰는 최소 1자 이상 입력해야 합니다.'),
+  gatheringId: z.number().min(0, '모임 id가 필요합니다'),
 });

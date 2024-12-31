@@ -55,6 +55,7 @@ export default function BookFeedback({ setValue, getValues }: Props) {
         <div className='flex gap-1.5'>
           {Object.entries(RATING).map(([key, rate]) => (
             <button
+              type='button'
               key={key}
               className={`px-3 py-2.5 text-customGrey-800 border rounded-full ${key === rating ? 'bg-customGreen-500 text-white' : ''}`}
               onClick={() => setValue('rating', key, { shouldValidate: true })}
@@ -72,6 +73,7 @@ export default function BookFeedback({ setValue, getValues }: Props) {
         <div className='flex flex-wrap gap-1.5'>
           {Object.entries(TAGS).map(([key, tag]) => (
             <button
+              type='button'
               key={key}
               className={`h-10 px-2.5 py-1.5 text-customGrey-800 border rounded-md ${applySelectedStyle(key)}`}
               onClick={() => handleClick(key)}

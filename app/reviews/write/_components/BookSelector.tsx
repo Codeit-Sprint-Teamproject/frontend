@@ -33,7 +33,7 @@ export default function BookSelector({
   };
   const handleToggle = (id: number, title: string, gatheringId: number) => {
     if (book.gatheringId === gatheringId) {
-      setBook({ id: null, title: null, gatheringId: undefined });
+      setBook({ id: null, title: null, gatheringId: 0 });
       return;
     }
     setBook({ id, title, gatheringId });

@@ -9,7 +9,7 @@ import {
 
 type Props = {
   onDelete: () => void;
-  onUpdate?: () => void;
+  onUpdate: () => void;
 };
 export default function DropDown({ onDelete, onUpdate }: Props) {
   return (

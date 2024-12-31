@@ -16,7 +16,7 @@ export default function DropDown({ onDelete, onUpdate }: Props) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className='p-2 outline-none'>
-          <MoreIcon className='w-6 h-6 stroke-black' />
+          <MoreIcon className='w-6 h-6 stroke-customGrey-300' />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-[108px] border px-1.5 py-2 flex flex-col items-center gap-3 bg-white rounded-sm overflow-hidden'>

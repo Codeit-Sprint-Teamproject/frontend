@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { fetchAPIClient } from '@/lib/fetchAPI.client';
 import ChevronDownIcon from '@/public/ChevronDownIcon';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface GatheringResult {
   id: number;
@@ -34,9 +34,15 @@ type SearchType = 'BOOK_NAME' | 'CONTENT' | 'TITLE';
 
 export default function SearchTabs() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const searchWordFromPath = decodeURIComponent(pathname.split('/')[2] || '');
+  const typeFromQuery = searchParams.get('type') as SearchType;
+
   const [searchWord, setSearchWord] = useState(searchWordFromPath);
-  const [searchType, setSearchType] = useState<SearchType>('BOOK_NAME');
+  const [searchType, setSearchType] = useState<SearchType>(
+    typeFromQuery || 'BOOK_NAME',
+  );
   const [activeTab, setActiveTab] = useState<'gatherings' | 'reviews'>(
     'gatherings',
   );
@@ -112,6 +118,7 @@ export default function SearchTabs() {
     setErrorMessage('');
     setGatheringPage(0);
     setReviewPage(0);
+    router.push(`/search/${searchWord}?type=${searchType}`);
     if (activeTab === 'gatherings') fetchGatherings(0);
     else fetchReviews(0);
   };

@@ -1,5 +1,6 @@
 import CommentIcon from '../_svg/CommentIcon';
 import LikeIcon from '../_svg/LikeIcon';
+import { formatTimeWithDate } from '@/app/_utils/dateFormatter';
 import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
 import { BookReview } from '@/types/book';
 import Image from 'next/image';
@@ -12,6 +13,7 @@ export default function Review({ review }: { review: BookReview }) {
     bookImage,
     userName,
     createTime,
+    apprCd,
     likes,
     commentCnt,
     userLikeCk,
@@ -21,9 +23,19 @@ export default function Review({ review }: { review: BookReview }) {
 
   return (
     <div className='border w-[520px]'>
-      <div className='flex items-center  justify-between px-5'>
-        <h3 className='text-xl font-bold py-3'>{title}</h3>
-        <span className='text-sm text-customGrey-500'>이 책을 추천해요</span>
+      <div className='flex items-center justify-between px-5'>
+        <h3 className='text-lg font-bold py-3 break-words whitespace-normal max-w-[200px]'>
+          {title}
+        </h3>
+        <span className='text-sm text-customGrey-500'>
+          {apprCd === 'SG' ? (
+            <p className='text-customGrey-500'>이 책을 추천해요</p>
+          ) : apprCd === 'NG' ? (
+            <p className='text-customGrey-500'>
+              이 책은 아쉬운 부분이 있었어요
+            </p>
+          ) : null}
+        </span>
       </div>
       <div className='w-11/12 border border-customGrey-100 mx-auto'></div>
       <div
@@ -44,23 +56,27 @@ export default function Review({ review }: { review: BookReview }) {
       <div className='w-11/12 border border-customGrey-100 mx-auto'></div>
       <div className='flex justify-between items-center px-5 py-3'>
         <div className='flex items-center gap-2.5'>
+          {/* TODO (유진) profile 데이터 정보 생기면 수정할 예정 */}
           <div className='w-10 h-10 bg-[#D9D9D9] rounded-full'></div>
-          <span>{userName}</span>
-          {/* TODO (유진) 몇 시간 전 또는 며칠 전으로 수정할 예정 */}
-          <p className='text-customGrey-300'>{createTime}</p>
+          <span className='text-sm text-customGrey-800'>{userName}</span>
+          <p className='text-customGrey-300 text-sm'>
+            {formatTimeWithDate(createTime)}
+          </p>
         </div>
         <div className='flex gap-5'>
           <div className='flex gap-1'>
             <button onClick={() => handleLike(userLikeCk as boolean)}>
               <LikeIcon
-                className={`w-5 h-5 ${userLikeCk ? 'fill-black' : ''}`}
+                className={`w-5 h-5 stroke-customGrey-500 ${userLikeCk ? 'fill-black' : ''}`}
               />
             </button>
-            <span>{likes}</span>
+            <span className='text-customGrey-500 font-bold'>{likes}</span>
           </div>
           <div className='flex items-center gap-1'>
-            <CommentIcon className='w-5 h-5' />
-            <span>{commentCnt || 0}</span>
+            <CommentIcon className='w-5 h-5 stroke-customGrey-500' />
+            <span className='text-customGrey-500 font-bold'>
+              {commentCnt || 0}
+            </span>
           </div>
         </div>
       </div>

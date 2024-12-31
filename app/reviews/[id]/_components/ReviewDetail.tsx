@@ -5,6 +5,7 @@ import ConfirmModal from './ConfirmModal';
 import DropDown from './DropDown';
 import GatheringAction from './GatheringAction';
 import ReviewTag from './ReviewTag';
+import { formatDate } from '@/app/_utils/dateFormatter';
 import CommentIcon from '@/app/reviews/_svg/CommentIcon';
 import LikeIcon from '@/app/reviews/_svg/LikeIcon';
 import Modal from '@/components/Modal';
@@ -66,7 +67,7 @@ export default function ReviewDetail() {
               <div className='w-6 h-6 bg-[#D9D9D9] rounded-full'></div>
               <p className='font-bold'>{userName}</p>
               <p className='text-sm text-customGrey-300'>
-                {createTime.replace(/-/g, '.')}
+                {formatDate(createTime)}
               </p>
             </div>
             {user?.name === userName && (

@@ -18,6 +18,16 @@ export const formatDateWithWeekday = (date: Date): string => {
     })
     .replace(/(.*?\..*?)\./, '$1');
 };
+export const formatDate = (date: string) => {
+  return new Date(date)
+    .toLocaleString('ko', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+    .replace(/\.$/, '')
+    .replace(/\s+/g, '');
+};
 
 export const formatTimeWithDate = (dateTime: string) => {
   const date = new Date(dateTime);
@@ -30,13 +40,7 @@ export const formatTimeWithDate = (dateTime: string) => {
   } else if (daysDiff === 1) {
     return '1일 전';
   } else {
-    return new Date(date)
-      .toLocaleString('ko', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-      .replace(/\.$/, '');
+    return formatDate(dateTime);
   }
 };
 

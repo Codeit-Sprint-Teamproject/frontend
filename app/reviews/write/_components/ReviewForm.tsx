@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import TextareaAutosize from 'react-textarea-autosize';
 import { useQuery } from '@tanstack/react-query';
 import BookFeedback from './BookFeedback';
 import BookSelector from './BookSelector';
@@ -13,6 +12,8 @@ import { useReviewQuery } from '@/hooks/useReviewQuery';
 import useUserStore from '@/store/userStore';
 import { MyMeetingBookReview } from '@/types/book';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Textarea } from '@nextui-org/input';
+import { useRouter } from 'next/navigation';
 
 export type Form = {
   bookId: number;
@@ -22,6 +23,7 @@ export type Form = {
   content: string;
 };
 export default function ReviewForm() {
+  const router = useRouter();
   const { user } = useUserStore();
   const { book } = useBookContext();
   const { addReviewMutate } = useReviewQuery();
@@ -82,30 +84,37 @@ export default function ReviewForm() {
       />
       <BookSelector books={books} />
       <BookFeedback setValue={setValue} getValues={getValues} />
-      <div className='relative flex flex-col'>
-        {!getValues('content') && (
-          <h3 className='absolute left-10 top-5 text-lg font-bold'>
-            리뷰를 작성해 주세요
-          </h3>
-        )}
-        <TextareaAutosize
-          {...register('content')}
-          className='h-[356px] border outline-none resize-none placeholder:text-sm pt-5 placeholder:pt-5'
-          placeholder={`
-            🞄 책을 읽고 나서 어떤 기분이 들었나요?
-            🞄 이 책에서 가장 기억에 남는 장면이나 문장이 있었나요?
-            🞄 다른 사람들에게 이 책을 추천하고 싶다면, 어떤 이유인가요?
-            🞄 책 속에서 가장 공감한 내용은 무엇인가요?
-            🞄 아쉬웠던 점이 있다면 간단히 적어주세요.`}
-          minRows={13}
-        />
+      <Textarea
+        {...register('content')}
+        className='border outline-none placeholder:text-sm'
+        classNames={{
+          base: 'min-h-[356px] resize-y',
+          inputWrapper: 'min-h-[356px] p-5',
+          input: 'min-h-[208px]  resize-none',
+          label: 'text-lg font-bold mb-4',
+        }}
+        label='리뷰를 작성해 주세요'
+        placeholder={` 🞄 책을 읽고 나서 어떤 기분이 들었나요?
+ 🞄 이 책에서 가장 기억에 남는 장면이나 문장이 있었나요?
+ 🞄 다른 사람들에게 이 책을 추천하고 싶다면, 어떤 이유인가요?
+ 🞄 책 속에서 가장 공감한 내용은 무엇인가요?
+ 🞄 아쉬웠던 점이 있다면 간단히 적어주세요.`}
+        minRows={13}
+      />
+      <div className='flex justify-end gap-4'>
+        <button
+          className='h-10 px-3 py-2 border rounded-sm text-lg'
+          onClick={() => router.back()}
+        >
+          취소
+        </button>
+        <button
+          className='h-10 px-3 py-2 bg-customGreen-500 text-white rounded-sm disabled:bg-customGrey-100 disabled:text-customGrey-300'
+          disabled={!isValid}
+        >
+          리뷰 작성
+        </button>
       </div>
-      <button
-        className='h-10 ml-auto px-3 py-2 bg-customGreen-500 text-white rounded-sm disabled:bg-customGrey-100 disabled:text-customGrey-300'
-        disabled={!isValid}
-      >
-        리뷰 작성
-      </button>
     </form>
   );
 }

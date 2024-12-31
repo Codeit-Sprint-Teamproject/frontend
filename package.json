@@ -12,7 +12,11 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
+<<<<<<< HEAD
     "@radix-ui/react-alert-dialog": "^1.1.4",
+=======
+    "@nextui-org/input": "^2.4.7",
+>>>>>>> 81b4474 (style: 리뷰 작성 입력 UI 수정 (#100))
     "@radix-ui/react-checkbox": "^1.1.3",
     "@radix-ui/react-dropdown-menu": "^2.1.2",
     "@radix-ui/react-label": "^2.1.0",
@@ -32,8 +36,11 @@
     "react-calendar": "^5.1.0",
     "react-dom": "18",
     "react-hook-form": "^7.54.0",
+<<<<<<< HEAD
     "react-simple-star-rating": "^5.1.7",
     "react-textarea-autosize": "^8.5.6",
+=======
+>>>>>>> 81b4474 (style: 리뷰 작성 입력 UI 수정 (#100))
     "swiper": "^11.1.15",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",

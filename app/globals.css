@@ -96,3 +96,15 @@ body {
 .swiper-button-next {
   @apply w-10 h-10 rounded-full border p-2 bg-white !important;
 }
+textarea::-webkit-scrollbar {
+  @apply w-2;
+}
+textarea::-webkit-scrollbar-track {
+  @apply bg-customGrey-100 rounded-sm;
+}
+textarea::-webkit-scrollbar-thumb {
+  @apply bg-customGrey-400 rounded-sm cursor-auto;
+}
+textarea::-webkit-scrollbar-thumb:hover {
+  @apply bg-customGrey-600;
+}

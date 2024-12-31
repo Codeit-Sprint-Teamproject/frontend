@@ -82,6 +82,13 @@ export default function ReviewForm({
       e.preventDefault();
     }
   };
+  const handleCancel = () => {
+    if (isEdit && reviewId) {
+      router.replace(`/reviews/${reviewId}`);
+    } else {
+      router.back();
+    }
+  };
 
   useEffect(() => {
     if (book?.id) {
@@ -125,8 +132,9 @@ export default function ReviewForm({
       />
       <div className='flex justify-end gap-4'>
         <button
+          type='button'
           className='h-10 px-3 py-2 border rounded-sm text-lg'
-          onClick={() => router.back()}
+          onClick={handleCancel}
         >
           취소
         </button>

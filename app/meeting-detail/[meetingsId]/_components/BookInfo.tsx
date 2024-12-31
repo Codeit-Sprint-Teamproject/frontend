@@ -27,7 +27,7 @@ const BookInfo = ({
         <div className='flex flex-row'>
           <div className='w-[87px] h-[132px] flex justify-center items-center relative'>
             <Image
-              src={bookImage}
+              src={bookImage || ''}
               alt='book-image'
               layout='fill'
               objectFit='cover'

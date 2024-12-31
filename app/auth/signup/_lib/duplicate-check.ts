@@ -9,7 +9,6 @@ export const checkDuplicate = async (
       `/api/auths/check/${type}?param=${value}`,
       'GET',
     );
-    console.log(response);
     if (response.code === 'SUCCESS') {
       return { isDuplicate: false, message: '사용 가능합니다.' };
     } else if (response.code === 'DUPLICATE_EMAIL') {

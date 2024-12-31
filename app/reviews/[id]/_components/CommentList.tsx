@@ -2,12 +2,12 @@
 
 import CommentInput from './CommentInput';
 import CommentItem from './CommentItem';
-import { useReviewQuery } from '@/hooks/useReviewQuery';
+import { useReviewDetailQuery } from '@/hooks/useReveiwDetailQuery';
 import { useParams } from 'next/navigation';
 
 export default function CommentList() {
   const { id } = useParams();
-  const { review } = useReviewQuery(id as string);
+  const { review } = useReviewDetailQuery(id as string);
 
   return (
     <div className='pt-5 border-t'>

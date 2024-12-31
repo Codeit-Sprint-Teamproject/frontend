@@ -8,17 +8,20 @@ import ReviewTag from './ReviewTag';
 import CommentIcon from '@/app/reviews/_svg/CommentIcon';
 import LikeIcon from '@/app/reviews/_svg/LikeIcon';
 import Modal from '@/components/Modal';
+import { useReviewDetailQuery } from '@/hooks/useReveiwDetailQuery';
 import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
 import { useReviewQuery } from '@/hooks/useReviewQuery';
 import { useModalStore } from '@/store/modal';
 import useUserStore from '@/store/userStore';
 import { BookDetail, BookReviewDetail } from '@/types/book';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 export default function ReviewDetail() {
+  const router = useRouter();
   const { id } = useParams();
-  const { review, deleteReviewMutate } = useReviewQuery(id as string);
+  const { review } = useReviewDetailQuery(id as string);
+  const { deleteReviewMutate } = useReviewQuery();
   const { user } = useUserStore();
   const { handleLike } = useReviewLikeQuery(Number(id));
   const { isOpen, openModal } = useModalStore();
@@ -66,7 +69,12 @@ export default function ReviewDetail() {
                 {createTime.replace(/-/g, '.')}
               </p>
             </div>
-            {user?.name === userName && <DropDown onDelete={handleDelete} />}
+            {user?.name === userName && (
+              <DropDown
+                onDelete={handleDelete}
+                onUpdate={() => router.push(`/reviews/${id}/edit`)}
+              />
+            )}
           </div>
         </div>
         <div className='flex flex-col gap-8 px-7.5 py-5'>

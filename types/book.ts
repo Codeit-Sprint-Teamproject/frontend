@@ -23,6 +23,7 @@ export type PendingBookReview = {
   image: string;
   gatheringId: number;
 };
+export type MyMeetingBookReview = PendingBookReview;
 type BookReviewRating = 'SG' | 'NG' | 'NONE';
 export type BookReviewTag =
   | 'BAD'
@@ -51,6 +52,7 @@ export type BookReviewDetail = Omit<BookReview, 'bookImage'> & {
   tagCd: string;
   writerReviewCnt: number;
   userName: string;
+  gatheringId?: number;
 };
 export type BookDetail = Omit<PendingBookReview, 'gatheringId'> & {
   gatheringExists?: boolean;
@@ -59,3 +61,4 @@ export type BookReviewByTitle = Omit<
   BookReview,
   'apprCd' | 'userName' | 'bookImage'
 >;
+export type SearchedBook = Omit<PendingBookReview, 'gatheringId'>;

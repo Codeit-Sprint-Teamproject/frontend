@@ -12,5 +12,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/mypage/:path*'],
+  matcher: ['/mypage/:path*', '/reviews/write', '/reviews/:id/edit'],
 };

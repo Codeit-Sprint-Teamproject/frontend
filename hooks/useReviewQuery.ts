@@ -1,19 +1,22 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteBookReview } from '@/app/reviews/[id]/_lib/deleteBookReview';
+import { updateBookReview } from '@/app/reviews/[id]/edit/_lib/updateBookReview';
 import {
-  ReviewDetailResponse,
-  getReviewDetail,
-} from '@/app/reviews/[id]/_lib/getReviewDetail';
+  Review,
+  createBookReview,
+} from '@/app/reviews/write/_lib/createBookReview';
 import { useRouter } from 'next/navigation';
 
-export const useReviewQuery = (id: string) => {
+export const useReviewQuery = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { data: review } = useQuery<ReviewDetailResponse>({
-    queryKey: ['reviews', 'detail', id],
-    queryFn: () => getReviewDetail(Number(id)),
-    staleTime: 60 * 1000,
-    enabled: !!id,
+
+  const { mutate: addReviewMutate } = useMutation({
+    mutationFn: (review: Review) => createBookReview(review),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reviews'] });
+      router.replace('/reviews');
+    },
   });
   const { mutate: deleteReviewMutate } = useMutation({
     mutationFn: (id: number) => deleteBookReview(id),
@@ -24,6 +27,14 @@ export const useReviewQuery = (id: string) => {
       router.replace('/reviews');
     },
   });
+  const { mutate: updateReviewMutate } = useMutation({
+    mutationFn: ({ id, review }: { id: number; review: Review }) =>
+      updateBookReview({ id, review }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reviews'] });
+      router.replace(`/reviews`);
+    },
+  });
 
-  return { review, deleteReviewMutate };
+  return { addReviewMutate, deleteReviewMutate, updateReviewMutate };
 };

@@ -111,7 +111,7 @@ export default function ReviewForm({
         placeholder='리뷰 제목을 입력해 주세요'
         onKeyDown={handleKeyDown}
       />
-      <BookSelector books={books} />
+      <BookSelector books={books} isEdit={isEdit} />
       <BookFeedback setValue={setValue} getValues={getValues} />
       <Textarea
         {...register('content')}

@@ -3,6 +3,7 @@
 import PlusIcon from '../_svg/PlusIcon';
 import ThinCheckIcon from '../_svg/ThinCheckIcon';
 import BookSearchModal from './BookSearchModal';
+import ReadOnlyBookTitle from './ReadOnlyBookTitle';
 import { useBookContext } from '@/app/reviews/_components/BookContext';
 import Modal from '@/components/Modal';
 import CloseIcon from '@/components/common/icons/CloseIcon';
@@ -12,8 +13,10 @@ import { MyMeetingBookReview } from '@/types/book';
 
 export default function BookSelector({
   books,
+  isEdit,
 }: {
   books: MyMeetingBookReview[];
+  isEdit?: boolean;
 }) {
   const { isOpen, openModal, closeModal } = useModalStore();
   const { book, setBook } = useBookContext();
@@ -38,6 +41,9 @@ export default function BookSelector({
     }
     setBook({ id, title, gatheringId });
   };
+  if (isEdit && book?.title) {
+    return <ReadOnlyBookTitle title={book?.title} />;
+  }
   return (
     <div className='flex flex-col gap-[18px] p-5 bg-customGrey-50 rounded-sm'>
       <h3 className='text-lg text-customGrey-800 font-bold'>

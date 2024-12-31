@@ -1,5 +1,23 @@
-import { postJoinMeeting, postWishMeeting } from '../_lib/meetingDetail';
+'use client';
+
+import { useEffect, useState } from 'react';
+import {
+  checkToken,
+  postJoinMeeting,
+  postWishMeeting,
+} from '../_lib/meetingDetail';
 import { IMeetingDetail } from '@/app/types';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import {
   Tooltip,
   TooltipContent,
@@ -15,6 +33,7 @@ import { Arrow } from '@radix-ui/react-tooltip';
 import Error from 'next/error';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface ExtendedError extends Error {
   message: string;
@@ -22,8 +41,21 @@ interface ExtendedError extends Error {
 }
 
 export default function MeetingDetailLeft({ data }: IMeetingDetail) {
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   const pathname = usePathname();
-  const meetingJoinBtnHandler = async () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await checkToken();
+
+      setIsLogin(!!token);
+    };
+
+    fetchToken();
+  }, []);
+
+  const handleJoinMeeting = async () => {
     try {
       await postJoinMeeting(data.id);
       alert('모임에 성공적으로 참여하였습니다!');
@@ -37,7 +69,7 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
     }
   };
 
-  const meetingShareBtnHandler = () => {
+  const handleShareMeeting = () => {
     const fullUrl = `http://localhost:3000${pathname}`;
 
     navigator.clipboard
@@ -51,13 +83,16 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
       });
   };
 
-  const meetingBookmarkBtnHandler = async () => {
+  const handleBookmarkMeeting = async () => {
     try {
       await postWishMeeting(data.id);
-      alert('모임을 성공적으로 찜했습니다!');
     } catch (error) {
-      alert(`에러 발생 : ${error}`);
+      console.log('Error : ', error);
     }
+  };
+
+  const handleLoginForBookmark = () => {
+    router.push('/auth/login');
   };
 
   return (
@@ -81,7 +116,7 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
       <div className='h-[48px] mt-[21px]'>
         <button
           className='w-full h-full text-lg bg-customGreen-500 text-white font-bold rounded-[4px]'
-          onClick={meetingJoinBtnHandler}
+          onClick={handleJoinMeeting}
         >
           모임 참여하기
         </button>
@@ -96,7 +131,7 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
             <TooltipTrigger>
               <div
                 className='flex flex-row gap-2 cursor-pointer'
-                onClick={meetingShareBtnHandler}
+                onClick={handleShareMeeting}
               >
                 <ShareIcon width={24} height={24} />
                 <span>공유하기</span>
@@ -108,13 +143,53 @@ export default function MeetingDetailLeft({ data }: IMeetingDetail) {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-        <div
-          className='flex flex-row gap-2 cursor-pointer'
-          onClick={meetingBookmarkBtnHandler}
-        >
-          <HeartIcon width={25} height={25} />
-          <span>찜하기</span>
-        </div>
+        {isLogin ? (
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <div
+                className='flex flex-row gap-2 cursor-pointer'
+                onClick={handleBookmarkMeeting}
+              >
+                <HeartIcon width={25} height={25} />
+                <span>찜하기</span>
+              </div>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>모임 찜 성공</AlertDialogTitle>
+                <AlertDialogDescription>
+                  성공적으로 해당 모임을 찜 했습니다.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogAction>확인하기</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        ) : (
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <div className='flex flex-row gap-2 cursor-pointer'>
+                <HeartIcon width={25} height={25} />
+                <span>찜하기</span>
+              </div>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>로그인 필요</AlertDialogTitle>
+                <AlertDialogDescription>
+                  모임을 찜하려면 로그인하셔야합니다.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>취소하기</AlertDialogCancel>
+                <AlertDialogAction onClick={handleLoginForBookmark}>
+                  로그인하기
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
       </div>
     </div>
   );

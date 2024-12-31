@@ -12,16 +12,16 @@ export default function InputReset(props: React.SVGProps<SVGSVGElement>) {
       <path
         d='M16 8L8 16'
         stroke='white'
-        stroke-width='1.5'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
       <path
         d='M8 8L16 16'
         stroke='white'
-        stroke-width='1.5'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );

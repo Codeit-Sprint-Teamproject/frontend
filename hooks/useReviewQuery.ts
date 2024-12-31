@@ -1,7 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteBookReview } from '@/app/reviews/[id]/_lib/deleteBookReview';
 import { updateBookReview } from '@/app/reviews/[id]/edit/_lib/updateBookReview';
-import { Review, createBookReview } from '@/app/reviews/_lib/createBookReview';
+import {
+  Review,
+  createBookReview,
+} from '@/app/reviews/write/_lib/createBookReview';
 import { useRouter } from 'next/navigation';
 
 export const useReviewQuery = () => {

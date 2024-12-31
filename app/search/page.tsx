@@ -79,7 +79,8 @@ export default function SearchPage() {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align='start'
-              sideOffset={2}
+              sideOffset={4}
+              alignOffset={17}
               className='flex flex-col p-2 min-w-[168px] border-2 border-customGrey-100 bg-white rounded-md'
             >
               {options.map((option) => (

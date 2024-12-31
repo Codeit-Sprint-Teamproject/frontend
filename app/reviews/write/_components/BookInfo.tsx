@@ -10,7 +10,13 @@ export default function BookInfo({ book }: { book: SearchedBook }) {
       className={`flex gap-2.5 p-2.5 border-b mt-3 cursor-pointer ${selectedBook.id === id ? 'bg-customGrey-100' : ''}`}
       onClick={() => setBook({ id, title })}
     >
-      <Image src={image} width={90} height={135} alt='책 표지' />
+      <Image
+        src={image}
+        width={90}
+        height={135}
+        className='w-[90px] h-[135px]'
+        alt='책 표지'
+      />
       <div className='flex flex-col'>
         <h3 className='text-customGrey-800 mb-2'>{title}</h3>
         <p className='text-sm text-customGrey-500'>

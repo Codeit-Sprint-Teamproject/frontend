@@ -1,7 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getPopularKeyword } from '../_lib/getPopularKeyword';
 import BookInfo from './BookInfo';
+import Message from './Message';
+import PopularKeyword from './PopularKeyword';
 import { useBookContext } from '@/app/reviews/_components/BookContext';
 import { searchBookByName } from '@/app/reviews/_lib/searchBookByName';
 import SearchIcon from '@/components/common/icons/SearchIcon';
@@ -14,6 +18,12 @@ export default function BookSearchModal({ onSelect }: Props) {
   const [text, setText] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const { book } = useBookContext();
+
+  const { data: keywords = [] } = useQuery({
+    queryKey: ['books', 'keyword'],
+    queryFn: getPopularKeyword,
+    staleTime: 5 * 60 * 1000,
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,7 +65,7 @@ export default function BookSearchModal({ onSelect }: Props) {
             <input
               type='text'
               value={text}
-              className='w-full px-2'
+              className='w-full px-2 text-customGrey-500'
               placeholder='책의 제목을 3자 이상 입력해 주세요'
               onChange={handleChange}
             />
@@ -64,14 +74,17 @@ export default function BookSearchModal({ onSelect }: Props) {
       </div>
       <div className='w-full border'></div>
       {isLoading ? (
-        <p>isLoading...</p>
+        <Message message='isLoading...' />
       ) : errorMessage ? (
-        <p>{errorMessage}</p>
-      ) : books && books.length > 0 ? (
+        <Message message={errorMessage} />
+      ) : !books ? (
+        <PopularKeyword keywords={keywords} />
+      ) : books?.length > 0 ? (
         books.map((book) => <BookInfo key={book.id} book={book} />)
-      ) : books && books?.length < 1 ? (
-        <p>검색 결과가 없습니다. 다른 검색어를 입력해 보세요.</p>
-      ) : null}
+      ) : (
+        <Message message='검색 결과가 없습니다. 다른 검색어를 입력해 보세요.' />
+      )}
+
       {books && books?.length > 0 && (
         <div className='px-2 pt-5 pb-2'>
           <button

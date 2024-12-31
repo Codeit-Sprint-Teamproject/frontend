@@ -19,7 +19,6 @@ export const LoginForm = () => {
 
     try {
       const result = await userLogIn(formData);
-      console.log(result);
 
       if (result.errors) {
         setState({ message: result.message, errors: result.errors });

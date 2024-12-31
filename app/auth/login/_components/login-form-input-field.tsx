@@ -21,8 +21,6 @@ export const FormInputField = ({
   disabled,
   onChange,
 }: FormInputFieldProps) => {
-  console.log({ errors });
-
   return (
     <div className='relative flex flex-col gap-2'>
       <Input

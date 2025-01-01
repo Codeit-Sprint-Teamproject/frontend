@@ -1,4 +1,5 @@
-import { useBookContext } from '../../_components/BookContext';
+import { Rating } from 'react-simple-star-rating';
+import { useBookContext } from '@/app/reviews/_components/BookContext';
 import { SearchedBook } from '@/types/book';
 import Image from 'next/image';
 
@@ -28,10 +29,21 @@ export default function BookInfo({ book }: { book: SearchedBook }) {
         <p className='text-sm text-customGrey-500'>
           발행 <span className='text-customGrey-800'>{publisherDate}</span>
         </p>
-        <p className='text-sm text-customGrey-500'>
-          {/* TODO (유진) react-simple-star-rating 별점 표기할 예정 */}
-          평점 <span className='text-customGrey-800'>{star}</span>
-        </p>
+        <div className='flex items-center gap-2 text-sm text-customGrey-500'>
+          평점
+          <div className='flex items-center mb-1'>
+            <Rating
+              size={14}
+              readonly
+              initialValue={star / 2}
+              fillColor='#262626'
+              SVGstyle={{ display: 'inline' }}
+            />
+            <span className='text-customGrey-800 ml-[1px] pt-[1px]'>
+              {star}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );

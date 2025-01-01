@@ -1,9 +1,12 @@
 import CommentIcon from '../_svg/CommentIcon';
 import LikeIcon from '../_svg/LikeIcon';
-import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
+import UnLikeIcon from '../_svg/UnLikeIcon';
+import { formatTimeWithDate } from '@/app/_utils/dateFormatter';
+import Avatar from '@/components/common/icons/Avatar';
+import { useReviewLikeToggle } from '@/hooks/useReviewLikeToggle';
 import { BookReview } from '@/types/book';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Review({ review }: { review: BookReview }) {
   const {
@@ -12,18 +15,36 @@ export default function Review({ review }: { review: BookReview }) {
     bookImage,
     userName,
     createTime,
+    apprCd,
     likes,
     commentCnt,
     userLikeCk,
+    profile,
   } = review;
-  const { handleLike } = useReviewLikeQuery(id);
+  const searchParams = useSearchParams();
+  const filter = searchParams.get('filter') || 'ALL'; // URL에서 filter 값 가져오기
+  const { mutate: toggleLike } = useReviewLikeToggle({
+    id,
+    isLiked: userLikeCk ?? false,
+    filter,
+  });
   const router = useRouter();
 
   return (
     <div className='border w-[520px]'>
-      <div className='flex items-center  justify-between px-5'>
-        <h3 className='text-xl font-bold py-3'>{title}</h3>
-        <span className='text-sm text-customGrey-500'>이 책을 추천해요</span>
+      <div className='flex items-center justify-between px-5'>
+        <h3 className='text-lg font-bold py-3 break-words whitespace-normal max-w-[200px]'>
+          {title}
+        </h3>
+        <span className='text-sm text-customGrey-500'>
+          {apprCd === 'SG' ? (
+            <p className='text-customGrey-500'>이 책을 추천해요</p>
+          ) : apprCd === 'NG' ? (
+            <p className='text-customGrey-500'>
+              이 책은 아쉬운 부분이 있었어요
+            </p>
+          ) : null}
+        </span>
       </div>
       <div className='w-11/12 border border-customGrey-100 mx-auto'></div>
       <div
@@ -44,23 +65,42 @@ export default function Review({ review }: { review: BookReview }) {
       <div className='w-11/12 border border-customGrey-100 mx-auto'></div>
       <div className='flex justify-between items-center px-5 py-3'>
         <div className='flex items-center gap-2.5'>
-          <div className='w-10 h-10 bg-[#D9D9D9] rounded-full'></div>
-          <span>{userName}</span>
-          {/* TODO (유진) 몇 시간 전 또는 며칠 전으로 수정할 예정 */}
-          <p className='text-customGrey-300'>{createTime}</p>
+          {profile ? (
+            <Image
+              src={profile}
+              width={32}
+              height={32}
+              className='w-8 h-8 rounded-full'
+              alt='프로필'
+            />
+          ) : (
+            <Avatar className='w-8 h-8' />
+          )}
+          <span className='text-sm text-customGrey-800'>{userName}</span>
+          <p className='text-customGrey-300 text-sm'>
+            {formatTimeWithDate(createTime)}
+          </p>
         </div>
         <div className='flex gap-5'>
-          <div className='flex gap-1'>
-            <button onClick={() => handleLike(userLikeCk as boolean)}>
-              <LikeIcon
-                className={`w-5 h-5 ${userLikeCk ? 'fill-black' : ''}`}
-              />
+          <div className='flex items-center gap-1'>
+            <button onClick={() => toggleLike()}>
+              {userLikeCk ? (
+                <LikeIcon className='w-5 h-5' />
+              ) : (
+                <UnLikeIcon className='w-5 h-5 stroke-customGrey-500' />
+              )}
             </button>
-            <span>{likes}</span>
+            <span
+              className={`text-sm font-bold ${userLikeCk ? 'text-customGreen-500' : 'text-customGrey-500'}`}
+            >
+              {likes}
+            </span>
           </div>
           <div className='flex items-center gap-1'>
-            <CommentIcon className='w-5 h-5' />
-            <span>{commentCnt || 0}</span>
+            <CommentIcon className='w-5 h-5 stroke-customGrey-500' />
+            <span className='text-sm text-customGrey-500 font-bold'>
+              {commentCnt || 0}
+            </span>
           </div>
         </div>
       </div>

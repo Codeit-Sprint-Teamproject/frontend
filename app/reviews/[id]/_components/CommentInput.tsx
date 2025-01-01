@@ -63,7 +63,7 @@ export default function CommentInput({
         {user?.profile ? (
           <Image
             src={user.profile}
-            className='rounded-full'
+            className='w-8 h-8 rounded-full'
             width={32}
             height={32}
             alt='프로필'

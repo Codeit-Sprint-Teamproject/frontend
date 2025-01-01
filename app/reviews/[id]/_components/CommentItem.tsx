@@ -53,7 +53,13 @@ export default function CommentItem({ comment }: Props) {
       <div className='flex justify-between'>
         <div className='flex gap-2'>
           {profile ? (
-            <Image src={profile} width={32} height={32} alt='프로필' />
+            <Image
+              src={profile}
+              width={32}
+              height={32}
+              className='w-8 h-8'
+              alt='프로필'
+            />
           ) : (
             <Avatar className='w-8 h-8' />
           )}

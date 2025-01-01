@@ -1,8 +1,11 @@
 import BookIcon from '../_svg/BookIcon';
 import CommentIcon from '../_svg/CommentIcon';
 import LikeIcon from '../_svg/LikeIcon';
-import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
+import UnLikeIcon from '../_svg/UnLikeIcon';
+import Avatar from '@/components/common/icons/Avatar';
+import { useReviewLikeToggle } from '@/hooks/useReviewLikeToggle';
 import { BestBookReview } from '@/types/book';
+import Image from 'next/image';
 
 export default function BestReviewCard({ review }: { review: BestBookReview }) {
   const {
@@ -14,8 +17,12 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
     likes,
     commentCnt,
     userLikeCk,
+    profile,
   } = review;
-  const { handleLike } = useReviewLikeQuery(id);
+  const { mutate: togglelike } = useReviewLikeToggle({
+    id,
+    isLiked: userLikeCk ?? false,
+  });
 
   return (
     <div className='flex flex-col gap-5 w-[522px]  bg-customGreen-50 px-4 py-5'>
@@ -31,7 +38,17 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
       </div>
       <div className='flex gap-3 justify-between items-center mt-2.5'>
         <div className='flex gap-3'>
-          <div className='w-10 h-10 bg-[#D9D9D9] rounded-full'></div>
+          {profile ? (
+            <Image
+              src={profile}
+              width={32}
+              height={32}
+              className='w-8 h-8 rounded-full'
+              alt='프로필'
+            />
+          ) : (
+            <Avatar className='w-8 h-8' />
+          )}
           <div className='flex flex-col'>
             <p className='text-sm font-bold'>{userName}</p>
             <p className='text-xs text-customGrey-500'>
@@ -41,10 +58,12 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
         </div>
         <div className='flex gap-5'>
           <div className='flex items-center gap-1'>
-            <button onClick={() => handleLike(userLikeCk as boolean)}>
-              <LikeIcon
-                className={`w-5 h-5 stroke-customGrey-500 ${userLikeCk ? 'fill-black' : ''}`}
-              />
+            <button onClick={() => togglelike()}>
+              {userLikeCk ? (
+                <LikeIcon className='w-5 h-5' />
+              ) : (
+                <UnLikeIcon className='w-5 h-5 stroke-customGrey-500' />
+              )}
             </button>
             <span className='text-customGrey-500'>{likes}</span>
           </div>

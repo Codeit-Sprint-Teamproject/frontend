@@ -122,7 +122,7 @@ export default function ReviewDetail() {
                 </p>
                 <div className='flex items-center gap-2 text-sm text-customGrey-500'>
                   평점
-                  <div className='flex flex-row items-center mb-1'>
+                  <div className='flex items-center mb-1'>
                     <Rating
                       size={14}
                       readonly
@@ -130,7 +130,9 @@ export default function ReviewDetail() {
                       fillColor='#262626'
                       SVGstyle={{ display: 'inline' }}
                     />
-                    <span className='text-customGrey-800 pt-1'>{star}</span>
+                    <span className='text-customGrey-800 ml-[1px] pt-[2px]'>
+                      {star}
+                    </span>
                   </div>
                 </div>
               </div>

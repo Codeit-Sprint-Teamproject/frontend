@@ -11,6 +11,7 @@ import CommentIcon from '@/app/reviews/_svg/CommentIcon';
 import LikeIcon from '@/app/reviews/_svg/LikeIcon';
 import UnLikeIcon from '@/app/reviews/_svg/UnLikeIcon';
 import Modal from '@/components/Modal';
+import Avatar from '@/components/common/icons/Avatar';
 import { useReviewDetailQuery } from '@/hooks/useReveiwDetailQuery';
 import { useReviewLikeToggle } from '@/hooks/useReviewLikeToggle';
 import { useReviewQuery } from '@/hooks/useReviewQuery';
@@ -53,6 +54,7 @@ export default function ReviewDetail() {
     createTime,
     userName,
     userLikeCk,
+    profile,
   } = bookReview as BookReviewDetail;
   const {
     title,
@@ -71,7 +73,17 @@ export default function ReviewDetail() {
           <h2 className='text-[32px] font-bold mb-4'>{reviewTitle}</h2>
           <div className='flex justify-between'>
             <div className='flex items-center gap-2.5'>
-              <div className='w-6 h-6 bg-[#D9D9D9] rounded-full'></div>
+              {profile ? (
+                <Image
+                  src={profile}
+                  width={24}
+                  height={24}
+                  className='w-6 h-6 rounded-full'
+                  alt='프로필'
+                />
+              ) : (
+                <Avatar className='w-6 h-6' />
+              )}
               <p className='font-bold'>{userName}</p>
               <p className='text-sm text-customGrey-300'>
                 {formatDate(createTime)}

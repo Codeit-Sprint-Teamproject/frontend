@@ -2,6 +2,7 @@ import CommentIcon from '../_svg/CommentIcon';
 import LikeIcon from '../_svg/LikeIcon';
 import UnLikeIcon from '../_svg/UnLikeIcon';
 import { formatTimeWithDate } from '@/app/_utils/dateFormatter';
+import Avatar from '@/components/common/icons/Avatar';
 import { useReviewLikeToggle } from '@/hooks/useReviewLikeToggle';
 import { BookReview } from '@/types/book';
 import Image from 'next/image';
@@ -18,6 +19,7 @@ export default function Review({ review }: { review: BookReview }) {
     likes,
     commentCnt,
     userLikeCk,
+    profile,
   } = review;
   const searchParams = useSearchParams();
   const filter = searchParams.get('filter') || 'ALL'; // URL에서 filter 값 가져오기
@@ -63,8 +65,17 @@ export default function Review({ review }: { review: BookReview }) {
       <div className='w-11/12 border border-customGrey-100 mx-auto'></div>
       <div className='flex justify-between items-center px-5 py-3'>
         <div className='flex items-center gap-2.5'>
-          {/* TODO (유진) profile 데이터 정보 생기면 수정할 예정 */}
-          <div className='w-10 h-10 bg-[#D9D9D9] rounded-full'></div>
+          {profile ? (
+            <Image
+              src={profile}
+              width={32}
+              height={32}
+              className='w-8 h-8 rounded-full'
+              alt='프로필'
+            />
+          ) : (
+            <Avatar className='w-8 h-8' />
+          )}
           <span className='text-sm text-customGrey-800'>{userName}</span>
           <p className='text-customGrey-300 text-sm'>
             {formatTimeWithDate(createTime)}

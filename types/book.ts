@@ -12,6 +12,7 @@ export type BestBookReview = {
   writerReviewCnt: number;
   userName: string;
   userLikeCk?: boolean;
+  profile?: string;
 };
 export type PendingBookReview = {
   id: number;
@@ -46,6 +47,7 @@ export type BookReview = {
   bookImage: string;
   userLikeCk?: boolean;
   commentCnt?: number;
+  profile?: string;
 };
 export type BookReviewDetail = Omit<BookReview, 'bookImage'> & {
   bookdId: number;

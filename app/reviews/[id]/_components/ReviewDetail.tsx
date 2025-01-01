@@ -12,7 +12,7 @@ import LikeIcon from '@/app/reviews/_svg/LikeIcon';
 import UnLikeIcon from '@/app/reviews/_svg/UnLikeIcon';
 import Modal from '@/components/Modal';
 import { useReviewDetailQuery } from '@/hooks/useReveiwDetailQuery';
-import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
+import { useReviewLikeToggle } from '@/hooks/useReviewLikeToggle';
 import { useReviewQuery } from '@/hooks/useReviewQuery';
 import { useModalStore } from '@/store/modal';
 import useUserStore from '@/store/userStore';
@@ -26,7 +26,12 @@ export default function ReviewDetail() {
   const { review } = useReviewDetailQuery(id as string);
   const { deleteReviewMutate } = useReviewQuery();
   const { user } = useUserStore();
-  const { handleLike } = useReviewLikeQuery(Number(id));
+  const { mutate: toggleLike } = useReviewLikeToggle({
+    id: Number(id),
+    isLiked: review?.bookReview?.userLikeCk ?? false,
+    title: review?.bookResponse?.title,
+    page: 0,
+  });
   const { isOpen, openModal } = useModalStore();
 
   const handleDelete = () => {
@@ -133,7 +138,7 @@ export default function ReviewDetail() {
         </div>
         <div className='flex gap-5 mt-6 mb-5'>
           <div className='flex items-center gap-1'>
-            <button onClick={() => handleLike(userLikeCk as boolean)}>
+            <button onClick={() => toggleLike()}>
               {userLikeCk ? (
                 <LikeIcon className='w-5 h-5' />
               ) : (

@@ -1,7 +1,8 @@
 import BookIcon from '../_svg/BookIcon';
 import CommentIcon from '../_svg/CommentIcon';
 import LikeIcon from '../_svg/LikeIcon';
-import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
+import UnLikeIcon from '../_svg/UnLikeIcon';
+import { useReviewLikeToggle } from '@/hooks/useReviewLikeToggle';
 import { BestBookReview } from '@/types/book';
 
 export default function BestReviewCard({ review }: { review: BestBookReview }) {
@@ -15,7 +16,10 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
     commentCnt,
     userLikeCk,
   } = review;
-  const { handleLike } = useReviewLikeQuery(id);
+  const { mutate: togglelike } = useReviewLikeToggle({
+    id,
+    isLiked: userLikeCk ?? false,
+  });
 
   return (
     <div className='flex flex-col gap-5 w-[522px]  bg-customGreen-50 px-4 py-5'>
@@ -41,10 +45,12 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
         </div>
         <div className='flex gap-5'>
           <div className='flex items-center gap-1'>
-            <button onClick={() => handleLike(userLikeCk as boolean)}>
-              <LikeIcon
-                className={`w-5 h-5 stroke-customGrey-500 ${userLikeCk ? 'fill-black' : ''}`}
-              />
+            <button onClick={() => togglelike()}>
+              {userLikeCk ? (
+                <LikeIcon className='w-5 h-5' />
+              ) : (
+                <UnLikeIcon className='w-5 h-5 stroke-customGrey-500' />
+              )}
             </button>
             <span className='text-customGrey-500'>{likes}</span>
           </div>

@@ -2,10 +2,10 @@ import CommentIcon from '../_svg/CommentIcon';
 import LikeIcon from '../_svg/LikeIcon';
 import UnLikeIcon from '../_svg/UnLikeIcon';
 import { formatTimeWithDate } from '@/app/_utils/dateFormatter';
-import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
+import { useReviewLikeToggle } from '@/hooks/useReviewLikeToggle';
 import { BookReview } from '@/types/book';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Review({ review }: { review: BookReview }) {
   const {
@@ -19,7 +19,13 @@ export default function Review({ review }: { review: BookReview }) {
     commentCnt,
     userLikeCk,
   } = review;
-  const { handleLike } = useReviewLikeQuery(id);
+  const searchParams = useSearchParams();
+  const filter = searchParams.get('filter') || 'ALL'; // URL에서 filter 값 가져오기
+  const { mutate: toggleLike } = useReviewLikeToggle({
+    id,
+    isLiked: userLikeCk ?? false,
+    filter,
+  });
   const router = useRouter();
 
   return (
@@ -66,7 +72,7 @@ export default function Review({ review }: { review: BookReview }) {
         </div>
         <div className='flex gap-5'>
           <div className='flex items-center gap-1'>
-            <button onClick={() => handleLike(userLikeCk as boolean)}>
+            <button onClick={() => toggleLike()}>
               {userLikeCk ? (
                 <LikeIcon className='w-5 h-5' />
               ) : (

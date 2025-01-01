@@ -1,5 +1,6 @@
 import CommentIcon from '../_svg/CommentIcon';
 import LikeIcon from '../_svg/LikeIcon';
+import UnLikeIcon from '../_svg/UnLikeIcon';
 import { formatTimeWithDate } from '@/app/_utils/dateFormatter';
 import { useReviewLikeQuery } from '@/hooks/useReviewLikeQuery';
 import { BookReview } from '@/types/book';
@@ -64,17 +65,23 @@ export default function Review({ review }: { review: BookReview }) {
           </p>
         </div>
         <div className='flex gap-5'>
-          <div className='flex gap-1'>
+          <div className='flex items-center gap-1'>
             <button onClick={() => handleLike(userLikeCk as boolean)}>
-              <LikeIcon
-                className={`w-5 h-5 stroke-customGrey-500 ${userLikeCk ? 'fill-black' : ''}`}
-              />
+              {userLikeCk ? (
+                <LikeIcon className='w-5 h-5' />
+              ) : (
+                <UnLikeIcon className='w-5 h-5 stroke-customGrey-500' />
+              )}
             </button>
-            <span className='text-customGrey-500 font-bold'>{likes}</span>
+            <span
+              className={`text-sm font-bold ${userLikeCk ? 'text-customGreen-500' : 'text-customGrey-500'}`}
+            >
+              {likes}
+            </span>
           </div>
           <div className='flex items-center gap-1'>
             <CommentIcon className='w-5 h-5 stroke-customGrey-500' />
-            <span className='text-customGrey-500 font-bold'>
+            <span className='text-sm text-customGrey-500 font-bold'>
               {commentCnt || 0}
             </span>
           </div>

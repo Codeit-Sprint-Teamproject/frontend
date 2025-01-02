@@ -1,13 +1,45 @@
+'use client';
+
+import useUserStore from '@/store/userStore';
+import Image from 'next/image';
+import Link from 'next/link';
+
 export default function NoPendingReviewBox() {
+  const { user } = useUserStore();
+  if (!user)
+    return (
+      <div className='w-[360px] flex flex-col items-center gap-4 p-5 border rounded-md'>
+        <Image src='/book.png' width={90} height={72} alt='책' />
+        <div className='text-customGrey-800 text-center mt-1'>
+          <p>로그인하고</p>
+          <p>책 속에서 얻은 배움을 정리해보세요</p>
+        </div>
+        <Link
+          href='/auth/login'
+          className='w-full h-12 min-h-10 p-3 bg-customGreen-500 text-white rounded-sm text-center font-bold'
+        >
+          모읽지 시작하기
+        </Link>
+      </div>
+    );
   return (
-    <div className='flex flex-col'>
-      <p className='font-bold mb-1'>새로운 리뷰를 기다리고 있어요!</p>
-      <div className='w-[372px] h-[249px] bg-[#F6F6F6] text-center'>
-        <h3 className='text-xl font-bold mt-12'>리뷰하고 싶은 책이 있나요?</h3>
-        <p className='mt-3'>모읽지에서 작성해 보세요!</p>
-        <button className='w-80 h-14 bg-[#C5C5C5] font-bold mt-14'>
-          독서 리뷰 작성하기
-        </button>
+    <div className='w-[360px] flex flex-col border rounded-md p-5'>
+      <div className='flex flex-col gap-4 text-center'>
+        <div>
+          <h3 className='font-bold text-customGrey-800 mt-10'>
+            리뷰하고 싶은 책이 있나요?
+          </h3>
+          <div className='text-sm text-customGrey-800 mt-3'>
+            <p>독서 리뷰를 작성하고</p>
+            <p> 책 속에서 얻은 배움을 정리해보세요</p>
+          </div>
+        </div>
+        <Link
+          href='/reviews/write'
+          className='h-12 min-h-8 p-3 border border-customGreen-100 text-customGreen-600 font-bold mt-4 rouned-sm'
+        >
+          리뷰 작성하기
+        </Link>
       </div>
     </div>
   );

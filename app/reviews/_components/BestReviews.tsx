@@ -33,7 +33,7 @@ export default function BestReviews() {
         <button onClick={handlePrev} disabled={!currentIndex}>
           <SlidePrevIcon className='w-6 h-6' />
         </button>
-        <div className='text-xs'>
+        <div className='text-sm'>
           <span className='font-bold'>{currentIndex + 1} </span> /{' '}
           <span>{total}</span>
         </div>

@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getUser, updateUser } from '@/app/mypage/_lib/profile';
+import { getProfile } from '@/app/mypage/_lib/getProfile';
+import { updateUser } from '@/app/mypage/_lib/profile';
 
 export const useProfileQuery = () => {
   const queryClient = useQueryClient();
@@ -9,7 +10,7 @@ export const useProfileQuery = () => {
     error,
   } = useQuery({
     queryKey: ['mypage', 'profile'],
-    queryFn: getUser,
+    queryFn: getProfile,
   });
 
   const { mutate: updateProfileMutate } = useMutation({

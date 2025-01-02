@@ -99,10 +99,10 @@ export default function MainPageHeader() {
 
   return (
     <div className='h-[613px] flex justify-center items-center gap-20 bg-gradient-to-r from-[#FFF6E7] to-[#EAF7F2] py-8 px-40'>
-      <div className='w-[542px] h-[493px] flex flex-col justify-center'>
+      <div className='w-[542px] h-[493px] flex flex-col justify-between'>
         <h3 className='text-xl font-bold'>바로 참여해 보세요</h3>
         <h1 className='text-2xl font-bold mb-4'>오늘 시작인 독서 모임</h1>
-        <div className='flex-1'>
+        <div className='flex'>
           <Swiper
             spaceBetween={10}
             slidesPerView={1}
@@ -121,7 +121,7 @@ export default function MainPageHeader() {
                       height={413}
                     />
                   </div>
-                  <div className='flex flex-col px-4 py-7'>
+                  <div className='flex flex-col px-4 py-7 justify-between'>
                     <div>
                       <h3 className='text-[22px] font-bold'>
                         {item?.bookTitle}
@@ -133,7 +133,7 @@ export default function MainPageHeader() {
                       </div>
                     </div>
 
-                    <div className='mt-[75px]'>
+                    <div>
                       <div className='h-[143px] flex flex-col items-start gap-[4px] text-customGrey-500'>
                         <div className='flex flex-row gap-2 items-center'>
                           <CalendarIcon width={24} height={24} />

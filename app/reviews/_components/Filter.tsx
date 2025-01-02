@@ -34,11 +34,11 @@ export default function Filter({
 
   return (
     <div className='flex flex-col gap-2 mb-9'>
-      <div className='flex flex-wrap gap-2'>
+      <div className='flex flex-wrap gap-1.5'>
         {filters.slice(0, 4).map(({ label, value }) => (
           <button
             key={value}
-            className={`p-2.5 border rounded-full ${applyButtonStyle(value as BookReviewFilter)}`}
+            className={`p-3 border rounded-full ${applyButtonStyle(value as BookReviewFilter)}`}
             onClick={() => onFilterChange(value as BookReviewFilter)}
           >
             {label}
@@ -59,7 +59,7 @@ export default function Filter({
         )}
         {isOpen && (
           <button
-            className='w-11 h-11 ml-5 rounded-full border'
+            className='w-10 h-10 ml-5 rounded-full border'
             onClick={onToggle}
           >
             <DropUpThinIcon className='w-7 h-7 mx-auto' />

@@ -14,13 +14,13 @@ export default function UserInfo() {
       {user?.profile ? (
         <Image
           src={user?.profile}
-          width={56}
-          height={56}
+          width={48}
+          height={48}
           className='rounded-full'
           alt='프로필'
         />
       ) : (
-        <Avatar className='w-14 h-14' />
+        <Avatar className='w-12 h-12' />
       )}
       <div>
         <p className='text-lg font-bold'>{user?.name}</p>

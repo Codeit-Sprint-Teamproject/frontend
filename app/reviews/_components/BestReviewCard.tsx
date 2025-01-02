@@ -27,9 +27,9 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
   return (
     <div className='flex flex-col gap-5 w-[522px]  bg-customGreen-50 px-4 py-5'>
       <div className='flex items-center gap-1 text-sm'>
-        <div className='flex items-center bg-white px-1.5 py-0.5 rounded-[2px]'>
-          <BookIcon className='w-4 h-4' />
-          <span>책</span>
+        <div className='flex items-center gap-1 bg-white px-1.5 py-1 rounded-[2px]'>
+          <BookIcon className='w-4 h-4 stroke-customGreen-500' />
+          <span className='text-customGreen-500'>책</span>
         </div>
         <h3 className='text-customGrey-800'>{title}</h3>
       </div>
@@ -65,7 +65,11 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
                 <UnLikeIcon className='w-5 h-5 stroke-customGrey-500' />
               )}
             </button>
-            <span className='text-customGrey-500'>{likes}</span>
+            <span
+              className={`text-sm font-bold ${userLikeCk ? 'text-customGreen-500' : 'text-customGrey-500'}`}
+            >
+              {likes}
+            </span>
           </div>
           <div className='flex items-center gap-1'>
             <CommentIcon className='w-5 h-5 stroke-customGrey-500' />

@@ -6,10 +6,10 @@ interface CircularProgressProps {
 }
 
 const CircularProgress: React.FC<CircularProgressProps> = ({ value, max }) => {
-  const radius = 50; // 반지름
-  const strokeWidth = 12; // 선 두께
-  const circumference = 2 * Math.PI * radius; // 원 둘레
-  const progress = (value / max) * 100; // 진행률
+  const radius = 50;
+  const strokeWidth = 12;
+  const circumference = 2 * Math.PI * radius;
+  const progress = (value / max) * 100;
   const offset = circumference - (progress / 100) * circumference;
 
   return (
@@ -34,7 +34,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({ value, max }) => {
           cx='70'
           cy='70'
           r={radius}
-          stroke='#999999'
+          stroke='#30B380'
           strokeWidth={strokeWidth}
           fill='none'
           strokeDasharray={circumference}

@@ -1,9 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Avatar from '@/components/common/icons/Avatar';
+import BookICon from '@/components/common/icons/Book';
+import CalendarIcon from '@/components/common/icons/Calendar';
+import CommentIcon from '@/components/common/icons/Comment';
 import InputReset from '@/components/common/icons/InputReset';
+import LikeIcon from '@/components/common/icons/Like';
 import PageNext from '@/components/common/icons/PageNext';
 import PagePrev from '@/components/common/icons/PagePrev';
+import ParticipantsIcon from '@/components/common/icons/Participants';
+import ReadingTImeIcon from '@/components/common/icons/ReadingTIme';
 import SearchIcon from '@/components/common/icons/SearchIcon';
 import {
   DropdownMenu,
@@ -13,6 +20,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { fetchAPIClient } from '@/lib/fetchAPI.client';
 import ChevronDownIcon from '@/public/ChevronDownIcon';
+import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface GatheringResult {
@@ -21,13 +30,24 @@ interface GatheringResult {
   currentCapacity: number;
   maxCapacity: number;
   bookTitle: string;
+  thumbnail: string;
+  bookImage: string;
+  gatheringWeek: number;
+  readingTimeGoal: number;
+  startDate: string;
 }
 
 interface ReviewResult {
   id: number;
+  userId: number;
   title: string;
   content: string;
   likes: number;
+  createTime: string;
+  userName: string;
+  profile: string;
+  bookTitle: string;
+  commentCnt: number;
 }
 
 type SearchType = 'BOOK_NAME' | 'CONTENT' | 'TITLE';
@@ -56,7 +76,7 @@ export default function SearchTabs() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const PAGE_SIZE_GATHERINGS = 6;
+  const PAGE_SIZE_GATHERINGS = 3;
   const PAGE_SIZE_REVIEWS = 3;
   const MAX_PAGE_DISPLAY = 5;
 
@@ -80,8 +100,8 @@ export default function SearchTabs() {
         setIsLoading(false);
         return;
       }
-      setGatheringsData(response.gatheringResultPageResponses || []);
-      setGatheringTotalCount(response.totalCount || 0);
+      setGatheringsData(response.result.gatheringResultPageResponses || []);
+      setGatheringTotalCount(response.result.totalCount || 0);
     } catch (error) {
       console.error('모임 데이터 가져오기 실패:', error);
     }
@@ -102,15 +122,16 @@ export default function SearchTabs() {
         setIsLoading(false);
         return;
       }
-      setReviewsData(response.reviewResultPageResponses || []);
-      setReviewTotalCount(response.reviewTotalCount || 0);
+      setReviewsData(response.result.reviewResultPageResponses || []);
+      setReviewTotalCount(response.result.reviewTotalCount || 0);
     } catch (error) {
       console.error('리뷰 데이터 가져오기 실패:', error);
     }
     setIsLoading(false);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (type?: SearchType) => {
+    const searchTypeToUse = type || searchType;
     if (searchWord.trim().length < 2) {
       setErrorMessage('검색어는 최소 2글자 이상이어야 합니다.');
       return;
@@ -118,15 +139,23 @@ export default function SearchTabs() {
     setErrorMessage('');
     setGatheringPage(0);
     setReviewPage(0);
-    router.push(`/search/${searchWord}?type=${searchType}`);
-    if (activeTab === 'gatherings') fetchGatherings(0);
-    else fetchReviews(0);
+
+    router.push(`/search/${searchWord}?type=${searchTypeToUse}`);
+
+    if (activeTab === 'gatherings') {
+      fetchGatherings(0);
+    } else {
+      fetchReviews(0);
+    }
   };
 
   useEffect(() => {
-    if (activeTab === 'gatherings') fetchGatherings(gatheringPage);
-    else fetchReviews(reviewPage);
-  }, [activeTab, gatheringPage, reviewPage]);
+    if (activeTab === 'gatherings') {
+      fetchGatherings(gatheringPage);
+    } else if (activeTab === 'reviews') {
+      fetchReviews(reviewPage);
+    }
+  }, [activeTab, gatheringPage, reviewPage, searchType]);
 
   const renderPagination = (
     currentPage: number,
@@ -147,7 +176,7 @@ export default function SearchTabs() {
     const endPage = Math.min(totalPages, startPage + MAX_PAGE_DISPLAY);
 
     return (
-      <div className='flex justify-center gap-4 pt-20 mb-20'>
+      <div className='flex justify-center gap-4 pt-[72px] mb-20'>
         <button
           onClick={() => setPage(currentPage - 1)}
           disabled={currentPage === 0}
@@ -164,7 +193,7 @@ export default function SearchTabs() {
           <button
             key={page}
             onClick={() => setPage(page)}
-            className={`px-2 py-1 ${page === currentPage ? 'font-bold bg-gray-200 rounded text-customGreen-500' : ''}`}
+            className={`px-2 py-1 ${page === currentPage ? 'font-bold  text-customGreen-500' : ''}`}
           >
             {page + 1}
           </button>
@@ -187,8 +216,8 @@ export default function SearchTabs() {
   };
 
   return (
-    <div className='flex flex-col items-center mx-20'>
-      <div className='flex w-full max-w-[703px] h-16 py-1 mb-20 mt-32 items-center justify-between border border-gray-300 rounded-lg'>
+    <div className='flex flex-col items-center mx-[350px]'>
+      <div className='flex w-full h-16 py-1 mb-20 mt-32 items-center justify-between border border-gray-300 rounded-lg'>
         <div className='flex w-full relative items-center gap-2 ml-6'>
           <SearchIcon className='w-6 h-6 text-black' />
           <input
@@ -230,6 +259,7 @@ export default function SearchTabs() {
                   key={option.value}
                   onClick={() => {
                     setSearchType(option.value);
+                    handleSearch(option.value);
                     setIsDropdownOpen(false);
                   }}
                   className='cursor-pointer p-4 text-[16px] justify-center hover:bg-customGrey-100'
@@ -239,6 +269,7 @@ export default function SearchTabs() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+
           <span
             className={`absolute right-0 transition-transform duration-200 ${isDropdownOpen ? 'rotate-0' : 'rotate-180'}`}
           >
@@ -250,45 +281,137 @@ export default function SearchTabs() {
         )}
       </div>
 
-      <div className='flex gap-10 w-full items-center justify-start border-b-2 border-gray-100 pl-4'>
+      <div className='flex gap-6 w-full items-center justify-start border-b-2 border-gray-100 '>
         <button
           onClick={() => setActiveTab('gatherings')}
-          className={`w-36 text-xl px-4 py-2 ${
+          className={`flex justify-center text-xl px-[2px] py-1 gap-[6px] ${
             activeTab === 'gatherings'
               ? 'border-b-4 border-black font-bold'
               : 'border-b-4 border-transparent'
           }`}
         >
-          모임
-          {gatheringTotalCount > 0 && gatheringTotalCount}
+          <p>모임</p>
+          <p>{gatheringTotalCount > 0 && gatheringTotalCount}</p>
         </button>
         <button
           onClick={() => setActiveTab('reviews')}
-          className={`w-36 text-xl px-4 py-2 ${
+          className={`flex text-xl px-[2px] py-1 gap-[6px] nowrap ${
             activeTab === 'reviews'
               ? 'border-b-4 border-black font-bold'
               : 'border-b-4 border-transparent'
           }`}
         >
-          독서 리뷰
-          {reviewTotalCount > 0 && reviewTotalCount}
+          <p>독서 리뷰</p>
+          <p>{reviewTotalCount > 0 && reviewTotalCount}</p>
         </button>
       </div>
 
-      {isLoading && <p>로딩 중...</p>}
+      {isLoading && (
+        <div className='flex items-center h-full w-full justify-center mt-[200px]'>
+          <div className='h-8 w-8 animate-spin rounded-full border-4 border-customGreen-500 border-t-transparent' />
+        </div>
+      )}
 
       {!isLoading && activeTab === 'gatherings' && (
-        <div>
+        <div className='w-full h-full mt-4'>
           {gatheringsData.length > 0 ? (
-            gatheringsData.map((item) => (
-              <div key={item.id} className='mb-2 p-4 border rounded'>
-                <strong>{item.name}</strong>
-                <p>책 제목: {item.bookTitle}</p>
-                <p>
-                  현재 참여 인원: {item.currentCapacity}/{item.maxCapacity}
-                </p>
-              </div>
-            ))
+            <div className='grid grid-rows-3 gap-4'>
+              {gatheringsData.map((item) => (
+                <Link
+                  href={`/meeting-detail/${item.id}`}
+                  key={item.id}
+                  className='relative rounded-[2px] px-3 pt-3 pb-8 border-b'
+                >
+                  <div className='flex gap-4'>
+                    <div className='relative w-[120px] h-[180px]'>
+                      <Image
+                        src={item.bookImage}
+                        alt={item.bookTitle}
+                        layout='fill'
+                        objectFit='cover'
+                        className='rounded'
+                      />
+                    </div>
+                    <div className='flex flex-col justify-between text-base font-medium'>
+                      <div className='flex flex-col gap-1 justify-center items-start'>
+                        <div
+                          className={`flex flex-0 text-sm font-medium px-[2px] py-[6px] rounded-[2px] ${
+                            new Date(item.startDate).toDateString() ===
+                            new Date().toDateString()
+                              ? 'text-customRed bg-[#F3E7E7]'
+                              : new Date(item.startDate).toDateString() ===
+                                  new Date(
+                                    new Date().setDate(
+                                      new Date().getDate() + 1,
+                                    ),
+                                  ).toDateString()
+                                ? 'text-customOrange-600 bg-customOrange-50'
+                                : new Date(item.startDate) > new Date()
+                                  ? 'text-customGreen-500 bg-customGreen-50'
+                                  : 'text-customGrey-500 bg-customGrey-100'
+                          }`}
+                        >
+                          {new Date(item.startDate).toDateString() ===
+                          new Date().toDateString()
+                            ? '오늘부터 시작'
+                            : new Date(item.startDate).toDateString() ===
+                                new Date(
+                                  new Date().setDate(new Date().getDate() + 1),
+                                ).toDateString()
+                              ? '내일부터 시작'
+                              : new Date(item.startDate) > new Date()
+                                ? `${Math.ceil(
+                                    (new Date(item.startDate).getTime() -
+                                      new Date().getTime()) /
+                                      (1000 * 60 * 60 * 24),
+                                  )}일 뒤 시작`
+                                : '모집 마감'}
+                        </div>
+
+                        <p className='block text-lg font-bold text-customGrey-800 mb-2'>
+                          {item.name}
+                        </p>
+                      </div>
+                      <div className='flex flex-col gap-[2px] text-base font-medium text-customGrey-500'>
+                        <div className='flex gap-1 justify-start items-center'>
+                          <CalendarIcon className='w-5 h-5' />
+                          <p>{Math.floor(item.gatheringWeek / 7)}주 동안</p>
+                        </div>
+                        <div className='flex gap-1 justify-start items-center'>
+                          <ReadingTImeIcon className='w-5 h-5' />
+                          <p>
+                            매일{' '}
+                            {item.readingTimeGoal >= 90
+                              ? '1시간 이상'
+                              : `${item.readingTimeGoal}분`}
+                          </p>
+                        </div>
+                        <div className='flex gap-1 justify-start items-center'>
+                          <ParticipantsIcon className='w-5 h-5' />
+                          <p>
+                            {item.currentCapacity}명 /{' '}
+                            {item.maxCapacity > 1000
+                              ? ' 무제한'
+                              : `${item.maxCapacity}명`}
+                          </p>
+                        </div>
+                        <div className='w-[358px] h-3 bg-customGrey-100 rounded-full mt-[2px]'>
+                          <div
+                            className='h-full bg-customGreen-500 rounded-full '
+                            style={{
+                              width:
+                                item.maxCapacity > 1000
+                                  ? '100%'
+                                  : `${(item.currentCapacity / item.maxCapacity) * 100}%`,
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
           ) : (
             <p className='flex items-center justify-center text-center my-40 text-customGrey-400 text-base font-medium'>
               검색 결과가 없습니다. <br />
@@ -305,14 +428,65 @@ export default function SearchTabs() {
       )}
 
       {!isLoading && activeTab === 'reviews' && (
-        <div>
+        <div className='w-full h-full mt-4'>
           {reviewsData.length > 0 ? (
             reviewsData.map((item) => (
-              <div key={item.id} className='mb-2 p-4 border rounded'>
-                <strong>{item.title}</strong>
-                <p>{item.content}</p>
-                <p>좋아요: {item.likes}</p>
-              </div>
+              <Link
+                href={`/reviews/${item.id}`}
+                key={item.id}
+                className='flex flex-col w-full h-full items-start justify-center gap-3 py-4 pb-8 border-b'
+              >
+                <div className='flex justify-start items-center gap-[6px]'>
+                  <div className='flex items-center justify-center py-1 px-[6px] gap-1 bg-[#EAF7F2] rounded-[2px]'>
+                    <BookICon className='w-4 h-5 text-customGreen-500' />
+                    <p className='text-xs font-normal text-customGreen-500'>
+                      책
+                    </p>
+                  </div>
+                  <p className='text-sm font-medium text-customGrey-500'>
+                    {item.bookTitle}
+                  </p>
+                </div>
+                <p className='text-lg font-medium text-customGrey-800'>
+                  {item.title}
+                </p>
+                <p className='text-base font-normal text-customGrey-800 line-clamp-2'>
+                  {item.content}
+                </p>
+                <div className='flex justify-between items-center w-full'>
+                  <div className='flex gap-3 items-center justify-start'>
+                    <div className='flex gap-1 items-center justify-start'>
+                      {item.profile ? (
+                        <Image
+                          src={item.profile}
+                          alt={`${item.userName}의 프로필 이미지`}
+                          className='w-8 h-8 rounded-full border border-customGrey-100'
+                          width={32}
+                          height={32}
+                        />
+                      ) : (
+                        <Avatar className='w-8 h-8' />
+                      )}
+                      <p className='text-sm font-medium text-customGrey-800'>
+                        {item.userName}
+                      </p>
+                    </div>
+                    <p className='text-sm font-normal text-customGrey-300'>
+                      {item.createTime}
+                    </p>
+                  </div>
+                  <div className='flex gap-5 text-sm font-bold text-customGrey-500'>
+                    <div className='flex gap-1 justify-center items-center'>
+                      <LikeIcon className='w-5 h-5 text-custom-500' />
+                      <p>{item.likes}</p>
+                    </div>
+                    <div className='flex gap-1 justify-center items-center'>
+                      <CommentIcon className='w-5 h-5 text-custom-500' />
+                      <p>{item.commentCnt ?? 0}</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
             ))
           ) : (
             <p className='flex items-center justify-center text-center my-40 text-customGrey-400 text-base font-medium'>

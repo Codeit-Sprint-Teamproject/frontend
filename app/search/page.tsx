@@ -47,8 +47,8 @@ export default function SearchPage() {
   ];
 
   return (
-    <div className='flex flex-col items-center mx-20'>
-      <div className='flex relative  w-full max-w-[703px] h-16 py-1 mb-20 mt-32 items-center justify-between border border-gray-300 rounded-lg'>
+    <div className='flex flex-col items-center mx-[350px]'>
+      <div className='flex w-full h-16 py-1 mb-20 mt-32 items-center justify-between border border-gray-300 rounded-lg'>
         <div className='flex w-full relative items-center gap-2 ml-6'>
           <SearchIcon className='w-6 h-6 text-black' />
           <input

@@ -30,8 +30,8 @@ export default function ProfileModifyForm() {
   } = useForm<FormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      nickname: user?.user.userName,
-      image: user?.user.profile,
+      nickname: user?.userName,
+      image: user?.profile as string,
     },
   });
   const { closeModal } = useModalStore();

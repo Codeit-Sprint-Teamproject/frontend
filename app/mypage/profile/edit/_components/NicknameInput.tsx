@@ -30,10 +30,11 @@ export default function NicknameInput() {
       <div className='flex gap-3'>
         <input
           type='text'
-          value={nickname}
+          value={isEdit ? nickname : ''}
           className='flex-1 border px-2.5 py-1.5 rounded-sm border-customGrey-200'
           placeholder={user?.name}
           onChange={(e) => setNickname(e.target.value)}
+          disabled={!isEdit}
         />
         {!isEdit && (
           <button

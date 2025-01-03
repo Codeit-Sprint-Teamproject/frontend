@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';
 import { fetchPopularBooks } from '../_services/popularBooks';
-import { useMeetingsInfiniteQuery } from '../_services/useMeetingsInfiniteQuery';
 import { IFilterState, IMeeting, IPopularBooks } from '../types';
 import CustomDropdown from './CustomDropdown';
 import { Input } from '@/components/ui/input';

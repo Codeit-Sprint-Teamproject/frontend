@@ -17,6 +17,8 @@ import BlankHeartIcon from '@/app/_svg/BlankHeartIcon';
 import { Button } from '@/components/ui/button';
 import BookIcon from '@/public/BookIcon';
 import CalendarIcon from '@/public/CalendarIcon';
+import ChevronLeftIcon from '@/public/ChevronLeftIcon';
+import ChevronRightIcon from '@/public/ChevronRightIcon';
 import UsersIcon from '@/public/UsersIcon';
 import useUserStore from '@/store/userStore';
 import { format } from 'date-fns';
@@ -28,6 +30,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+type TileProps = {
+  date: Date;
+  view: string;
+};
 
 export default function MainPageHeader() {
   const today = new Date();
@@ -97,6 +104,31 @@ export default function MainPageHeader() {
   if (joinableMeetingsIsLoading || participatingMeetingsIsLoading)
     return <div>Loading datas...</div>;
 
+  const tileClassName = ({ date }: TileProps) => {
+    if (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    ) {
+      return 'highlight-today';
+    }
+    return '';
+  };
+
+  const tileContent = ({ date, view }: TileProps) => {
+    if (view === 'month') {
+      const today = new Date();
+      if (
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      ) {
+        return <span>{date.getDate()}</span>;
+      }
+    }
+    return null;
+  };
+
   return (
     <div className='h-[613px] flex justify-center items-center gap-20 bg-gradient-to-r from-[#FFF6E7] to-[#EAF7F2] py-8 px-40'>
       <div className='w-[542px] h-[493px] flex flex-col justify-between'>
@@ -110,6 +142,7 @@ export default function MainPageHeader() {
             modules={[Navigation]}
             className='custom-swiper'
           >
+            {!joinableMeetings && <div>오늘 시작하는 모임이 없습니다.</div>}
             {joinableMeetings?.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <div className='flex flex-row w-full h-[413px] rounded-lg bg-white shadow-md'>
@@ -256,21 +289,17 @@ export default function MainPageHeader() {
             )}
           </div>
           {/* TODO (희원) API에 모임출석에 대한 데이터가 없는 상태라 정보를 보여줄 수 없음 -> API 업데이트 되면 수정예정 */}
+
           <Calendar
-            locale='en-GB'
-            formatShortWeekday={(_, date) => format(date, 'EEE')}
-            formatMonthYear={(locale, date) =>
-              date.toLocaleString(locale, { month: 'short', year: 'numeric' })
-            }
-            view='month'
             prev2Label={null}
             next2Label={null}
+            prevLabel={<ChevronLeftIcon width={24} height={24} />}
+            nextLabel={<ChevronRightIcon width={24} height={24} />}
+            formatDay={(_, date) => format(date, 'd')}
             showNeighboringMonth={false}
-            tileClassName={({ date, view }) =>
-              view === 'month' && date.toDateString() === today.toDateString()
-                ? 'highlight-today'
-                : null
-            }
+            calendarType='gregory'
+            tileClassName={tileClassName}
+            tileContent={tileContent}
           />
           <div className='flex flex-row bg-white w-full h-12 py-[12px] px-[28px] gap-2 justify-end items-center'>
             <PrevIcon

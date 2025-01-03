@@ -21,6 +21,7 @@ export interface IMeeting {
   author: string;
   thumbnail: string;
   gatheringWeek: number;
+  wish: boolean;
 }
 
 export interface IPopularBooks {
@@ -74,4 +75,36 @@ export interface IMeetingInfo {
   star: number;
   author: string;
   introduce: string;
+}
+
+export interface IJoinableMeeting {
+  id: number;
+  name: string;
+  content: string;
+  readingTimeGoal: number;
+  startDate: string;
+  endDate: string;
+  minCapacity: number;
+  maxCapacity: number;
+  currentCapacity: number;
+  gatheringStatus: 'FULL' | 'ACTIVE' | 'DELETED' | 'COMPLETED' | 'RECRUITING';
+  createdTime: string;
+  updatedTime: string;
+  bookTitle: string;
+  bookImage: string;
+  publishDate: string;
+  gatheringWeek: number;
+  userProfiles: string[];
+  wish?: boolean;
+}
+
+export interface IParticipatingMeeting {
+  id: number;
+  name: string;
+  readingTimeGoal: number;
+  startDate: string;
+  endDate: string;
+  currentCapacity: number;
+  bookTitle: string;
+  bookImage: string;
 }

@@ -2,7 +2,7 @@
 
 import { fetchAPIServer } from '@/lib/fetchAPI.server';
 
-export interface fetchMeetingsProps {
+export interface meetingsProps {
   page?: number;
   size?: number;
   bookTitle?: string;
@@ -13,7 +13,7 @@ export interface fetchMeetingsProps {
   readingTimeGoals?: string[];
 }
 
-export async function fetchMeetings(params: fetchMeetingsProps = {}) {
+export async function getFilteredMeetings(params: meetingsProps = {}) {
   const queryParams = new URLSearchParams();
 
   if (params.page !== undefined)
@@ -34,14 +34,14 @@ export async function fetchMeetings(params: fetchMeetingsProps = {}) {
   }
 
   const response = await fetchAPIServer(
-    `/api/gatheringSearch?${queryParams.toString()}`,
+    `/api/gatheringSearch/filtering?${queryParams.toString()}`,
     'GET',
   );
 
   if (response?.error) {
-    console.error('모임 검색 API error :', response.error);
+    console.error('무한스크롤 모임 검색 API error :', response.error);
     throw new Error(response.error.message);
   }
 
-  return response.result;
+  return response.result.gatheringResponses;
 }

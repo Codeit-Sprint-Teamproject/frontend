@@ -32,7 +32,7 @@ export default function ProfileModifyForm() {
           </div>
         </div>
       </div>
-      <div className='w-full border px-4 pt-4 pb-5'>
+      <div className='w-full border px-4 pt-4 pb-5 rounded-sm'>
         <h4 className='text-lg font-bold text-customGrey-800 mb-8'>내 정보</h4>
         <div className='flex flex-col gap-7'>
           <NicknameInput />

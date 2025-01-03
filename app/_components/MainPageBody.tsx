@@ -2,10 +2,11 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';
-import { fetchPopularBooks } from '../_services/popularBooks';
 import { IFilterState, IMeeting, IPopularBooks } from '../types';
 import CustomDropdown from './CustomDropdown';
+import { getPopularBooks } from './_lib/getPopularBooks';
 import { useMeetingsInfiniteQuery } from './_lib/useMeetingsInfiniteQuery';
+import SearchIcon from '@/app/_svg/SearchIcon';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
@@ -14,7 +15,6 @@ import CalendarDotIcon from '@/public/CalendarDotIcon';
 import CalendarIcon from '@/public/CalendarIcon';
 import ChevronDownIcon from '@/public/ChevronDownIcon';
 import RotateCwIcon from '@/public/RotateCwIcon';
-import SearchIcon from '@/public/SearchIcon';
 import UsersIcon from '@/public/UsersIcon';
 import { format } from 'date-fns';
 import Image from 'next/image';
@@ -33,15 +33,18 @@ export default function MainPageBody() {
   const today = new Date();
 
   useEffect(() => {
-    if (data?.pages[0]) {
-      setMeetingsData(data?.pages[0].gatheringResponses);
+    if (data?.pages && data.pages.length > 0) {
+      const firstPage = data.pages[0];
+      setMeetingsData(firstPage || []);
+    } else {
+      setMeetingsData([]);
     }
   }, [data]);
 
   useEffect(() => {
     const loadPopularBooks = async () => {
       try {
-        const data = await fetchPopularBooks({ page: 0, size: 5 });
+        const data = await getPopularBooks({ page: 0, size: 5 });
         setPopularBooks(data.result);
       } catch (error) {
         console.error(
@@ -55,6 +58,10 @@ export default function MainPageBody() {
   }, []);
 
   const filteredMeetings = useMemo(() => {
+    if (!meetingsData || meetingsData.length === 0) {
+      return [];
+    }
+
     return meetingsData
       .filter((meeting) => {
         if (filterState.startDate) {
@@ -93,18 +100,16 @@ export default function MainPageBody() {
       <div className='mt-20 h-[1500px] flex flex-col items-center justify-start'>
         <div className='flex flex-col items-center gap-4 mb-20'>
           <h2 className='text-4xl font-bold mb-4'>모여서 읽고 싶은 지금</h2>
-          <div className='relative w-[32.5625rem]'>
+          <div className='flex flex-row relative w-[565px] h-[64px] px-4 stroke-customGreen-500'>
             {!searchBarHasText && (
-              <div className='absolute top-1/2 left-4 transform -translate-y-1/2 flex items-center text-gray-400 pointer-events-none'>
+              <div className='absolute top-5 right-8'>
                 <SearchIcon width={24} height={24} />
-                <span className='ml-2'>
-                  원하는 책과 관련된 모임을 검색해보세요!
-                </span>
               </div>
             )}
             <Input
-              className='w-full h-[3.5rem] pl-12'
+              className='w-full h-full px-4 border-[2px] border-customGreen-500 font-medium text-[18px]'
               onChange={(e) => setSearchBarHasText(!!e.target.value)}
+              placeholder='읽고 싶은 책의 모임을 찾아보세요'
             />
           </div>
         </div>
@@ -185,11 +190,8 @@ export default function MainPageBody() {
                     ].join(' ');
                   }}
                   onChange={(date) => {
-                    if (Array.isArray(date)) {
-                      handleFilterChange('startDate', date[0]);
-                    } else {
-                      handleFilterChange('startDate', date);
-                    }
+                    const selectedDate = Array.isArray(date) ? date[0] : date;
+                    handleFilterChange('startDate', selectedDate);
                   }}
                   value={filterState.startDate}
                 />
@@ -229,7 +231,6 @@ export default function MainPageBody() {
                       alt='meeting-thumbnail-image'
                       width={360}
                       height={148}
-                      style={{ width: 360, height: 148 }}
                     />
                   </div>
                   <div className='flex flex-row p-4'>
@@ -239,7 +240,6 @@ export default function MainPageBody() {
                         alt='meeting-bookcover-image'
                         width={360}
                         height={148}
-                        style={{ width: 360, height: 148 }}
                       />
                     </div>
                     <div>

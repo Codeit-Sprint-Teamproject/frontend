@@ -5,6 +5,7 @@ import Calendar from 'react-calendar';
 import { fetchPopularBooks } from '../_services/popularBooks';
 import { IFilterState, IMeeting, IPopularBooks } from '../types';
 import CustomDropdown from './CustomDropdown';
+import { useMeetingsInfiniteQuery } from './_lib/useMeetingsInfiniteQuery';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';

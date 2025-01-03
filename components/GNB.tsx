@@ -93,7 +93,7 @@ const LoggedInMenu = ({
       asChild
       className='rounded-[4px] border-[1.5px] border-customGrey-200 bg-white px-3 py-2 text-[16px] font-medium text-customGrey-500 hover:font-bold hover:text-white'
     >
-      <Link href='/create-meeting'>모임 만들기</Link>
+      <Link href='/create-gathering'>모임 만들기</Link>
     </Button>
   </div>
 );

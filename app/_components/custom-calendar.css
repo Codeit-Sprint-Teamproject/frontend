@@ -26,11 +26,11 @@
 
 .react-calendar__month-view__weekdays abbr {
   text-decoration: none;
-  font-weight: bold;
+  color: #6a6a6a;
 }
 
 .react-calendar {
-  width: full;
+  width: 100%;
   height: 365px;
   padding: 20px;
   box-sizing: border-box;
@@ -47,16 +47,20 @@
   color: rgba(175, 175, 175, 0.664) !important;
 }
 
-/* 오늘 날짜 표시 */
-.highlight-today {
-  background-color: #000000;
-  border-radius: 30%;
+.react-calendar__tile.highlight-today span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2em;
   color: white;
-  width: 50%;
-  height: 100%;
+  background-color: black;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding-top: 5px;
 }
 
-/* 선택된 날짜 표시 */
 .selected-date {
   background-color: #ffa443;
   border-radius: 20%;
@@ -64,7 +68,10 @@
   height: 2.0625rem;
 }
 
-/* 네비게이션 라벨 클릭 방지 */
-.react-calendar__navigation__label {
+.react-calendar__navigation {
+  margin-bottom: 16px;
+}
+
+react-calendar__navigation__label {
   pointer-events: none;
 }

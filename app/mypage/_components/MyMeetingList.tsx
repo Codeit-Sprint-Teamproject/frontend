@@ -1,9 +1,12 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
+import { getActiveMeetings } from '../_lib/getActiveMeetings';
 import { formatDateWithWeekday } from '@/app/_utils/dateFormatter';
 import Avatar from '@/components/common/icons/Avatar';
 import MoreIcon from '@/components/common/icons/MoreIcon';
 import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
 import SlidePrevIcon from '@/components/common/icons/SlidePrevIcon';
-import { MeetingList } from '@/types/meeting';
 import Image from 'next/image';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -11,10 +14,11 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-type Props = {
-  meetingList: MeetingList[];
-};
-export default function MyMeetingList({ meetingList = [] }: Props) {
+export default function MyMeetingList() {
+  const { data: meetingList = [] } = useQuery({
+    queryKey: ['mypage', 'meetings', 'active', 'preview'],
+    queryFn: getActiveMeetings,
+  });
   return (
     <div className='relative w-full'>
       <div className='swiper-button-prev'>
@@ -35,7 +39,13 @@ export default function MyMeetingList({ meetingList = [] }: Props) {
           ({ id, name, startDate, endDate, bookImage, currentCapacity }) => (
             <SwiperSlide key={id}>
               <div className='flex gap-5 w-[575px] h-[201x] bg-white p-4 rounded-sm border border-[rgba(0, 0, 0, 0.10)]'>
-                <Image src={bookImage} width={132} height={200} alt='책 표지' />
+                <Image
+                  src={bookImage}
+                  width={132}
+                  height={198}
+                  className='w-[132px] h-[198px]'
+                  alt='책 표지'
+                />
                 <div className='text-sm'>
                   <h3 className='text-lg mb-4'>{name}</h3>
                   <p className='text-sm mb-[2px]'>모임 기간 </p>

@@ -5,7 +5,8 @@ export type UserProfile = {
   userId: number;
   userName: string;
   email: string;
-  profile: string;
+  profile: string | null;
+  roles: string;
 };
 
 export type User = {

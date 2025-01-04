@@ -3,13 +3,13 @@
 import { Rating } from 'react-simple-star-rating';
 import CommentList from './CommentList';
 import ConfirmModal from './ConfirmModal';
-import DropDown from './DropDown';
 import GatheringAction from './GatheringAction';
 import ReviewTag from './ReviewTag';
 import { formatDate } from '@/app/_utils/dateFormatter';
 import CommentIcon from '@/app/reviews/_svg/CommentIcon';
 import LikeIcon from '@/app/reviews/_svg/LikeIcon';
 import UnLikeIcon from '@/app/reviews/_svg/UnLikeIcon';
+import DropDown from '@/components/DropDown';
 import Modal from '@/components/Modal';
 import Avatar from '@/components/common/icons/Avatar';
 import { useReviewDetailQuery } from '@/hooks/useReveiwDetailQuery';
@@ -91,8 +91,13 @@ export default function ReviewDetail() {
             </div>
             {user?.name === userName && (
               <DropDown
-                onDelete={handleDelete}
-                onUpdate={() => router.push(`/reviews/${id}/edit`)}
+                items={[
+                  {
+                    text: '수정하기',
+                    onClick: () => router.push(`/reviews/${id}/edit`),
+                  },
+                  { text: '삭제하기', onClick: handleDelete, isDelete: true },
+                ]}
               />
             )}
           </div>

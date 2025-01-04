@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import CommentInput from './CommentInput';
 import ConfirmModal from './ConfirmModal';
-import DropDown from './DropDown';
 import { formatTimeWithDate } from '@/app/_utils/dateFormatter';
+import DropDown from '@/components/DropDown';
 import Avatar from '@/components/common/icons/Avatar';
 import { useReveiwCommentQuery } from '@/hooks/useReviewCommentQuery';
 import { useModalStore } from '@/store/modal';
@@ -67,8 +67,13 @@ export default function CommentItem({ comment }: Props) {
         </div>
         {user?.name === userName && (
           <DropDown
-            onDelete={handleDelete}
-            onUpdate={() => setIsEditing(true)}
+            items={[
+              {
+                text: '수정하기',
+                onClick: () => setIsEditing(true),
+              },
+              { text: '삭제하기', onClick: handleDelete, isDelete: true },
+            ]}
           />
         )}
       </div>

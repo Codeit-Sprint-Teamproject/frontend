@@ -2,22 +2,21 @@ import { useModalStore } from '@/store/modal';
 
 type Props = {
   title: string;
+  content: string;
   onDelete: () => void;
 };
 
-export default function ConfirmModal({ title, onDelete }: Props) {
+export default function ConfirmModal({ title, content, onDelete }: Props) {
   const { closeModal } = useModalStore();
   const handleDelete = () => {
     onDelete();
     closeModal();
   };
   return (
-    <div className='w-full p-3 flex flex-col items-center gap-6'>
+    <div className='w-full px-3 pt-3 pb-1 flex flex-col items-center gap-6'>
       <div>
         <h3 className='font-bold text-lg'>{title}</h3>
-        <p className='text-customGrey-500 text-sm'>
-          삭제된 글은 복구할 수 없습니다.
-        </p>
+        <p className='text-customGrey-500 text-sm text-center'>{content}</p>
       </div>
       <div className='w-full flex gap-2'>
         <button

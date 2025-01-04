@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import CommentInput from './CommentInput';
-import ConfirmModal from './ConfirmModal';
 import { formatTimeWithDate } from '@/app/_utils/dateFormatter';
+import ConfirmModal from '@/components/ConfirmModal';
 import DropDown from '@/components/DropDown';
 import Avatar from '@/components/common/icons/Avatar';
 import { useReveiwCommentQuery } from '@/hooks/useReviewCommentQuery';
@@ -23,6 +23,7 @@ export default function CommentItem({ comment }: Props) {
     openModal(
       <ConfirmModal
         title='댓글을 삭제 하시겠습니까?'
+        content='삭제된 글은 복구할 수 없습니다.'
         onDelete={() => deleteCommentMutate(Number(id))}
       />,
     );

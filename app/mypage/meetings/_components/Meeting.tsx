@@ -1,7 +1,10 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { completeReading } from '../_lib/completeReading';
+import { leaveMeeting } from '../_lib/leaveMeeting';
 import AlertModal from './AlertModal';
 import { useTabContext } from './TabContext';
 import { formatDateWithWeekday } from '@/app/_utils/dateFormatter';
+import ConfirmModal from '@/components/ConfirmModal';
 import DropDown from '@/components/DropDown';
 import Modal from '@/components/Modal';
 import Avatar from '@/components/common/icons/Avatar';
@@ -12,6 +15,7 @@ import { MyMeetingList } from '@/types/meeting';
 import Image from 'next/image';
 
 export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
+  const queryClient = useQueryClient();
   const { tab } = useTabContext();
   const { isOpen, openModal } = useModalStore();
   const {
@@ -23,13 +27,29 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
     currentCapacity,
     readingRate,
   } = meeting;
-
+  const { mutate: leaveMeetingMutate } = useMutation({
+    mutationFn: (id: number) => leaveMeeting(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['mypage', 'meetings'],
+      });
+    },
+  });
   const handleComplete = async () => {
     try {
       await completeReading(id);
     } catch (error) {
       openModal(<AlertModal message={(error as Error).message} />);
     }
+  };
+  const handleLeave = () => {
+    openModal(
+      <ConfirmModal
+        title='참여중인 모임을 나가겠습니까?'
+        content='나간 모임은 복구할 수 없습니다.'
+        onDelete={() => leaveMeetingMutate(id)}
+      />,
+    );
   };
   return (
     <div className='w-[696px] flex gap-5 bg-white pt-4 py-7 border-b'>
@@ -45,7 +65,10 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
         <div className='flex justify-between'>
           <h3 className='text-lg text-customGrey-800 font-bold mb-2'>{name}</h3>
           <DropDown
-            items={[{ text: '독서 완료하기', onClick: handleComplete }]}
+            items={[
+              { text: '독서 완료하기', onClick: handleComplete },
+              { text: '모임 나가기', onClick: handleLeave, isDelete: true },
+            ]}
           />
         </div>
         <div className='flex gap-[2px]'>
@@ -83,7 +106,7 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
           </p>
         </div>
       </div>
-      {isOpen && <Modal width='w-[300px]' />}
+      {isOpen && <Modal width='w-[300px]' isHidden={true} />}
     </div>
   );
 }

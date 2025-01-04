@@ -1,5 +1,6 @@
 'use server';
 
+import { Logout } from '@/app/_utils/logout';
 import { fetchAPIServer } from '@/lib/fetchAPI.server';
 
 export interface getPopularBooksProps {
@@ -17,6 +18,7 @@ export async function getPopularBooks({ page, size }: getPopularBooksProps) {
   const data = await fetchAPIServer(endpoint, 'GET');
 
   if (data?.error) {
+    Logout();
     throw new Error(data.error.message || 'Failed to fetch popular books');
   }
 

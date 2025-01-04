@@ -1,5 +1,6 @@
 'use server';
 
+import { Logout } from '@/app/_utils/logout';
 import { fetchAPIServer } from '@/lib/fetchAPI.server';
 
 export const getParticipatingMeetings = async () => {
@@ -9,6 +10,7 @@ export const getParticipatingMeetings = async () => {
   const data = await fetchAPIServer(endpoint, method);
 
   if (data?.error) {
+    Logout();
     throw new Error(data.error.message || 'Failed to fetch meeting detail');
   }
 

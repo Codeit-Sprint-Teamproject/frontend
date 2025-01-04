@@ -1,15 +1,19 @@
 import { completeReading } from '../_lib/completeReading';
+import AlertModal from './AlertModal';
 import { useTabContext } from './TabContext';
 import { formatDateWithWeekday } from '@/app/_utils/dateFormatter';
 import DropDown from '@/components/DropDown';
+import Modal from '@/components/Modal';
 import Avatar from '@/components/common/icons/Avatar';
 import CalendarIcon from '@/components/common/icons/Calendar';
 import MoreIcon from '@/components/common/icons/MoreIcon';
+import { useModalStore } from '@/store/modal';
 import { MyMeetingList } from '@/types/meeting';
 import Image from 'next/image';
 
 export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
   const { tab } = useTabContext();
+  const { isOpen, openModal } = useModalStore();
   const {
     id,
     name,
@@ -21,7 +25,11 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
   } = meeting;
 
   const handleComplete = async () => {
-    await completeReading(id);
+    try {
+      await completeReading(id);
+    } catch (error) {
+      openModal(<AlertModal message={(error as Error).message} />);
+    }
   };
   return (
     <div className='w-[696px] flex gap-5 bg-white pt-4 py-7 border-b'>
@@ -75,6 +83,7 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
           </p>
         </div>
       </div>
+      {isOpen && <Modal width='w-[300px]' />}
     </div>
   );
 }

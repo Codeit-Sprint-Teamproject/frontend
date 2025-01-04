@@ -64,3 +64,13 @@ export type BookReviewByTitle = Omit<
   'apprCd' | 'userName' | 'bookImage'
 >;
 export type SearchedBook = Omit<PendingBookReview, 'gatheringId'>;
+export type ReadingBook = {
+  id: number;
+  image: string;
+};
+export type DailyReadingRecord = {
+  date: string;
+  bookResponses: ReadingBook[];
+  totalBookCount: number;
+};
+export type ReadingCalendar = DailyReadingRecord[];

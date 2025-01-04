@@ -1,53 +1,116 @@
-import Heart from '../_svg/Heart';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { completeReading } from '../_lib/completeReading';
+import { leaveMeeting } from '../_lib/leaveMeeting';
+import AlertModal from './AlertModal';
 import { useTabContext } from './TabContext';
 import { formatDateWithWeekday } from '@/app/_utils/dateFormatter';
+import ConfirmModal from '@/components/ConfirmModal';
+import DropDown from '@/components/DropDown';
+import Modal from '@/components/Modal';
 import Avatar from '@/components/common/icons/Avatar';
+import CalendarIcon from '@/components/common/icons/Calendar';
 import MoreIcon from '@/components/common/icons/MoreIcon';
+import { useModalStore } from '@/store/modal';
 import { MyMeetingList } from '@/types/meeting';
 import Image from 'next/image';
 
 export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
+  const queryClient = useQueryClient();
   const { tab } = useTabContext();
-  const { name, bookImage, startDate, endDate, currentCapacity } = meeting;
+  const { isOpen, openModal } = useModalStore();
+  const {
+    id,
+    name,
+    bookImage,
+    startDate,
+    endDate,
+    currentCapacity,
+    readingRate,
+  } = meeting;
+  const { mutate: leaveMeetingMutate } = useMutation({
+    mutationFn: (id: number) => leaveMeeting(id),
+    onSuccess: (data) => {
+      if (data.code === 'HOST_CANNOT_LEAVE_GATHERING') {
+        openModal(<AlertModal message='모임 주최자는 삭제만 가능합니다.' />);
+        return;
+      }
+      queryClient.invalidateQueries({
+        queryKey: ['mypage', 'meetings'],
+      });
+    },
+  });
+  const handleComplete = async () => {
+    try {
+      await completeReading(id);
+    } catch (error) {
+      openModal(<AlertModal message={(error as Error).message} />);
+    }
+  };
+  const handleLeave = () => {
+    openModal(
+      <ConfirmModal
+        title='참여중인 모임을 나가겠습니까?'
+        content='나간 모임은 복구할 수 없습니다.'
+        onDelete={() => leaveMeetingMutate(id)}
+      />,
+    );
+  };
   return (
-    <div className='w-[701px] flex gap-5 bg-white p-[15px] rounded-sm border border-[rgba(0, 0, 0, 0.10)]'>
-      <div className='border border-[rgba(0, 0, 0, 0.10)] bg-white p-1'>
-        <Image src={bookImage} width={132} height={200} alt='책 표지' />
-      </div>
+    <div className='w-[696px] flex gap-5 bg-white pt-4 py-7 border-b'>
+      <Image
+        src={bookImage}
+        className='w-[113px] h-[170px]'
+        width={113}
+        height={170}
+        alt='책 표지'
+        priority
+      />
       <div className='w-3/4 text-sm'>
-        <div className={`${tab === 'bookmark' ? 'flex justify-between' : ''}`}>
-          <h3 className='text-lg mb-4'>{name}</h3>
-          {tab === 'bookmark' && <Heart />}
+        <div className='flex justify-between'>
+          <h3 className='text-lg text-customGrey-800 font-bold mb-2'>{name}</h3>
+          <DropDown
+            items={[
+              { text: '독서 완료하기', onClick: handleComplete },
+              { text: '모임 나가기', onClick: handleLeave, isDelete: true },
+            ]}
+          />
         </div>
-
-        <p className='text-sm mb-[2px]'>모임 기간 </p>
-        <p className='mb-2'>
+        <div className='flex gap-[2px]'>
+          <CalendarIcon className='w-[14px] h-4' />
+          <p className='text-customGrey-500 text-sm mb-[2px]'>모임 기간 </p>
+        </div>
+        <p className='text-customGrey-800 mb-2'>
           {formatDateWithWeekday(startDate)} - {formatDateWithWeekday(endDate)}
         </p>
-        <p className='mb-1'>나의 독서 진행률 </p>
+        <p className='text-customGrey-500 mb-1'>나의 독서 진행률 </p>
         <div className='flex gap-2 mb-2.5'>
-          <div className='w-[489px] h-[15px] bg-[#D9D9D9] rounded-lg'>
-            <div className='w-[311px] h-[15px] bg-black rounded-lg'></div>
+          <div className='w-[489px] h-[15px] bg-customGrey-100 rounded-lg'>
+            <div
+              className='h-[15px] bg-customGreen-500 rounded-lg'
+              style={{ width: `${489 * (readingRate / 100) || 0}px` }}
+            ></div>
           </div>
-          {/* TODO (유진) 목표 달성률 데이터 있을 때 변경할 예정 */}
-          <span>12%</span>
+          <span className='text-sm text-customGrey-800'>
+            {readingRate || 0}%
+          </span>
         </div>
-        <div className='flex items-center gap-1.5 w-full h-[56px] px-2.5 py-1.5 bg-[#E4E4E4] rounded'>
+        <div className='flex items-center gap-2 h-11 px-2 py-1.5 bg-customGreen-50 rounded'>
           <div className='flex -space-x-4 items-center'>
-            <Avatar className='w-11 h-11' />
-            <Avatar className='w-11 h-11' />
-            <Avatar className='w-11 h-11' />
-            <div className='p-2.5 rounded-full w-11 h-11 bg-[#DFDFDF]'>
-              <MoreIcon />
+            <Avatar className='w-8 h-8' />
+            <Avatar className='w-8 h-8' />
+            <Avatar className='w-8 h-8' />
+            <div className='p-2 rounded-full w-8 h-8 bg-[#DFDFDF]'>
+              <MoreIcon className='w-[18px] h-[18px] stroke-customGrey-300' />
             </div>
           </div>
-          <p className='text-sm'>
+          <p className='text-sm text-customGreen-500'>
             {currentCapacity}명과 함께{' '}
             {/* TODO (유진) 만든 모임에서도 완료한 모임 여부 판단 추가할 예정 */}
             {tab === 'completed' ? '읽었어요' : '읽는 중'}
           </p>
         </div>
       </div>
+      {isOpen && <Modal width='w-[300px]' isHidden={true} />}
     </div>
   );
 }

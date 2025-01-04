@@ -21,7 +21,7 @@ export default function Pagination({
       </button>
       {Array.from({ length: totalPage }, (_, index) => (
         <button
-          className={`p-2 ${page === index ? 'font-bold text-customGreen-500' : 'text-customGrey-500'}`}
+          className={`text-sm p-2 ${page === index ? 'font-bold text-customGreen-500' : 'text-customGrey-500'}`}
           key={index}
           onClick={() => onPageChange(index)}
         >

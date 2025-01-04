@@ -4,6 +4,8 @@
 }
 .reading-calendar .react-calendar {
   width: 600px;
+  min-height: 680px;
+  height: auto;
   padding: 15px;
   border: 1px solid #d9d9d9;
 }
@@ -58,7 +60,7 @@
 .reading-calendar .react-calendar__month-view__days__day abbr {
   position: relative;
   font-size: 14px;
-  z-index: 1;
+  color: #262626;
 }
 .reading-calendar .react-calendar__navigation__today-button {
   position: absolute;
@@ -66,7 +68,7 @@
   right: 16px;
   width: 60px;
   height: 40px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid #ececec;
   border-radius: 4px;
   color: #6a6a6a;
 }
@@ -83,7 +85,6 @@
   height: 18px;
   font-size: 12px;
   border: 1px solid #ececec;
-  border-radius: 2px;
   background-color: white;
   color: #6a6a6a;
   box-shadow:

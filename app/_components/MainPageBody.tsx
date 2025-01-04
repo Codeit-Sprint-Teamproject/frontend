@@ -164,7 +164,7 @@ export default function MainPageBody() {
           <div className='flex flex-row items-center mb-2'>
             {(filterState.startDate || filterState.targetTime) && (
               <div
-                className='bg-gray-300 py-[5px] px-[10px] rounded-[30px] hover:bg-gray-400 duration-150 ml-2 flex flex-row gap-2 items-center font-bold'
+                className='py-[5px] px-[10px] rounded-[30px] hover:bg-gray-400 duration-150 ml-2 flex flex-row gap-2 items-center font-bold'
                 onClick={resetFilters}
               >
                 초기화
@@ -172,7 +172,7 @@ export default function MainPageBody() {
               </div>
             )}
 
-            <div className='w-[160px] h-[40px] bg-white px-2 rounded-[4px] border-[1px] border-customGrey-100 ml-2 flex flex-row gap-1 items-center'>
+            <div className='w-[160px] h-[40px] bg-white px-2 rounded-[4px] border-[1px] border-customGrey-100 ml-2 flex flex-row gap-1 justify-center items-center'>
               <CustomDropdown
                 trigger={
                   filterState.targetTime
@@ -184,7 +184,7 @@ export default function MainPageBody() {
               />
               <ChevronDownIcon width={24} height={24} />
             </div>
-            <div className='w-[140px] h-[40px] bg-white px-2 rounded-[4px] border-[1px] border-customGrey-100 ml-2 flex flex-row gap-2 items-center'>
+            <div className='w-[160px] h-[40px] bg-white px-2 rounded-[4px] border-[1px] border-customGrey-100 ml-2 flex flex-row gap-2 justify-center items-center'>
               <CustomDropdown
                 trigger={
                   filterState.startDate

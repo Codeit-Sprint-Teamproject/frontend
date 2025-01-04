@@ -10,7 +10,6 @@ import { useMeetingsInfiniteQuery } from './_lib/useMeetingsInfiniteQuery';
 import SearchIcon from '@/app/_svg/SearchIcon';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Progress } from '@/components/ui/progress';
 import { Switch } from '@/components/ui/switch';
 import BookIcon from '@/public/BookIcon';
 import CalendarIcon from '@/public/CalendarIcon';
@@ -127,7 +126,7 @@ export default function MainPageBody() {
             <h2 className='text-xl font-bold'>많은 모임을 만들어낸 책</h2>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-5 gap-4 relative'>
-            {popularBooks.map((book, idx) => (
+            {popularBooks?.map((book, idx) => (
               <div
                 key={idx}
                 className='h-[18rem] border rounded-lg shadow-md p-4 hover:shadow-lg relative'
@@ -162,7 +161,6 @@ export default function MainPageBody() {
               어디서든 독서를 시작해요
             </h2>
           </div>
-          {/* FUNCTION PART - 목표 독서시간, 시작일 선택, 모집중만 보기, 정렬기능 */}
           <div className='flex flex-row items-center mb-2'>
             {(filterState.startDate || filterState.targetTime) && (
               <div
@@ -174,7 +172,7 @@ export default function MainPageBody() {
               </div>
             )}
 
-            <div className='bg-gray-300 py-[5px] px-[10px] rounded-[30px] hover:bg-gray-400 duration-150 ml-2 flex flex-row gap-1 items-center font-bold'>
+            <div className='w-[160px] h-[40px] bg-white px-2 rounded-[4px] border-[1px] border-customGrey-100 ml-2 flex flex-row gap-1 items-center'>
               <CustomDropdown
                 trigger={
                   filterState.targetTime
@@ -186,14 +184,14 @@ export default function MainPageBody() {
               />
               <ChevronDownIcon width={24} height={24} />
             </div>
-            <div className='bg-gray-300 py-[5px] px-[10px] rounded-[30px] hover:bg-gray-400 duration-150 ml-2 flex flex-row gap-2 items-center font-bold'>
+            <div className='w-[140px] h-[40px] bg-white px-2 rounded-[4px] border-[1px] border-customGrey-100 ml-2 flex flex-row gap-2 items-center'>
               <CustomDropdown
                 trigger={
                   filterState.startDate
                     ? filterState.startDate.toLocaleDateString()
-                    : '시작일 선택'
+                    : '모임 시작일'
                 }
-                label='시작일 선택'
+                label='모임 시작일'
               >
                 <Calendar
                   locale='en-GB'
@@ -231,7 +229,9 @@ export default function MainPageBody() {
               <CalendarIcon width={24} height={24} />
             </div>
             <div className='py-[5px] px-[10px] flex items-center ml-2 gap-2'>
-              <Label htmlFor='recruiting-only'>모집중만 보기</Label>
+              <Label htmlFor='recruiting-only' className='text-[14px]'>
+                모집중만 보기
+              </Label>
               <Switch
                 id='recruiting only'
                 checked={filterState.recruitingOnly}
@@ -241,13 +241,11 @@ export default function MainPageBody() {
               />
             </div>
           </div>
-          {/* MEETINGS PART - 모임목록 무한스크롤 */}
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-6'>
             {filteredMeetings.map((meeting) => (
               <Link href={`/meeting-detail/${meeting.id}`} key={meeting.id}>
                 <div className='w-full p-3 border rounded-lg shadow-md hover:shadow-lg  flex flex-col'>
                   <div className='flex flex-row gap-4'>
-                    {/* MEETING IMAGE */}
                     <div className='w-[120px] h-[180px] flex justify-center items-center'>
                       <Image
                         src={meeting.bookImage}
@@ -258,14 +256,48 @@ export default function MainPageBody() {
                     </div>
                     <div className='flex flex-col w-[358px] justify-between'>
                       <div className='flex flex-col'>
-                        <span className='bg-[#F3E7E7] text-customRed py-[2px] px-[6px] rounded-[2px] w-[103px] text-[14px]'>
-                          오늘부터 시작
-                        </span>
-                        <h3 className='text-lg font-bold mt-1'>
-                          {meeting.name}
-                        </h3>
+                        <div className='flex flex-col gap-1 justify-center items-start'>
+                          <div
+                            className={`flex flex-0 text-sm font-medium px-[2px] py-[6px] rounded-[2px] ${
+                              new Date(meeting.startDate).toDateString() ===
+                              new Date().toDateString()
+                                ? 'text-customRed bg-[#F3E7E7]'
+                                : new Date(meeting.startDate).toDateString() ===
+                                    new Date(
+                                      new Date().setDate(
+                                        new Date().getDate() + 1,
+                                      ),
+                                    ).toDateString()
+                                  ? 'text-customOrange-600 bg-customOrange-50'
+                                  : new Date(meeting.startDate) > new Date()
+                                    ? 'text-customGreen-500 bg-customGreen-50'
+                                    : 'text-customGrey-500 bg-customGrey-100'
+                            }`}
+                          >
+                            {new Date(meeting.startDate).toDateString() ===
+                            new Date().toDateString()
+                              ? '오늘부터 시작'
+                              : new Date(meeting.startDate).toDateString() ===
+                                  new Date(
+                                    new Date().setDate(
+                                      new Date().getDate() + 1,
+                                    ),
+                                  ).toDateString()
+                                ? '내일부터 시작'
+                                : new Date(meeting.startDate) > new Date()
+                                  ? `${Math.ceil(
+                                      (new Date(meeting.startDate).getTime() -
+                                        new Date().getTime()) /
+                                        (1000 * 60 * 60 * 24),
+                                    )}일 뒤 시작`
+                                  : '모집 마감'}
+                          </div>
+
+                          <p className='block text-lg font-bold text-customGrey-800 mb-2'>
+                            {meeting.name}
+                          </p>
+                        </div>
                       </div>
-                      {/* MEETING INFO */}
                       <div>
                         <div className='flex flex-row gap-[4px]'>
                           <CalendarIcon width={20} height={20} />
@@ -289,15 +321,16 @@ export default function MainPageBody() {
                             명
                           </p>
                         </div>
-                        {/* PROGRESS BAR */}
-                        <div>
-                          <Progress
-                            className='mt-1'
-                            value={
-                              (meeting.currentCapacity / meeting.maxCapacity) *
-                              100
-                            }
-                          />
+                        <div className='w-[358px] h-3 bg-customGrey-100 rounded-full mt-[2px]'>
+                          <div
+                            className='h-full bg-customGreen-500 rounded-full '
+                            style={{
+                              width:
+                                meeting.maxCapacity > 1000
+                                  ? '100%'
+                                  : `${(meeting.currentCapacity / meeting.maxCapacity) * 100}%`,
+                            }}
+                          ></div>
                         </div>
                       </div>
                     </div>

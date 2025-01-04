@@ -17,7 +17,7 @@ export default function Tab() {
   const tabs = [
     {
       value: 'active',
-      label: '참여 중인 모임',
+      label: '참여중인 모임',
       count: participatingCount || 0,
     },
     { value: 'completed', label: '완료한 모임', count: completedCount },
@@ -26,15 +26,17 @@ export default function Tab() {
   ] as const;
 
   return (
-    <div className='flex gap-6 text-lg border-b h-14'>
+    <div className='flex gap-6 border-customGrey-200 border-b h-8'>
       {tabs.map(({ value, label, count }) => (
         <div
           key={value}
-          className={`flex items-center gap-2 cursor-pointer ${tab === value ? 'font-bold border-b-4 border-black' : ''}`}
+          className={`flex items-center gap-2 cursor-pointer ${tab === value ? 'font-bold border-b-2 border-black text-custmGrey-800' : 'text-customGrey-300'}`}
           onClick={() => setTab(value)}
         >
           {label}
-          <span className='w-[42px]  py-[2px] bg-black text-white text-center rounded-[10px]'>
+          <span
+            className={`font-bold ${tab === value ? 'text-custmGrey-800' : 'text-customGrey-300'}`}
+          >
             {count}
           </span>
         </div>

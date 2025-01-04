@@ -30,8 +30,8 @@ export default function MeetingList() {
   const totalPage = Math.ceil((count as number) / SIZE);
 
   return (
-    <div className='relative min-h-[900px]'>
-      <div className='flex flex-col gap-[15px] mt-5'>
+    <div className='relative'>
+      <div className='flex flex-col gap-3 mt-4'>
         {meetings?.map((meeting) => (
           <Meeting key={meeting.id} meeting={meeting} />
         ))}
@@ -40,7 +40,7 @@ export default function MeetingList() {
         page={page}
         totalPage={totalPage}
         onPageChange={setPage}
-        className='flex justify-center gap-2 mt-20 absolute bottom-10 left-1/3'
+        className='flex justify-center gap-2 absolute -bottom-[72px] left-1/3'
       />
     </div>
   );

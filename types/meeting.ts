@@ -25,7 +25,7 @@ export type MyMeetingList = {
   endDate: Date;
   bookTitle: string;
   bookImage: string;
-  completeRate: number;
+  readingRate: number;
   readingTimeGoal: number;
   currentCapacity: number;
 };

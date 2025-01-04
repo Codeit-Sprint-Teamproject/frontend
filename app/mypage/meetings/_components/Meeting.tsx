@@ -29,7 +29,11 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
   } = meeting;
   const { mutate: leaveMeetingMutate } = useMutation({
     mutationFn: (id: number) => leaveMeeting(id),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if (data.code === 'HOST_CANNOT_LEAVE_GATHERING') {
+        openModal(<AlertModal message='모임 주최자는 삭제만 가능합니다.' />);
+        return;
+      }
       queryClient.invalidateQueries({
         queryKey: ['mypage', 'meetings'],
       });

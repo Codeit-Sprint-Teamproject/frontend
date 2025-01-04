@@ -1,5 +1,7 @@
+import { completeReading } from '../_lib/completeReading';
 import { useTabContext } from './TabContext';
 import { formatDateWithWeekday } from '@/app/_utils/dateFormatter';
+import DropDown from '@/components/DropDown';
 import Avatar from '@/components/common/icons/Avatar';
 import CalendarIcon from '@/components/common/icons/Calendar';
 import MoreIcon from '@/components/common/icons/MoreIcon';
@@ -8,8 +10,19 @@ import Image from 'next/image';
 
 export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
   const { tab } = useTabContext();
-  const { name, bookImage, startDate, endDate, currentCapacity, readingRate } =
-    meeting;
+  const {
+    id,
+    name,
+    bookImage,
+    startDate,
+    endDate,
+    currentCapacity,
+    readingRate,
+  } = meeting;
+
+  const handleComplete = async () => {
+    await completeReading(id);
+  };
   return (
     <div className='w-[696px] flex gap-5 bg-white pt-4 py-7 border-b'>
       <Image
@@ -23,9 +36,9 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
       <div className='w-3/4 text-sm'>
         <div className='flex justify-between'>
           <h3 className='text-lg text-customGrey-800 font-bold mb-2'>{name}</h3>
-          <button>
-            <MoreIcon className='w-6 h-6 stroke-customGrey-500' />
-          </button>
+          <DropDown
+            items={[{ text: '독서 완료하기', onClick: handleComplete }]}
+          />
         </div>
         <div className='flex gap-[2px]'>
           <CalendarIcon className='w-[14px] h-4' />

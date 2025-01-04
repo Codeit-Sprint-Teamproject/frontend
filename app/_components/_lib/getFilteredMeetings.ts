@@ -1,6 +1,5 @@
 'use server';
 
-import { Logout } from '@/app/_utils/logout';
 import { fetchAPIServer } from '@/lib/fetchAPI.server';
 
 export interface meetingsProps {
@@ -41,7 +40,6 @@ export async function getFilteredMeetings(params: meetingsProps = {}) {
 
   if (response?.error) {
     console.error('무한스크롤 모임 검색 API error :', response.error);
-    Logout();
     throw new Error(response.error.message);
   }
 

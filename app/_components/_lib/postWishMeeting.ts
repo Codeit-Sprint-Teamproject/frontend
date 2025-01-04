@@ -1,6 +1,5 @@
 'use server';
 
-import { Logout } from '@/app/_utils/logout';
 import { fetchAPIServer } from '@/lib/fetchAPI.server';
 
 export const postWishMeeting = async (gatheringId: number) => {
@@ -11,7 +10,6 @@ export const postWishMeeting = async (gatheringId: number) => {
     const data = await fetchAPIServer(endpoint, method);
 
     if (data?.error) {
-      Logout();
       throw data.error;
     }
 

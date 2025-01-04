@@ -2,46 +2,44 @@
 
 import { useState } from 'react';
 import Calendar from 'react-calendar';
+import { useQuery } from '@tanstack/react-query';
+import { getReadingCalendar } from '../_lib/getReadingCalendar';
 import './CustomReadingCalendar.css';
 import SlideNextIcon from '@/components/common/icons/SlideNextIcon';
 import SlidePrevIcon from '@/components/common/icons/SlidePrevIcon';
-import { format, isToday } from 'date-fns';
+import { format, formatDate, isAfter, isToday } from 'date-fns';
 import Image from 'next/image';
 
 export default function MyReadingCalendar() {
   const [activeStartDate, setActiveStartDate] = useState(new Date());
+  const yearMonth = formatDate(activeStartDate, 'yyyy-MM');
+  const isFuture = isAfter(activeStartDate, new Date());
+
   const goToThisMonth = () => {
     const today = new Date();
     setActiveStartDate(new Date(today.getFullYear(), today.getMonth(), 1));
   };
-  const books = [
-    {
-      date: '2024-12-05',
-      title: 'Book 1',
-    },
-    {
-      date: '2024-12-10',
-      title: 'Book 2',
-    },
-    {
-      date: '2024-12-18',
-      title: 'Book 3',
-    },
-  ];
+  const { data: books } = useQuery({
+    queryKey: ['mypage', 'calendar', 'reading', yearMonth],
+    queryFn: () => getReadingCalendar(yearMonth),
+    enabled: !isFuture,
+  });
+
+  const book = books?.filter((book) => book.totalBookCount > 0);
   const getBookCover = ({ date }: { date: Date }) => {
-    const formattedDate = date.toISOString().split('T')[0];
-    const data = books.find((b) => b.date === formattedDate);
+    const formattedDate = format(date, 'yyyy-MM-dd');
+    const data = book?.find((b) => b.date === formattedDate);
 
     return data ? (
       <>
         <Image
-          src='/book.png'
+          src={data.bookResponses[0].image}
           className='book-cover'
-          alt={data.title}
+          alt='책 표지'
           width={54}
           height={81}
         />
-        <span className='book-count'>+1</span>
+        <span className='book-count'>+{data.totalBookCount}</span>
       </>
     ) : null;
   };

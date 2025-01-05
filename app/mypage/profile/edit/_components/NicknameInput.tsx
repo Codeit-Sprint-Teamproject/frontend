@@ -4,14 +4,31 @@ import { useState } from 'react';
 import { useProfileQuery } from '@/hooks/userProfileQuery';
 import useUserStore from '@/store/userStore';
 
+const NICKANME_REGEX = /^[a-zA-Z0-9가-힣]{1,10}$/;
+
 export default function NicknameInput() {
   const { user, setUser } = useUserStore();
   const [nickname, setNickname] = useState('');
   const [isEdit, setIsEdit] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { updateProfileMutate } = useProfileQuery();
+
+  const validateNickname = (nickname: string) => {
+    if (!NICKANME_REGEX.test(nickname)) {
+      return '닉네임은 한글/영문/숫자 포함 10자 이내로 입력하세요.';
+    }
+    return null;
+  };
 
   const handleChangeNickname = () => {
     const formData = new FormData();
+    const error = validateNickname(nickname);
+    console.log('error', error);
+    if (error) {
+      setErrorMessage(error);
+      return;
+    }
+    setErrorMessage('');
     const form = JSON.stringify({
       userName: nickname,
       email: user?.email,
@@ -51,6 +68,7 @@ export default function NicknameInput() {
             </button>
           )}
         </div>
+        <p className='text-sm text-customRed'>{errorMessage}</p>
         {isEdit && (
           <div className='flex justify-end mt-[14px]'>
             <button

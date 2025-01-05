@@ -33,7 +33,7 @@ export default function Review({ review, page }: Props) {
       ]);
       if (value?.bookReviews) {
         const index = value.bookReviews.findIndex((review) => review.id === id);
-        console.log('index', index);
+
         if (index > -1) {
           const isLiked = value.bookReviews[index].userLikeCk ?? false;
           console.log('isLiked', isLiked);
@@ -72,11 +72,15 @@ export default function Review({ review, page }: Props) {
   const handleUpdate = () => {
     router.push(`/reviews/${id}/edit`);
   };
-  const handleToggleLike = () => {
+  const handleToggleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     toggleReviewLikeMutate(id);
   };
   return (
-    <li className='flex flex-col gap-3 py-4 border-b'>
+    <li
+      className='flex flex-col gap-3 py-4 border-b cursor-pointer'
+      onClick={() => router.push(`/reviews/${id}`)}
+    >
       <div className='h-7 flex justify-between'>
         <div className='flex items-center gap-1 text-sm mb-[2px]'>
           <div className='flex items-center gap-1 bg-customGreen-50 px-1.5 py-1 rounded-[2px]'>

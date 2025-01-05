@@ -15,3 +15,17 @@ export type BookReviewComment = {
   profile: string;
   createTime: string;
 };
+export type MyBookReview = {
+  id: number;
+  title: string;
+  bookTitle: string;
+  content: string;
+  createTime: string;
+  userLikeCk?: boolean;
+  likes: number;
+  commentCnt?: number;
+};
+export type MyBookReviewList = {
+  bookReviews: MyBookReview[];
+  total: number;
+};

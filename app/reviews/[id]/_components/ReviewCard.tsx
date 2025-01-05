@@ -2,6 +2,7 @@ import UnLikeIcon from '../../_svg/UnLikeIcon';
 import CommentIcon from '@/app/reviews/_svg/CommentIcon';
 import LikeIcon from '@/app/reviews/_svg/LikeIcon';
 import { useReviewLikeToggle } from '@/hooks/useReviewLikeToggle';
+import useUserStore from '@/store/userStore';
 import { BookReviewByTitle } from '@/types/book';
 import { useSearchParams } from 'next/navigation';
 
@@ -20,6 +21,7 @@ export default function ReviewCard({
     title: bookTitle,
     page: page,
   });
+  const { user } = useUserStore();
   const { title, content, likes, commentCnt, userLikeCk } = review;
 
   return (
@@ -28,7 +30,7 @@ export default function ReviewCard({
       <div className='w-[287px] h-12 line-clamp-2'>{content}</div>
       <div className='flex gap-5 mt-2'>
         <div className='flex items-center gap-1'>
-          <button onClick={() => toggleLike()}>
+          <button onClick={() => toggleLike()} disabled={!user}>
             {userLikeCk ? (
               <LikeIcon className='w-5 h-5' />
             ) : (

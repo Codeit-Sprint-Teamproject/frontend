@@ -4,6 +4,7 @@ import UnLikeIcon from '../_svg/UnLikeIcon';
 import { formatTimeWithDate } from '@/app/_utils/dateFormatter';
 import Avatar from '@/components/common/icons/Avatar';
 import { useReviewLikeToggle } from '@/hooks/useReviewLikeToggle';
+import useUserStore from '@/store/userStore';
 import { BookReview } from '@/types/book';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -22,13 +23,14 @@ export default function Review({ review }: { review: BookReview }) {
     profile,
   } = review;
   const searchParams = useSearchParams();
-  const filter = searchParams.get('filter') || 'ALL'; // URL에서 filter 값 가져오기
+  const filter = searchParams.get('filter') || 'ALL';
   const { mutate: toggleLike } = useReviewLikeToggle({
     id,
     isLiked: userLikeCk ?? false,
     filter,
   });
   const router = useRouter();
+  const { user } = useUserStore();
 
   return (
     <div className='border w-[520px]'>
@@ -83,7 +85,7 @@ export default function Review({ review }: { review: BookReview }) {
         </div>
         <div className='flex gap-5'>
           <div className='flex items-center gap-1'>
-            <button onClick={() => toggleLike()}>
+            <button onClick={() => toggleLike()} disabled={!user}>
               {userLikeCk ? (
                 <LikeIcon className='w-5 h-5' />
               ) : (

@@ -1,17 +1,39 @@
 'use client';
 
 import { useState } from 'react';
+import { checkDuplicate } from '@/app/auth/signup/_lib/duplicate-check';
 import { useProfileQuery } from '@/hooks/userProfileQuery';
 import useUserStore from '@/store/userStore';
+
+const NICKANME_REGEX = /^[a-zA-Z0-9가-힣]{1,10}$/;
 
 export default function NicknameInput() {
   const { user, setUser } = useUserStore();
   const [nickname, setNickname] = useState('');
   const [isEdit, setIsEdit] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { updateProfileMutate } = useProfileQuery();
 
-  const handleChangeNickname = () => {
+  const validateNickname = async (nickname: string) => {
+    if (!NICKANME_REGEX.test(nickname)) {
+      return '닉네임은 한글/영문/숫자 포함 10자 이내로 입력하세요.';
+    }
+    const res = await checkDuplicate('userName', nickname);
+    if (res.isDuplicate) {
+      return res.message;
+    }
+    return null;
+  };
+
+  const handleChangeNickname = async () => {
     const formData = new FormData();
+    const error = await validateNickname(nickname);
+
+    if (error) {
+      setErrorMessage(error);
+      return;
+    }
+    setErrorMessage('');
     const form = JSON.stringify({
       userName: nickname,
       email: user?.email,
@@ -25,7 +47,9 @@ export default function NicknameInput() {
     });
   };
   return (
-    <div className={`rounded-sm ${isEdit ? 'bg-customGrey-50 px-5 py-4' : ''}`}>
+    <aside
+      className={`rounded-sm ${isEdit ? 'bg-customGrey-50 px-5 py-4' : ''}`}
+    >
       {isEdit && (
         <p className='font-bold text-customGrey-800 pb-5'>닉네임 변경</p>
       )}
@@ -51,6 +75,7 @@ export default function NicknameInput() {
             </button>
           )}
         </div>
+        <p className='text-sm text-customRed'>{errorMessage}</p>
         {isEdit && (
           <div className='flex justify-end mt-[14px]'>
             <button
@@ -68,6 +93,6 @@ export default function NicknameInput() {
           </div>
         )}
       </div>
-    </div>
+    </aside>
   );
 }

@@ -26,6 +26,7 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
     endDate,
     currentCapacity,
     readingRate,
+    userProfiles,
   } = meeting;
   const { mutate: leaveMeetingMutate } = useMutation({
     mutationFn: (id: number) => leaveMeeting(id),
@@ -87,7 +88,7 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
           <div className='w-[489px] h-[15px] bg-customGrey-100 rounded-lg'>
             <div
               className='h-[15px] bg-customGreen-500 rounded-lg'
-              style={{ width: `${489 * (readingRate / 100) || 0}px` }}
+              style={{ width: `${489 * (readingRate || 0 / 100) || 0}px` }}
             ></div>
           </div>
           <span className='text-sm text-customGrey-800'>
@@ -96,9 +97,20 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
         </div>
         <div className='flex items-center gap-2 h-11 px-2 py-1.5 bg-customGreen-50 rounded'>
           <div className='flex -space-x-4 items-center'>
-            <Avatar className='w-8 h-8' />
-            <Avatar className='w-8 h-8' />
-            <Avatar className='w-8 h-8' />
+            {Array.from({ length: Math.min(3, currentCapacity) }).map((_, i) =>
+              userProfiles[i] ? (
+                <Image
+                  key={i}
+                  src={userProfiles[i]}
+                  className='rounded-full'
+                  width={32}
+                  height={32}
+                  alt='프로필'
+                />
+              ) : (
+                <Avatar key={i} className='w-8 h-8' />
+              ),
+            )}
             <div className='p-2 rounded-full w-8 h-8 bg-[#DFDFDF]'>
               <MoreIcon className='w-[18px] h-[18px] stroke-customGrey-300' />
             </div>

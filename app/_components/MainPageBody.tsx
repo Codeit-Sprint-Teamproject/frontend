@@ -22,6 +22,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function MainPageBody() {
+  const [selectedSortType, setSelectedSortType] =
+    useState<string>('마감 임박 순');
   const [meetingsData, setMeetingsData] = useState<IMeeting[]>([]);
   const [popularBooks, setPopularBooks] = useState<IPopularBooks[]>([]);
   const [filterState, setFilterState] = useState<IFilterState>({
@@ -33,6 +35,7 @@ export default function MainPageBody() {
   const { data, isLoading, isError, error } = useMeetingsInfiniteQuery();
   const today = new Date();
   const router = useRouter();
+  const sortType = ['신규 모임 순', '마감 임박 순', '참여 인원 순'];
 
   useEffect(() => {
     if (data?.pages && data.pages.length > 0) {
@@ -242,9 +245,9 @@ export default function MainPageBody() {
             </div>
             <div className='h-[40px] bg-white px-2 rounded-[4px] flex flex-row gap-1 justify-center items-center absolute right-0'>
               <CustomDropdown
-                trigger={sortType ? sortType : '최신순'}
-                items={['최신순', '참여 인원순', '마감 임박순']}
-                onSelect={(value) => handleMeetingsSort(value)}
+                trigger={selectedSortType}
+                items={sortType}
+                onSelect={(value) => setSelectedSortType(value)}
               />
               <ChevronDownIcon width={24} height={24} />
             </div>

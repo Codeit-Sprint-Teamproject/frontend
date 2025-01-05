@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { completeReading } from '../_lib/completeReading';
 import { leaveMeeting } from '../_lib/leaveMeeting';
 import AlertModal from './AlertModal';
+import MeetingDropDown from './MeetingDropDown';
 import { useTabContext } from './TabContext';
 import { formatDateWithWeekday } from '@/app/_utils/dateFormatter';
 import ConfirmModal from '@/components/ConfirmModal';
-import DropDown from '@/components/DropDown';
 import Modal from '@/components/Modal';
 import Avatar from '@/components/common/icons/Avatar';
 import CalendarIcon from '@/components/common/icons/Calendar';
@@ -69,11 +69,10 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
       <div className='w-3/4 text-sm'>
         <div className='flex justify-between'>
           <h3 className='text-lg text-customGrey-800 font-bold mb-2'>{name}</h3>
-          <DropDown
-            items={[
-              { text: '독서 완료하기', onClick: handleComplete },
-              { text: '모임 나가기', onClick: handleLeave, isDelete: true },
-            ]}
+          <MeetingDropDown
+            tab={tab}
+            completeReading={handleComplete}
+            leaveMeeting={handleLeave}
           />
         </div>
         <div className='flex gap-[2px]'>

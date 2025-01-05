@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import EmptyMeetingList from './EmptyMeetingList';
 import Meeting from './Meeting';
 import { useTabContext } from './TabContext';
 import Pagination from '@/components/Pagination';
@@ -26,7 +27,7 @@ export default function MeetingList() {
   const { isMeetingsLoading, meetings } = useMyMeetingQuery(tab, page);
 
   if (isCountLoading || isMeetingsLoading) return <p>Loading...</p>;
-  if (!meetings?.length) return <p>모임이 없습니다.</p>;
+  if (!meetings?.length) return <EmptyMeetingList tab={tab} />;
   const totalPage = Math.ceil((count as number) / SIZE);
 
   return (

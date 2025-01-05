@@ -2,15 +2,12 @@
 
 import { fetchAPIServer } from '@/lib/fetchAPI.server';
 
-export interface fetchPopularBooksProps {
+export interface getPopularBooksProps {
   page: number;
   size: number;
 }
 
-export async function fetchPopularBooks({
-  page,
-  size,
-}: fetchPopularBooksProps) {
+export async function getPopularBooks({ page, size }: getPopularBooksProps) {
   const params = new URLSearchParams({
     page: page.toString(),
     size: size.toString(),

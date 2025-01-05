@@ -65,6 +65,10 @@ export default function MainPageHeader() {
     }
   };
 
+  const handleEnterMeeting = (meetingId: number) => {
+    router.push(`/meeting-detail/${meetingId}`);
+  };
+
   const {
     data: joinableMeetings,
     error: joinableMeetingsError,
@@ -80,14 +84,14 @@ export default function MainPageHeader() {
     data: participatingMeetings,
     error: participatingMeetingsError,
     isLoading: participatingMeetingsIsLoading,
-    isError: participatingMeetingsIsError,
   } = useQuery<IParticipatingMeeting[]>({
     queryKey: ['participatingMeetings'],
     queryFn: () => getParticipatingMeetings(),
     staleTime: 5 * 60 * 1000,
+    enabled: !!user,
   });
 
-  if (joinableMeetingsIsError || participatingMeetingsIsError)
+  if (joinableMeetingsIsError)
     return (
       <div>
         Error:{' '}
@@ -142,182 +146,195 @@ export default function MainPageHeader() {
             modules={[Navigation]}
             className='custom-swiper'
           >
-            {!joinableMeetings && <div>오늘 시작하는 모임이 없습니다.</div>}
-            {joinableMeetings?.map((item, idx) => (
-              <SwiperSlide key={idx}>
-                <div className='flex flex-row w-full h-[413px] rounded-lg bg-white shadow-md'>
-                  <div className='flex justify-center items-center border-r-[1px] w-[271px] h-full px-4'>
-                    <Image
-                      src={item.bookImage}
-                      alt='book-image'
-                      width={271}
-                      height={413}
-                    />
-                  </div>
-                  <div className='flex flex-col px-4 py-7 justify-between'>
-                    <div>
-                      <h3 className='text-[22px] font-bold'>
-                        {item?.bookTitle}
-                      </h3>
-                      <div className='bg-[#F3E7E7] w-auto inline-block mt-2 py-0.5 px-1.5 rounded-[4px]'>
-                        <span className='text-customRed  text-sm font-bold'>
-                          오늘부터 시작
-                        </span>
-                      </div>
+            {!joinableMeetings && (
+              <div className='flex flex-row w-full h-[413px] rounded-lg bg-white shadow-md'>
+                오늘 시작하는 모임이 없습니다.
+              </div>
+            )}
+            {joinableMeetings &&
+              joinableMeetings?.map((item, idx) => (
+                <SwiperSlide key={idx}>
+                  <div className='flex flex-row w-full h-[413px] rounded-lg bg-white shadow-md'>
+                    <div className='flex justify-center items-center border-r-[1px] w-[271px] h-full px-4'>
+                      <Image
+                        src={item.bookImage}
+                        alt='book-image'
+                        width={271}
+                        height={413}
+                      />
                     </div>
+                    <div className='flex flex-col px-4 py-7 justify-between'>
+                      <div>
+                        <h3 className='text-[22px] font-bold'>
+                          {item?.bookTitle}
+                        </h3>
+                        <div className='bg-[#F3E7E7] w-auto inline-block mt-2 py-0.5 px-1.5 rounded-[4px]'>
+                          <span className='text-customRed  text-sm font-bold'>
+                            오늘부터 시작
+                          </span>
+                        </div>
+                      </div>
 
-                    <div>
-                      <div className='h-[143px] flex flex-col items-start gap-[4px] text-customGrey-500'>
-                        <div className='flex flex-row gap-2 items-center'>
-                          <CalendarIcon width={24} height={24} />
-                          <span className='text-lg'>
-                            {item.gatheringWeek / 7}주 동안
-                          </span>
-                        </div>
-                        <div className='flex flex-row gap-2 items-center'>
-                          <BookIcon width={24} height={24} />
-                          <span className='text-lg'>
-                            매일 {item.readingTimeGoal}분
-                          </span>
-                        </div>
-                        <div className='flex flex-row gap-2 items-center'>
-                          <UsersIcon width={24} height={24} />
-                          <span className='text-lg'>
-                            {item.currentCapacity}명 / {item.maxCapacity}명
-                          </span>
-                        </div>
+                      <div>
+                        <div className='h-[143px] flex flex-col items-start gap-[4px] text-customGrey-500'>
+                          <div className='flex flex-row gap-2 items-center'>
+                            <CalendarIcon width={24} height={24} />
+                            <span className='text-lg'>
+                              {item.gatheringWeek / 7}주 동안
+                            </span>
+                          </div>
+                          <div className='flex flex-row gap-2 items-center'>
+                            <BookIcon width={24} height={24} />
+                            <span className='text-lg'>
+                              매일 {item.readingTimeGoal}분
+                            </span>
+                          </div>
+                          <div className='flex flex-row gap-2 items-center'>
+                            <UsersIcon width={24} height={24} />
+                            <span className='text-lg'>
+                              {item.currentCapacity}명 /{' '}
+                              {item.maxCapacity < 1000
+                                ? `${item.maxCapacity}명`
+                                : '∞'}
+                            </span>
+                          </div>
 
-                        <div className='flex flex-row mt-[9px]'>
-                          {item.currentCapacity < 4 ? (
-                            <>
-                              {item.userProfiles.map((_, idx) => (
-                                <React.Fragment key={idx}>
-                                  <div className='w-12 h-12 border-[0.925px] border-[#D1D5DB] bg-white rounded-full -mr-3 flex justify-center items-center'>
-                                    <User />
-                                  </div>
-                                </React.Fragment>
-                              ))}
-                            </>
-                          ) : (
-                            <>
-                              {item.userProfiles.map((item, idx) => (
-                                <React.Fragment key={idx}>
-                                  {item ? (
-                                    <div className='w-12 h-12 border-[0.925px] border-[#D1D5DB] bg-white rounded-full -mr-3 flex justify-center items-center'>
-                                      <Image
-                                        src={item}
-                                        alt='user-profile-image'
-                                        width={48}
-                                        height={48}
-                                      />
-                                    </div>
-                                  ) : (
+                          <div className='flex flex-row mt-[9px]'>
+                            {item.currentCapacity < 4 ? (
+                              <>
+                                {item.userProfiles.map((_, idx) => (
+                                  <React.Fragment key={idx}>
                                     <div className='w-12 h-12 border-[0.925px] border-[#D1D5DB] bg-white rounded-full -mr-3 flex justify-center items-center'>
                                       <User />
                                     </div>
-                                  )}
-                                </React.Fragment>
-                              ))}
-                              <div className='w-12 h-12 border-[0.925px] border-[#D1D5DB] bg-[#D1D5DB] rounded-full -mr-3 flex justify-center items-center'>
-                                <Ellipsis className='w-[1.5rem] h-[1.5rem]' />
-                              </div>
-                            </>
-                          )}
+                                  </React.Fragment>
+                                ))}
+                              </>
+                            ) : (
+                              <>
+                                {item.userProfiles.map((item, idx) => (
+                                  <React.Fragment key={idx}>
+                                    {item ? (
+                                      <div className='w-12 h-12 border-[0.925px] border-[#D1D5DB] bg-white rounded-full -mr-3 flex justify-center items-center'>
+                                        <Image
+                                          src={item}
+                                          alt='user-profile-image'
+                                          width={48}
+                                          height={48}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className='w-12 h-12 border-[0.925px] border-[#D1D5DB] bg-white rounded-full -mr-3 flex justify-center items-center'>
+                                        <User />
+                                      </div>
+                                    )}
+                                  </React.Fragment>
+                                ))}
+                                <div className='w-12 h-12 border-[0.925px] border-[#D1D5DB] bg-[#D1D5DB] rounded-full -mr-3 flex justify-center items-center'>
+                                  <Ellipsis className='w-[1.5rem] h-[1.5rem]' />
+                                </div>
+                              </>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                      <div className='flex items-center justify-between h-12 mt-5 gap-1.5'>
-                        <Button
-                          className='w-[183px] h-full bg-customGreen-500 text-white'
-                          onClick={() =>
-                            router.push(`/meeting-detail/${item.id}`)
-                          }
-                        >
-                          참여하기
-                        </Button>
-                        <button
-                          className='text-lg'
-                          onClick={() => toggleWishMeeting(item.id)}
-                        >
-                          {item.wish ? (
-                            <FilledHeartIcon width={48} height={48} />
-                          ) : (
-                            <BlankHeartIcon width={48} height={48} />
-                          )}
-                        </button>
+                        <div className='flex items-center justify-between h-12 mt-5 gap-1.5'>
+                          <Button
+                            className='w-[183px] h-full bg-customGreen-500 text-white'
+                            onClick={() =>
+                              router.push(`/meeting-detail/${item.id}`)
+                            }
+                          >
+                            참여하기
+                          </Button>
+                          <button
+                            className='text-lg'
+                            onClick={() => toggleWishMeeting(item.id)}
+                          >
+                            {item.wish ? (
+                              <FilledHeartIcon width={48} height={48} />
+                            ) : (
+                              <BlankHeartIcon width={48} height={48} />
+                            )}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
+                </SwiperSlide>
+              ))}
           </Swiper>
         </div>
       </div>
-      {participatingMeetings?.slice(0, 1).map((item, idx) => (
-        <div className='flex flex-col w-[445px] h-[493px]' key={idx}>
-          <div className='bg-white w-[445px] h-[80px] px-[1.875rem] border-b-[1px] border-customGrey-100 flex flex-row justify-between items-center'>
-            {/* TODO (희원) API에 달성률데이터가 없는 상태라 정보를 보여줄 수 없음 -> API 업데이트 되면 수정예정 */}
-            {user ? (
-              <>
-                <div className='flex flex-row gap-10 items-center'>
-                  <CircularProgress value={60} max={100} />
-                  <div>
-                    <h3>지금 읽고 있는 책</h3>
-                    <h4 className='font-bold'>{item.bookTitle}</h4>
+      <div className='flex flex-col w-[445px] h-[493px]'>
+        <div className='bg-white w-[445px] h-[80px] px-[1.875rem] border-b-[1px] border-customGrey-100 flex flex-row justify-between items-center'>
+          {user ? (
+            participatingMeetings?.map(
+              (item, idx) =>
+                currentMeeting === idx + 1 && (
+                  <div
+                    key={idx}
+                    className='w-full h-full flex flex-row justify-between items-center'
+                  >
+                    <div className='flex flex-row gap-10 items-center'>
+                      <CircularProgress value={60} max={100} />
+                      <div>
+                        <h3>지금 읽고 있는 책</h3>
+                        <h4 className='font-bold'>{item.bookTitle}</h4>
+                      </div>
+                    </div>
+                    <div>
+                      <button
+                        className='w-[84px] h-[40px] py-2 px-3 border-[1.5px] rounded-[4px] border-customGrey-200 text-sm'
+                        onClick={() => handleEnterMeeting(item.id)}
+                      >
+                        입장하기
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div>
-                  {/* TODO (희원) 입장하기버튼을 클릭했을때에 대한 동작이 정해지지 않음 -> 정해지는대로 구현예정 */}
-                  <button className='w-[84px] h-[40px] py-2 px-3 border-[1.5px] rounded-[4px] border-customGrey-200 text-sm'>
-                    입장하기
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <div>
-                  <h3 className='font-bold'>로그인 후</h3>
-                  <h4>독서달력을 채워보세요</h4>
-                </div>
-                <button
-                  onClick={() => HandleloginStatus()}
-                  className='w-[100px] h-[40px] py-2 px-3 border-[1.5px] rounded-[4px] border-customGrey-200 text-sm'
-                >
-                  로그인 하기
-                </button>
-              </>
-            )}
-          </div>
-          {/* TODO (희원) API에 모임출석에 대한 데이터가 없는 상태라 정보를 보여줄 수 없음 -> API 업데이트 되면 수정예정 */}
-
-          <Calendar
-            prev2Label={null}
-            next2Label={null}
-            prevLabel={<ChevronLeftIcon width={24} height={24} />}
-            nextLabel={<ChevronRightIcon width={24} height={24} />}
-            formatDay={(_, date) => format(date, 'd')}
-            showNeighboringMonth={false}
-            calendarType='gregory'
-            tileClassName={tileClassName}
-            tileContent={tileContent}
-          />
-          <div className='flex flex-row bg-white w-full h-12 py-[12px] px-[28px] gap-2 justify-end items-center'>
-            <PrevIcon
-              width={24}
-              height={24}
-              onClick={() => handleCurrentMeeting('PREV')}
-              className={`cursor-pointer`}
-            />
-            참여중인 모임 {currentMeeting} / 3
-            <NextIcon
-              width={24}
-              height={24}
-              onClick={() => handleCurrentMeeting('NEXT')}
-              className='cursor-pointer'
-            />
-          </div>
+                ),
+            )
+          ) : (
+            <>
+              <div>
+                <h3 className='font-bold'>로그인 후</h3>
+                <h4>독서달력을 채워보세요</h4>
+              </div>
+              <button
+                onClick={() => HandleloginStatus()}
+                className='w-[100px] h-[40px] py-2 px-3 border-[1.5px] rounded-[4px] border-customGrey-200 text-sm'
+              >
+                로그인 하기
+              </button>
+            </>
+          )}
         </div>
-      ))}
+        <Calendar
+          prev2Label={null}
+          next2Label={null}
+          prevLabel={<ChevronLeftIcon width={24} height={24} />}
+          nextLabel={<ChevronRightIcon width={24} height={24} />}
+          formatDay={(_, date) => format(date, 'd')}
+          showNeighboringMonth={false}
+          calendarType='gregory'
+          tileClassName={tileClassName}
+          tileContent={tileContent}
+        />
+        <div className='flex flex-row bg-white w-full h-12 py-[12px] px-[28px] gap-2 justify-end items-center'>
+          <PrevIcon
+            width={24}
+            height={24}
+            onClick={() => handleCurrentMeeting('PREV')}
+            className={`cursor-pointer`}
+          />
+          참여중인 모임 {currentMeeting} / 3
+          <NextIcon
+            width={24}
+            height={24}
+            onClick={() => handleCurrentMeeting('NEXT')}
+            className='cursor-pointer'
+          />
+        </div>
+      </div>
     </div>
   );
 }

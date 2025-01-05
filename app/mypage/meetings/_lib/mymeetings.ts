@@ -7,7 +7,7 @@ export const getActiveMeetings = async (page: number, size: number) => {
     'GET',
   );
   if (res.code === 'SUCCESS') {
-    return res.result.gatheringResponses as MyMeetingList[];
+    return (res.result.gatheringResponses as MyMeetingList[]) || [];
   }
   throw new Error(`Failed fetch active meetings ${res.code}-${res.message}`);
 };
@@ -18,7 +18,7 @@ export const getCompletedMeetings = async (page: number, size: number) => {
     'GET',
   );
   if (res.code === 'SUCCESS') {
-    return res.result.gatheringResponses as MyMeetingList[];
+    return (res.result.gatheringResponses as MyMeetingList[]) || [];
   }
   throw new Error(`Failed fetch active meetings ${res.code}-${res.message}`);
 };
@@ -28,7 +28,7 @@ export const getMeetingCounts = async () => {
   if (res.code === 'SUCCESS') {
     return res.result as MyMeetingCount;
   }
-  throw new Error(`Failed fetch meeting counts ${res.code}-${res.message}`);
+  throw new Error('Failed fetch meeting counts');
 };
 export const getCreatedMeetings = async (page: number, size: number) => {
   const res = await fetchAPIClient(
@@ -36,9 +36,9 @@ export const getCreatedMeetings = async (page: number, size: number) => {
     'GET',
   );
   if (res.code === 'SUCCESS') {
-    return res.result.gatheringResponses as MyMeetingList[];
+    return (res.result.gatheringResponses as MyMeetingList[]) || [];
   }
-  throw new Error(`Failed fetch meeting counts ${res.code}-${res.message}`);
+  throw new Error('Failed fetch meeting counts');
 };
 export const getBookmarkedMeetings = async (page: number, size: number) => {
   const res = await fetchAPIClient(
@@ -46,7 +46,7 @@ export const getBookmarkedMeetings = async (page: number, size: number) => {
     'GET',
   );
   if (res.code === 'SUCCESS') {
-    return res.result.gatheringResponses as MyMeetingList[];
+    return (res.result.gatheringResponses as MyMeetingList[]) || [];
   }
-  throw new Error(`Failed fetch meeting counts ${res.code}-${res.message}`);
+  throw new Error('Failed fetch meeting counts');
 };

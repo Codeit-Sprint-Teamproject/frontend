@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { completeReading } from '../_lib/completeReading';
+import { deleteMeeting } from '../_lib/deleteMeeting';
 import { leaveMeeting } from '../_lib/leaveMeeting';
 import AlertModal from './AlertModal';
 import MeetingDropDown from './MeetingDropDown';
@@ -40,6 +41,14 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
       });
     },
   });
+  const { mutate: deleteMeetingMutate } = useMutation({
+    mutationFn: (id: number) => deleteMeeting(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['mypage', 'meetings', 'created'],
+      });
+    },
+  });
   const handleComplete = async () => {
     try {
       await completeReading(id);
@@ -53,6 +62,15 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
         title='참여중인 모임을 나가겠습니까?'
         content='나간 모임은 복구할 수 없습니다.'
         onDelete={() => leaveMeetingMutate(id)}
+      />,
+    );
+  };
+  const handleDelete = () => {
+    openModal(
+      <ConfirmModal
+        title='만든 모임을 삭제하시겠습니까?'
+        content='삭제한 모임은 복구할 수 없습니다.'
+        onDelete={() => deleteMeetingMutate(id)}
       />,
     );
   };
@@ -73,6 +91,7 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
             tab={tab}
             completeReading={handleComplete}
             leaveMeeting={handleLeave}
+            deleteMeeting={handleDelete}
           />
         </div>
         <div className='flex gap-[2px]'>

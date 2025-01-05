@@ -27,12 +27,13 @@ export default function MeetingInfo({ gatheringId }: MeetingInfoProps) {
     staleTime: 5 * 60 * 1000,
   });
 
+  console.log(data);
+
   const expectReadingAmount = data?.readingTimeGoal * (data?.gatheringWeek / 7);
 
   const [bookMoreInfoToggle, setBooMoreInfoToggle] = useState(false);
 
   const bookMoreInfoButtonHandler = () => {
-    setBooMoreInfoToggle(!bookMoreInfoToggle);
     setBooMoreInfoToggle(!bookMoreInfoToggle);
   };
 

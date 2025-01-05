@@ -4,7 +4,7 @@ import { fetchAPIServer } from '@/lib/fetchAPI.server';
 import { cookies } from 'next/headers';
 
 export const getMeetingDetails = async (gatheringId: number) => {
-  const endpoint = `/api/gatheringSearch/${gatheringId}`;
+  const endpoint = `/api/gatheringSearch/${gatheringId}/detail`;
   const method = 'GET';
 
   const data = await fetchAPIServer(endpoint, method);

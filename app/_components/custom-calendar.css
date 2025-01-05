@@ -62,10 +62,10 @@
 }
 
 .selected-date {
-  background-color: #ffa443;
-  border-radius: 20%;
+  background-color: #30b380;
+  border-radius: 4px;
   color: white;
-  height: 2.0625rem;
+  height: 100%;
 }
 
 .react-calendar__navigation {

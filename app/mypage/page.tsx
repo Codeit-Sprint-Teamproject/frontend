@@ -4,7 +4,7 @@ import Profile from './_components/Profile';
 
 export default function page() {
   return (
-    <div className='w-[750px] p-5'>
+    <div className='w-[750px]'>
       <h3 className='text-2xl font-semibold my-2 text-customGrey-800'>
         마이페이지
       </h3>

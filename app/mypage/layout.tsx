@@ -4,8 +4,8 @@ type Props = { children: React.ReactNode };
 
 export default function MypageLayout({ children }: Props) {
   return (
-    <div className='flex flex-col items-center mt-24'>
-      <div className='flex items-center gap-20'>
+    <div className='flex flex-col items-center pt-[60px]'>
+      <div className='flex items-center gap-28'>
         <aside>
           <Sidebar />
         </aside>

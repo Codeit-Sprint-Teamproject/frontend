@@ -161,7 +161,7 @@ export default function MainPageBody() {
               어디서든 독서를 시작해요
             </h2>
           </div>
-          <div className='flex flex-row items-center mb-2'>
+          <div className='flex flex-row items-center mb-2 relative'>
             {(filterState.startDate || filterState.targetTime) && (
               <div
                 className='py-[5px] px-[10px] rounded-[30px] hover:bg-gray-400 duration-150 ml-2 flex flex-row gap-2 items-center font-bold'
@@ -239,6 +239,14 @@ export default function MainPageBody() {
                   handleFilterChange('recruitingOnly', checked)
                 }
               />
+            </div>
+            <div className='h-[40px] bg-white px-2 rounded-[4px] flex flex-row gap-1 justify-center items-center absolute right-0'>
+              <CustomDropdown
+                trigger={sortType ? sortType : '최신순'}
+                items={['최신순', '참여 인원순', '마감 임박순']}
+                onSelect={(value) => handleMeetingsSort(value)}
+              />
+              <ChevronDownIcon width={24} height={24} />
             </div>
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mt-6'>

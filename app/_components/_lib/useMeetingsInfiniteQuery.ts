@@ -32,12 +32,14 @@ export function useMeetingsInfiniteQuery() {
     return {
       size: 6,
       ...(filters.startDate && {
-        startDate: filters.startDate.toISOString().split('T')[0],
+        startDate: filters.startDate?.toISOString().split('T')[0] ?? '',
       }),
       ...(filters.gatheringStatus && {
-        gatheringStatus: filters.gatheringStatus,
+        gatheringStatus: filters.gatheringStatus ?? 'RECRUITING',
       }),
-      ...(filters.targetTime && { readingTimeGoals: filters.targetTime }),
+      ...(filters.targetTime && {
+        readingTimeGoals: filters.targetTime ?? [],
+      }),
     };
   }, [filters]);
 

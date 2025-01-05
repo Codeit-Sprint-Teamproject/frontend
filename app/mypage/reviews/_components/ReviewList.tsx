@@ -21,7 +21,7 @@ export default function ReviewList() {
     <div className='w-full h-full relative'>
       <ul>
         {reviews?.bookReviews?.map((review) => (
-          <Review key={review.id} review={review} />
+          <Review key={review.id} review={review} page={page} />
         ))}
       </ul>
       <Pagination

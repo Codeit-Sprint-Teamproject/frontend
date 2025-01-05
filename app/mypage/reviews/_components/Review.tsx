@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteBookReview } from '@/app/reviews/[id]/_lib/deleteBookReview';
+import { toggleReviewLike } from '@/app/reviews/_lib/toggleReviewLike';
 import CommentIcon from '@/app/reviews/_svg/CommentIcon';
 import LikeIcon from '@/app/reviews/_svg/LikeIcon';
 import UnLikeIcon from '@/app/reviews/_svg/UnLikeIcon';
@@ -8,10 +9,11 @@ import DropDown from '@/components/DropDown';
 import Modal from '@/components/Modal';
 import BookICon from '@/components/common/icons/Book';
 import { useModalStore } from '@/store/modal';
-import { MyBookReview } from '@/types/review';
+import { MyBookReview, MyBookReviewList } from '@/types/review';
 import { useRouter } from 'next/navigation';
 
-export default function Review({ review }: { review: MyBookReview }) {
+type Props = { review: MyBookReview; page: number };
+export default function Review({ review, page }: Props) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { isOpen, openModal } = useModalStore();
@@ -19,6 +21,40 @@ export default function Review({ review }: { review: MyBookReview }) {
     mutationFn: (id: number) => deleteBookReview(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['mypage', 'reviews'] });
+    },
+  });
+  const { mutate: toggleReviewLikeMutate } = useMutation({
+    mutationFn: (id: number) => toggleReviewLike(id),
+    onMutate: () => {
+      const value: MyBookReviewList | undefined = queryClient.getQueryData([
+        'mypage',
+        'reviews',
+        page,
+      ]);
+      if (value?.bookReviews) {
+        const index = value.bookReviews.findIndex((review) => review.id === id);
+        console.log('index', index);
+        if (index > -1) {
+          const isLiked = value.bookReviews[index].userLikeCk ?? false;
+          console.log('isLiked', isLiked);
+          const snapshot = { ...value };
+          value.bookReviews = [...value.bookReviews];
+          snapshot.bookReviews[index] = {
+            ...snapshot.bookReviews[index],
+            userLikeCk: !isLiked,
+            likes: isLiked
+              ? snapshot.bookReviews[index].likes - 1
+              : snapshot.bookReviews[index].likes + 1,
+          };
+          queryClient.setQueryData(['mypage', 'reviews', page], snapshot);
+        }
+      }
+      return value;
+    },
+    onError: (error, variables, context) => {
+      if (context) {
+        queryClient.setQueryData(['mypage', 'reviews', page], context);
+      }
     },
   });
   const { id, title, bookTitle, createTime, userLikeCk, likes, commentCnt } =
@@ -35,6 +71,9 @@ export default function Review({ review }: { review: MyBookReview }) {
   };
   const handleUpdate = () => {
     router.push(`/reviews/${id}/edit`);
+  };
+  const handleToggleLike = () => {
+    toggleReviewLikeMutate(id);
   };
   return (
     <li className='flex flex-col gap-3 py-4 border-b'>
@@ -60,11 +99,13 @@ export default function Review({ review }: { review: MyBookReview }) {
         </p>
         <div className='flex gap-5'>
           <div className='flex items-center gap-1'>
-            {userLikeCk ? (
-              <LikeIcon className='w-5 h-5' />
-            ) : (
-              <UnLikeIcon className='w-5 h-5' />
-            )}
+            <button onClick={handleToggleLike}>
+              {userLikeCk ? (
+                <LikeIcon className='w-5 h-5' />
+              ) : (
+                <UnLikeIcon className='w-5 h-5' />
+              )}
+            </button>
             <p
               className={`text-sm font-bold ${userLikeCk ? 'text-customGreen-500' : 'text-customGrey-500'}`}
             >

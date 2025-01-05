@@ -25,3 +25,7 @@ export type MyBookReview = {
   likes: number;
   commentCnt?: number;
 };
+export type MyBookReviewList = {
+  bookReviews: MyBookReview[];
+  total: number;
+};

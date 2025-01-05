@@ -1,4 +1,4 @@
-import ChevronRight from '@/public/ChevronRight';
+import ChevronRightIcon from '@/public/ChevronRightIcon';
 import HomeIcon from '@/public/HomeIcon';
 
 interface PageLocatorProps {
@@ -13,7 +13,7 @@ const PageLocator = ({ pagePath, currentPage }: PageLocatorProps) => {
       {pagePath.map((item, idx) => (
         <div key={idx} className='flex flex-row justify-start items-center'>
           <span>{item}</span>
-          <ChevronRight width={14} height={14} />
+          <ChevronRightIcon width={14} height={14} />
         </div>
       ))}
       <span>{currentPage}</span>

@@ -3,7 +3,7 @@ import { MyMeetingCount, MyMeetingList } from '@/types/meeting';
 
 export const getActiveMeetings = async (page: number, size: number) => {
   const res = await fetchAPIClient(
-    `/api/gatheringSearch/participating?page=${page}&size=${size}&gatheringUserStatus=PARTICIPATING`,
+    `/api/gatheringSearch/participating?page=${page}&size=${size}&gatheringStatus=ACTIVE&gatheringUserStatus=PARTICIPATING`,
     'GET',
   );
   if (res.code === 'SUCCESS') {
@@ -14,7 +14,7 @@ export const getActiveMeetings = async (page: number, size: number) => {
 
 export const getCompletedMeetings = async (page: number, size: number) => {
   const res = await fetchAPIClient(
-    `/api/gatheringSearch/participating?page=${page}&size=${size}&gatheringStatus=COMPLETED`,
+    `/api/gatheringSearch/participating?page=${page}&size=${size}&gatheringStatus=COMPLETED&gatheringUserStatus=NOT_PARTICIPATING`,
     'GET',
   );
   if (res.code === 'SUCCESS') {

@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-const BASE_URL = process.env.NEXT_PUBLIC_DOMAIN || '//54.180.31.176';
+const BASE_URL = process.env.NEXT_PUBLIC_DOMAIN || 'http://54.180.31.176';
 
 function getToken(): string | undefined {
   return Cookies.get('token');

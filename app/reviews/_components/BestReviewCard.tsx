@@ -4,6 +4,7 @@ import LikeIcon from '../_svg/LikeIcon';
 import UnLikeIcon from '../_svg/UnLikeIcon';
 import Avatar from '@/components/common/icons/Avatar';
 import { useReviewLikeToggle } from '@/hooks/useReviewLikeToggle';
+import useUserStore from '@/store/userStore';
 import { BestBookReview } from '@/types/book';
 import Image from 'next/image';
 
@@ -23,7 +24,7 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
     id,
     isLiked: userLikeCk ?? false,
   });
-
+  const { user } = useUserStore();
   return (
     <div className='flex flex-col gap-5 w-[522px]  bg-customGreen-50 px-4 py-5'>
       <div className='flex items-center gap-1 text-sm'>
@@ -58,7 +59,7 @@ export default function BestReviewCard({ review }: { review: BestBookReview }) {
         </div>
         <div className='flex gap-5'>
           <div className='flex items-center gap-1'>
-            <button onClick={() => togglelike()}>
+            <button onClick={() => togglelike()} disabled={!user}>
               {userLikeCk ? (
                 <LikeIcon className='w-5 h-5' />
               ) : (

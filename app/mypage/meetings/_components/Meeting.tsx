@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { completeReading } from '../_lib/completeReading';
 import { deleteMeeting } from '../_lib/deleteMeeting';
 import { leaveMeeting } from '../_lib/leaveMeeting';
+import { unlikeMeeting } from '../_lib/unlikeMeeting';
 import AlertModal from './AlertModal';
 import MeetingDropDown from './MeetingDropDown';
 import { useTabContext } from './TabContext';
@@ -49,6 +50,14 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
       });
     },
   });
+  const { mutate: unLikeMeetingMutate } = useMutation({
+    mutationFn: (id: number) => unlikeMeeting(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['mypage', 'meetings'],
+      });
+    },
+  });
   const handleComplete = async () => {
     try {
       await completeReading(id);
@@ -74,6 +83,9 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
       />,
     );
   };
+  const handleUnlike = () => {
+    unLikeMeetingMutate(id);
+  };
   return (
     <div className='w-[696px] flex gap-5 bg-white pt-4 py-7 border-b'>
       <Image
@@ -92,6 +104,7 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
             completeReading={handleComplete}
             leaveMeeting={handleLeave}
             deleteMeeting={handleDelete}
+            unlikeMeeting={handleUnlike}
           />
         </div>
         <div className='flex gap-[2px]'>

@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { completeReading } from '../_lib/completeReading';
+import { deleteMeeting } from '../_lib/deleteMeeting';
 import { leaveMeeting } from '../_lib/leaveMeeting';
+import { unlikeMeeting } from '../_lib/unlikeMeeting';
 import AlertModal from './AlertModal';
 import MeetingDropDown from './MeetingDropDown';
 import { useTabContext } from './TabContext';
@@ -12,6 +14,7 @@ import CalendarIcon from '@/components/common/icons/Calendar';
 import MoreIcon from '@/components/common/icons/MoreIcon';
 import { useModalStore } from '@/store/modal';
 import { MyMeetingList } from '@/types/meeting';
+import { isBefore } from 'date-fns';
 import Image from 'next/image';
 
 export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
@@ -28,6 +31,7 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
     readingRate,
     userProfiles,
   } = meeting;
+  const isCompleted = isBefore(new Date(endDate), new Date());
   const { mutate: leaveMeetingMutate } = useMutation({
     mutationFn: (id: number) => leaveMeeting(id),
     onSuccess: (data) => {
@@ -35,6 +39,22 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
         openModal(<AlertModal message='모임 주최자는 삭제만 가능합니다.' />);
         return;
       }
+      queryClient.invalidateQueries({
+        queryKey: ['mypage', 'meetings'],
+      });
+    },
+  });
+  const { mutate: deleteMeetingMutate } = useMutation({
+    mutationFn: (id: number) => deleteMeeting(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['mypage', 'meetings', 'created'],
+      });
+    },
+  });
+  const { mutate: unLikeMeetingMutate } = useMutation({
+    mutationFn: (id: number) => unlikeMeeting(id),
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['mypage', 'meetings'],
       });
@@ -56,16 +76,46 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
       />,
     );
   };
+  const handleDelete = () => {
+    openModal(
+      <ConfirmModal
+        title='만든 모임을 삭제하시겠습니까?'
+        content='삭제한 모임은 복구할 수 없습니다.'
+        onDelete={() => deleteMeetingMutate(id)}
+      />,
+    );
+  };
+  const handleUnlike = () => {
+    unLikeMeetingMutate(id);
+  };
+  console.log(
+    '완료된 모임인ㅇ지 체크',
+    isBefore(new Date(endDate), new Date()),
+    '모임 끝나는 날짜',
+    new Date(endDate),
+    '현재 날짜',
+    new Date(),
+  );
   return (
     <div className='w-[696px] flex gap-5 bg-white pt-4 py-7 border-b'>
-      <Image
-        src={bookImage}
-        className='w-[113px] h-[170px]'
-        width={113}
-        height={170}
-        alt='책 표지'
-        priority
-      />
+      <div className='relative w-[113px] h-[170px]'>
+        <Image
+          src={bookImage}
+          className='w-[113px] h-[170px]'
+          width={113}
+          height={170}
+          alt='책 표지'
+          priority
+        />
+        {isCompleted && (
+          <>
+            <h4 className='w-1/2 h-16 text-2xl font-bold text-white absolute top-1/4 left-1/4 z-[1]'>
+              모임 종료
+            </h4>
+            <div className='absolute inset-0 bg-[rgba(0,0,0,0.2)]'></div>
+          </>
+        )}
+      </div>
       <div className='w-3/4 text-sm'>
         <div className='flex justify-between'>
           <h3 className='text-lg text-customGrey-800 font-bold mb-2'>{name}</h3>
@@ -73,6 +123,8 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
             tab={tab}
             completeReading={handleComplete}
             leaveMeeting={handleLeave}
+            deleteMeeting={handleDelete}
+            unlikeMeeting={handleUnlike}
           />
         </div>
         <div className='flex gap-[2px]'>
@@ -115,9 +167,7 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
             </div>
           </div>
           <p className='text-sm text-customGreen-500'>
-            {currentCapacity}명과 함께{' '}
-            {/* TODO (유진) 만든 모임에서도 완료한 모임 여부 판단 추가할 예정 */}
-            {tab === 'completed' ? '읽었어요' : '읽는 중'}
+            {currentCapacity}명과 함께 {isCompleted ? '읽었어요' : '읽는 중'}
           </p>
         </div>
       </div>

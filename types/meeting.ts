@@ -25,9 +25,10 @@ export type MyMeetingList = {
   endDate: Date;
   bookTitle: string;
   bookImage: string;
-  readingRate: number;
+  readingRate?: number;
   readingTimeGoal: number;
   currentCapacity: number;
+  userProfiles: string[];
 };
 export type MyMeetingCount = {
   participatingCount: number;

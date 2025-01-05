@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { completeReading } from '../_lib/completeReading';
 import { leaveMeeting } from '../_lib/leaveMeeting';
 import AlertModal from './AlertModal';
+import MeetingDropDown from './MeetingDropDown';
 import { useTabContext } from './TabContext';
 import { formatDateWithWeekday } from '@/app/_utils/dateFormatter';
 import ConfirmModal from '@/components/ConfirmModal';
-import DropDown from '@/components/DropDown';
 import Modal from '@/components/Modal';
 import Avatar from '@/components/common/icons/Avatar';
 import CalendarIcon from '@/components/common/icons/Calendar';
@@ -26,6 +26,7 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
     endDate,
     currentCapacity,
     readingRate,
+    userProfiles,
   } = meeting;
   const { mutate: leaveMeetingMutate } = useMutation({
     mutationFn: (id: number) => leaveMeeting(id),
@@ -68,11 +69,10 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
       <div className='w-3/4 text-sm'>
         <div className='flex justify-between'>
           <h3 className='text-lg text-customGrey-800 font-bold mb-2'>{name}</h3>
-          <DropDown
-            items={[
-              { text: '독서 완료하기', onClick: handleComplete },
-              { text: '모임 나가기', onClick: handleLeave, isDelete: true },
-            ]}
+          <MeetingDropDown
+            tab={tab}
+            completeReading={handleComplete}
+            leaveMeeting={handleLeave}
           />
         </div>
         <div className='flex gap-[2px]'>
@@ -87,7 +87,7 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
           <div className='w-[489px] h-[15px] bg-customGrey-100 rounded-lg'>
             <div
               className='h-[15px] bg-customGreen-500 rounded-lg'
-              style={{ width: `${489 * (readingRate / 100) || 0}px` }}
+              style={{ width: `${489 * (readingRate || 0 / 100) || 0}px` }}
             ></div>
           </div>
           <span className='text-sm text-customGrey-800'>
@@ -96,9 +96,20 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
         </div>
         <div className='flex items-center gap-2 h-11 px-2 py-1.5 bg-customGreen-50 rounded'>
           <div className='flex -space-x-4 items-center'>
-            <Avatar className='w-8 h-8' />
-            <Avatar className='w-8 h-8' />
-            <Avatar className='w-8 h-8' />
+            {Array.from({ length: Math.min(3, currentCapacity) }).map((_, i) =>
+              userProfiles[i] ? (
+                <Image
+                  key={i}
+                  src={userProfiles[i]}
+                  className='rounded-full'
+                  width={32}
+                  height={32}
+                  alt='프로필'
+                />
+              ) : (
+                <Avatar key={i} className='w-8 h-8' />
+              ),
+            )}
             <div className='p-2 rounded-full w-8 h-8 bg-[#DFDFDF]'>
               <MoreIcon className='w-[18px] h-[18px] stroke-customGrey-300' />
             </div>

@@ -70,7 +70,6 @@ export async function userLogIn(formData: FormData): Promise<{
 
   setCookie('token', token, {
     httpOnly: false,
-    secure: true,
     maxAge: 60 * 60 * 24, // 1 day
   });
 

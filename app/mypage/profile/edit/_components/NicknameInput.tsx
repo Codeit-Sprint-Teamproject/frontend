@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { checkDuplicate } from '@/app/auth/signup/_lib/duplicate-check';
 import { useProfileQuery } from '@/hooks/userProfileQuery';
 import useUserStore from '@/store/userStore';
 
@@ -13,17 +14,21 @@ export default function NicknameInput() {
   const [errorMessage, setErrorMessage] = useState('');
   const { updateProfileMutate } = useProfileQuery();
 
-  const validateNickname = (nickname: string) => {
+  const validateNickname = async (nickname: string) => {
     if (!NICKANME_REGEX.test(nickname)) {
       return '닉네임은 한글/영문/숫자 포함 10자 이내로 입력하세요.';
+    }
+    const res = await checkDuplicate('userName', nickname);
+    if (res.isDuplicate) {
+      return res.message;
     }
     return null;
   };
 
-  const handleChangeNickname = () => {
+  const handleChangeNickname = async () => {
     const formData = new FormData();
-    const error = validateNickname(nickname);
-    console.log('error', error);
+    const error = await validateNickname(nickname);
+
     if (error) {
       setErrorMessage(error);
       return;

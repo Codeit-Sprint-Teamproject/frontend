@@ -1,16 +1,38 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteBookReview } from '@/app/reviews/[id]/_lib/deleteBookReview';
 import CommentIcon from '@/app/reviews/_svg/CommentIcon';
 import LikeIcon from '@/app/reviews/_svg/LikeIcon';
 import UnLikeIcon from '@/app/reviews/_svg/UnLikeIcon';
+import ConfirmModal from '@/components/ConfirmModal';
 import DropDown from '@/components/DropDown';
+import Modal from '@/components/Modal';
 import BookICon from '@/components/common/icons/Book';
+import { useModalStore } from '@/store/modal';
 import { MyBookReview } from '@/types/review';
 import { useRouter } from 'next/navigation';
 
 export default function Review({ review }: { review: MyBookReview }) {
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const { isOpen, openModal } = useModalStore();
+  const { mutate: deleteReviewMutate } = useMutation({
+    mutationFn: (id: number) => deleteBookReview(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['mypage', 'reviews'] });
+    },
+  });
   const { id, title, bookTitle, createTime, userLikeCk, likes, commentCnt } =
     review;
-  const handleDelete = () => {};
+
+  const handleDelete = () => {
+    openModal(
+      <ConfirmModal
+        title='게시글을 삭제 하시겠습니까?'
+        content='삭제된 글은 복구할 수 없습니다.'
+        onDelete={() => deleteReviewMutate(Number(id))}
+      />,
+    );
+  };
   const handleUpdate = () => {
     router.push(`/reviews/${id}/edit`);
   };
@@ -57,6 +79,7 @@ export default function Review({ review }: { review: MyBookReview }) {
           </div>
         </div>
       </div>
+      {isOpen && <Modal width='w-[300px]' />}
     </li>
   );
 }

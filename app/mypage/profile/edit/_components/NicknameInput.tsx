@@ -47,7 +47,9 @@ export default function NicknameInput() {
     });
   };
   return (
-    <div className={`rounded-sm ${isEdit ? 'bg-customGrey-50 px-5 py-4' : ''}`}>
+    <aside
+      className={`rounded-sm ${isEdit ? 'bg-customGrey-50 px-5 py-4' : ''}`}
+    >
       {isEdit && (
         <p className='font-bold text-customGrey-800 pb-5'>닉네임 변경</p>
       )}
@@ -91,6 +93,6 @@ export default function NicknameInput() {
           </div>
         )}
       </div>
-    </div>
+    </aside>
   );
 }

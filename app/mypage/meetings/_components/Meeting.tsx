@@ -139,7 +139,7 @@ export default function Meeting({ meeting }: { meeting: MyMeetingList }) {
           <div className='w-[489px] h-[15px] bg-customGrey-100 rounded-lg'>
             <div
               className='h-[15px] bg-customGreen-500 rounded-lg'
-              style={{ width: `${489 * (readingRate || 0 / 100) || 0}px` }}
+              style={{ width: `${489 * ((readingRate || 0) / 100)}px` }}
             ></div>
           </div>
           <span className='text-sm text-customGrey-800'>

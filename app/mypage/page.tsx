@@ -10,7 +10,7 @@ export default function page() {
       </h3>
       <Profile />
       <MyMeetingList />
-      <h4 className='text-lg font-bold mb-6 text-customGrey-800'>
+      <h4 className='text-lg font-bold mb-6 text-customGrey-800 pt-[98px]'>
         나의 독서 달력
       </h4>
       <MyReadingCalendar />
